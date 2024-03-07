@@ -1,7 +1,7 @@
 import "./styles/App.scss";
 
 function App() {
-  return <></>;
+  return <>Hello</>;
 }
 
 export default App;
