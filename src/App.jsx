@@ -4,6 +4,7 @@ import { BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-do
 import Home from './Pages/Home/Home.jsx'
 import Registration from  './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
+import Search from './Pages/Search/Search.jsx'
 
 import './stylesGlobal/App.scss'
 
@@ -28,6 +29,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Registration userObj={userObj}/>}/>
           <Route path='/login' element={<LogIn/>}/>
+          <Route path='/search' element={<Search/>}/>
         </Routes>
     </Router>
   )

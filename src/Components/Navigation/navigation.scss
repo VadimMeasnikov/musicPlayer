@@ -1,0 +1,27 @@
+.nav {
+  position: fixed;
+  background: #1b1a1c;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1;
+  .nav__item {
+    flex-basis: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    & span {
+      color: #e5e5e5;
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 15px;
+      letter-spacing: 0%;
+      text-align: center;
+    }
+  }
+}
