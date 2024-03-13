@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword,  getAuth,  onAuthStateChanged } from "firebase/auth";
 import Registration_Data from '../../Components/Registration_Data/Registration_Data';
 import miniLogo from '../../img/mini_logo.png'
 
 import './registration.scss'
 
 
-export default function Registration() {
+export default function Registration({ userObj }) {
+
+  const { userEmail, setUserEmail, userPassword, setUserPassword, userName, setUserName, userNews, setUserNews,
+  userShare, setUserShare } = userObj;
 
   const [isRegistration, setIsRegistration] = useState(false)
+  const regState = { isRegistration, setIsRegistration }
 
-  const regState = {isRegistration, setIsRegistration}
 
-  // const auth = getAuth()
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       const uid = user.uid;
-  //     } else {
-  //     }
-  //   });
-  // }, [])
+  const navigate = useNavigate()
+
+
 
   return (
     <div className='registration'>
       {isRegistration ?
-        (<Registration_Data regState={regState} />)
+        (<Registration_Data regState={regState} userObj={userObj} />)
         :
         (<div className='reg'>
           <div className="reg_container">

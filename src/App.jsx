@@ -8,10 +8,25 @@ import LogIn from './Pages/LogIn/LogIn.jsx'
 import './stylesGlobal/App.scss'
 
 export default function App() {
+  
+  const [userEmail, setUserEmail] = useState(false)
+  const [userPassword, setUserPassword] = useState(false)
+  const [userName, setUserName] = useState(false)
+  const [userNews, setUserNews] = useState(false)
+  const [userShare, setUserShare] = useState(false)
+
+  const userObj ={
+    userEmail, setUserEmail,
+    userPassword, setUserPassword,
+    userName, setUserName,
+    userNews, setUserNews,
+    userShare, setUserShare
+  }
+
   return (
     <Router>
         <Routes>
-          <Route path='/' element={<Registration/>}/>
+          <Route path='/' element={<Registration userObj={userObj}/>}/>
           <Route path='/login' element={<LogIn/>}/>
         </Routes>
     </Router>

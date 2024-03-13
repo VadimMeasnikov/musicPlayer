@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-
+import { createUserWithEmailAndPassword,  getAuth,  onAuthStateChanged } from "firebase/auth";
 import arrow from '../../img/Chevron left.png'
 
 import './registration_data.scss'
 
-export default function Registration_Data({ regState }) {
+export default function Registration_Data({ regState, userObj }) {
+
+  const { userEmail, setUserEmail, userPassword, setUserPassword, userName, setUserName, userNews, setUserNews,
+    userShare, setUserShare } = userObj;
+
+
+  const auth = getAuth()
+  async function createUser(event) {
+    event.preventDefault();
+    console.log('create user');
+    createUserWithEmailAndPassword(auth, userEmail, userPassword)
+      .then((user) => console.log(user))
+      .catch((e) => console.error(e))
+
+    setUserName('')
+    setUserName('')
+    setUserPassword('')
+  }
+
+
   return (
     <div className='registration_data'>
       <div className="registration_data__container">
@@ -15,21 +34,21 @@ export default function Registration_Data({ regState }) {
           }} className='back__btn'> <img src={arrow} alt="" /> </button>
           <h1 className='create_account__title'>Create account</h1>
         </div>
-        <form className="create_account__content">
+        <form className="create_account__content" onSubmit={createUser}>
 
           <div className="user_data__box">
             <label className='user_data_label'>What’s your email?</label>
-            <input className='user_data_input' type="email" />
+            <input className='user_data_input' value={userEmail} onChange={(e) => setUserEmail(e.target.value)} type="email" />
             <label className='user_data_info'>You’ll need to confirm this email later.</label>
           </div>
           <div className="user_data__box">
             <label className='user_data_label'>Create a password</label>
-            <input className='user_data_input' type="password" />
+            <input className='user_data_input' onChange={(e) => setUserPassword(e.target.value)} type="password" />
             <label className='user_data_info'>Use atleast 8 characters.</label>
           </div>
           <div className="user_data__box">
             <label className='user_data_label'>What’s your name?</label>
-            <input className='user_data_input' type="text" />
+            <input className='user_data_input' onChange={(e) => setUserName(e.target.value)} type="text" />
             <label className='user_data_info'>This appears on your spotify profile</label>
           </div>
 
@@ -44,11 +63,11 @@ export default function Registration_Data({ regState }) {
               <div className="user_extra">
                 <p className='user_extra__text'>
                   Please send me news and offers from Spotify.</p>
-                <input className='user_extra__inp' type="checkbox" />
+                <input className='user_extra__inp' value={userNews} checked={!userNews} onChange={(e) => { setUserNews(!userNews) }} type="checkbox" />
               </div>
               <div className="user_extra">
                 <p className='user_extra__text'>Share my registration data with Spotify’s content providers for marketing purposes.</p>
-                <input className='user_extra__inp' type="checkbox" />
+                <input className='user_extra__inp' value={userNews} checked={!userShare} onChange={(e) => { setUserShare(!userShare) }} type="checkbox" />
               </div>
             </div>
           </div>
