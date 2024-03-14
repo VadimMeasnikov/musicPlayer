@@ -34,7 +34,7 @@ export default function Registration_Data({ regState, userObj }) {
           }} className='back__btn'> <img src={arrow} alt="" /> </button>
           <h1 className='create_account__title'>Create account</h1>
         </div>
-        <form className="create_account__content" onSubmit={createUser}>
+        <form className="create_account__content" onSubmit={(event) => createUser(event)}>
 
           <div className="user_data__box">
             <label className='user_data_label'>What’s your email?</label>
