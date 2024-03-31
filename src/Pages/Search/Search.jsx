@@ -1,7 +1,8 @@
-import "./search.scss";
+
 import Navigation from "../../Components/Navigation/Navigation";
 import SearchInput from "../../Components/SearchInput/SearchInput";
 import SearchCard from "../../Components/SearchCard/SearchCard";
+import "./search.scss";
 
 export default function Search() {
   return (

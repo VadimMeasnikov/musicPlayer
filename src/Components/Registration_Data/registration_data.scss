@@ -2,6 +2,8 @@
     display: grid;
     place-items: center;
 
+    height: auto;
+
     p {
         color: white;
     }
@@ -14,19 +16,11 @@
         width: 85%;
 
         .title_box__reg_data {
+            padding-top: 10px;
+
             display: flex;
             align-items: center;
             width: 100%;
-
-            .back__btn {
-                border-radius: 50%;
-                background: rgba(3, 3, 3, 1);
-                width: 32px;
-                height: 32px;
-                background: none;
-                border: none;
-                outline: none;
-            }
 
             .create_account__title {
 
@@ -45,8 +39,6 @@
         .create_account__content {
 
             margin-top: 25px;
-
-            height: 90%;
 
             display: flex;
             align-items: center;
@@ -161,9 +153,9 @@
             }
 
             .create_user__btn {
-                margin-top: 50px;
-
                 margin: 0 auto;
+
+                margin-top: 50px;
 
                 width: 55%;
                 height: 40px;

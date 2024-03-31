@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword,  getAuth,  onAuthStateChanged } from "firebase/auth";
+
 import arrow from '../../img/Chevron left.png'
 
+import GoBackButton from '../GoBackButton/GoBackButton';
+
 import './registration_data.scss'
+
 
 export default function Registration_Data({ regState, userObj }) {
 
   const { userEmail, setUserEmail, userPassword, setUserPassword, userName, setUserName, userNews, setUserNews,
     userShare, setUserShare } = userObj;
 
+  const navigate = useNavigate()
 
   const auth = getAuth()
+
   async function createUser(event) {
     event.preventDefault();
     console.log('create user');
+
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => console.log(user))
       .catch((e) => console.error(e))
@@ -29,9 +36,9 @@ export default function Registration_Data({ regState, userObj }) {
     <div className='registration_data'>
       <div className="registration_data__container">
         <div className="title_box__reg_data">
-          <button onClick={() => {
-            regState.setIsRegistration(false)
-          }} className='back__btn'> <img src={arrow} alt="" /> </button>
+
+           <button className='go_back__button' onClick={() => regState.setIsRegistration(false)}><img src={arrow} alt="" /></button>
+           
           <h1 className='create_account__title'>Create account</h1>
         </div>
         <form className="create_account__content" onSubmit={(event) => createUser(event)}>
@@ -71,7 +78,7 @@ export default function Registration_Data({ regState, userObj }) {
               </div>
             </div>
           </div>
-          <button className='create_user__btn' type='button'>Create an account</button>
+          <button className='create_user__btn' type='submit'>Create an account</button>
         </form>
       </div>
     </div>

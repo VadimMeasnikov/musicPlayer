@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { createUserWithEmailAndPassword,  getAuth,  onAuthStateChanged } from "firebase/auth";
 import Registration_Data from '../../Components/Registration_Data/Registration_Data';
 import miniLogo from '../../img/mini_logo.png'
@@ -14,11 +14,6 @@ export default function Registration({ userObj }) {
 
   const [isRegistration, setIsRegistration] = useState(false)
   const regState = { isRegistration, setIsRegistration }
-
-
-
-  const navigate = useNavigate()
-
 
 
   return (
