@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom'
-
-
+import { BrowserRouter as Router, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import Home from './Pages/Home/Home.jsx'
 import Registration from './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
@@ -11,8 +9,6 @@ import './stylesGlobal/App.scss'
 
 
 export default function App() {
-
-  const [data, setData] = useState([]) //for api
 
   const [userEmail, setUserEmail] = useState(false)
   const [userPassword, setUserPassword] = useState(false)
@@ -28,13 +24,14 @@ export default function App() {
     userShare, setUserShare
   }
 
-
+  // const { data } = useGetTrackQuery()
+  // console.log(data);
 
   return (
     <Router>
       <Routes>
-        <Route path='/registration' element={<Registration userObj={userObj} />} />
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Registration userObj={userObj} />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
       </Routes>

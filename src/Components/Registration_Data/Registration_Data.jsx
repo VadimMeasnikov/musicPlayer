@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword,  getAuth,  onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged , updateProfile} from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../reduxToolkit/slices/userSlice';
 
 import arrow from '../../img/Chevron left.png'
 
@@ -11,24 +13,53 @@ import './registration_data.scss'
 
 export default function Registration_Data({ regState, userObj }) {
 
-  const { userEmail, setUserEmail, userPassword, setUserPassword, userName, setUserName, userNews, setUserNews,
-    userShare, setUserShare } = userObj;
+  const {
+    userEmail, setUserEmail,
+    userPassword, setUserPassword,
+    userName, setUserName,
+    userNews, setUserNews,
+    userShare, setUserShare
+  } = userObj;
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const auth = getAuth()
 
   async function createUser(event) {
     event.preventDefault();
+
+    if (!userName || !userEmail || !userPassword) {
+      return
+    }
+
     console.log('create user');
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
-      .then((user) => console.log(user))
-      .catch((e) => console.error(e))
+      .then((user) => {
+        console.log(user)
 
-    setUserName('')
-    setUserName('')
-    setUserPassword('')
+        dispatch(setUser({
+          email: userEmail,
+          password: userPassword,
+          username: userName,
+          news: !!userNews,
+          share: !!userShare,
+        }))
+        
+        updateProfile(auth.currentUser, {
+          displayName: userName
+        })
+
+
+        setUserEmail('')
+        setUserPassword('')
+        setUserName('')
+        setUserShare(false)
+        setUserNews(false)
+
+       navigate('/')
+      })
+      .catch((e) => console.error(e))
   }
 
 
@@ -37,8 +68,8 @@ export default function Registration_Data({ regState, userObj }) {
       <div className="registration_data__container">
         <div className="title_box__reg_data">
 
-           <button className='go_back__button' onClick={() => regState.setIsRegistration(false)}><img src={arrow} alt="" /></button>
-           
+          <button className='go_back__button' onClick={() => regState.setIsRegistration(false)}><img src={arrow} alt="" /></button>
+
           <h1 className='create_account__title'>Create account</h1>
         </div>
         <form className="create_account__content" onSubmit={(event) => createUser(event)}>
@@ -50,12 +81,12 @@ export default function Registration_Data({ regState, userObj }) {
           </div>
           <div className="user_data__box">
             <label className='user_data_label'>Create a password</label>
-            <input className='user_data_input' onChange={(e) => setUserPassword(e.target.value)} type="password" />
+            <input className='user_data_input' value={userPassword} onChange={(e) => setUserPassword(e.target.value)} type="password" />
             <label className='user_data_info'>Use atleast 8 characters.</label>
           </div>
           <div className="user_data__box">
             <label className='user_data_label'>What’s your name?</label>
-            <input className='user_data_input' onChange={(e) => setUserName(e.target.value)} type="text" />
+            <input className='user_data_input' value={userName} onChange={(e) => setUserName(e.target.value)} type="text" />
             <label className='user_data_info'>This appears on your spotify profile</label>
           </div>
 
@@ -70,11 +101,11 @@ export default function Registration_Data({ regState, userObj }) {
               <div className="user_extra">
                 <p className='user_extra__text'>
                   Please send me news and offers from Spotify.</p>
-                <input className='user_extra__inp' value={userNews} checked={!userNews} onChange={(e) => { setUserNews(!userNews) }} type="checkbox" />
+                <input className='user_extra__inp' value={userNews} checked={userNews} onChange={(e) => { setUserNews(!userNews) }} type="checkbox" />
               </div>
               <div className="user_extra">
                 <p className='user_extra__text'>Share my registration data with Spotify’s content providers for marketing purposes.</p>
-                <input className='user_extra__inp' value={userNews} checked={!userShare} onChange={(e) => { setUserShare(!userShare) }} type="checkbox" />
+                <input className='user_extra__inp' value={userNews} checked={userShare} onChange={(e) => { setUserShare(!userShare) }} type="checkbox" />
               </div>
             </div>
           </div>
