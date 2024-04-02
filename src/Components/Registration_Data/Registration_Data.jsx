@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged , updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile} from "firebase/auth";
 import { useDispatch } from 'react-redux';
+import {initializeApp } from "firebase/app";
+import {addDoc, collection, getFirestore} from "firebase/firestore";
 import { setUser } from '../../reduxToolkit/slices/userSlice';
+import config from "../../../config";
 
 import arrow from '../../img/Chevron left.png'
 
@@ -12,6 +15,8 @@ import './registration_data.scss'
 
 
 export default function Registration_Data({ regState, userObj }) {
+
+ const [userState, setUserState] = useState('')
 
   const {
     userEmail, setUserEmail,
@@ -36,7 +41,7 @@ export default function Registration_Data({ regState, userObj }) {
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
-        console.log(user)
+        setUserState(user)
 
         dispatch(setUser({
           email: userEmail,
@@ -60,6 +65,22 @@ export default function Registration_Data({ regState, userObj }) {
        navigate('/')
       })
       .catch((e) => console.error(e))
+
+      console.log(userState);
+  }
+
+  async function addUserData(){
+    const db = getFirestore(initializeApp(config))
+
+    try{
+      const usersCollectionRef = collection(db, 'users');
+
+      await addDoc(usersCollectionRef, {})
+    }
+    catch{
+
+    }
+    
   }
 
 

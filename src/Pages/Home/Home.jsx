@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { setUser, removeUser } from '../../reduxToolkit/slices/userSlice'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import { useAuth } from '../../hooks/useAuth'
@@ -13,8 +12,9 @@ import './home.scss'
 
 
 export default function Home() {
-  // const {data} = useGetTrackQuery()
-  // console.log(data)
+
+
+
   const auth = getAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -36,7 +36,7 @@ export default function Home() {
         navigate('/registration')
       }
     })
-  })
+  }, [])
 
   return (
     <div>
