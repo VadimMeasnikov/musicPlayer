@@ -30,10 +30,10 @@ export default function LogIn() {
 
     signInWithEmailAndPassword(auth, emailLogIn, passwordLogIn)
       .then((user) => {
-        console.log('login user');
+      
         dispatch(setUser({
           email: user.email,
-          password: user.password,
+          id: user.uid,
           username: user.displayName,
         }))
 
@@ -66,7 +66,7 @@ export default function LogIn() {
             <label className={isError ? 'error_label' : 'user_data_label'}>Please, enter your password</label>
             <input className={isError ? 'error_input' : 'user_data_input'} value={passwordLogIn} onChange={(e) => {setPasswordLogIn(e.target.value); setIsError(false)}} type="password" />
           </div>
-          {isError && <div className='error_box_extra'><p className='error_box_extra_text'>Неверная почта или ароль</p></div>}
+          {isError && <div className='error_box_extra'><p className='error_box_extra_text'>Неверная почта или пароль</p></div>}
           <button type='submit' className='login_user__btn'>Log In</button>
         </form>
       </div>

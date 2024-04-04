@@ -13,20 +13,16 @@ import './home.scss'
 
 export default function Home() {
 
-
-
   const auth = getAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const getUser = useAuth()
-  console.log(getUser)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setUser({
           email: user.email,
+          id: user.uid,
           password: null,
           username: user.displayName,
           news: null,

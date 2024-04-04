@@ -45,10 +45,10 @@ export default function Registration_Data({ regState, userObj }) {
 
         dispatch(setUser({
           email: userEmail,
-          password: userPassword,
+          id: user.uid,
           username: userName,
-          news: !!userNews,
-          share: !!userShare,
+          news: userNews,
+          share: userShare,
         }))
         
         updateProfile(auth.currentUser, {
@@ -65,8 +65,6 @@ export default function Registration_Data({ regState, userObj }) {
        navigate('/')
       })
       .catch((e) => console.error(e))
-
-      console.log(userState);
   }
 
   async function addUserData(){

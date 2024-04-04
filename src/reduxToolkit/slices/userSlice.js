@@ -4,7 +4,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         email: null,
-        password: null,
+        id: null,
         username: null,
         news: null,
         share: null,
@@ -12,14 +12,14 @@ const userSlice = createSlice({
     reducers: {
         setUser(state, action){
             state.email = action.payload.email;
-            state.password = action.payload.password;
+            state.id = action.payload.id;
             state.username = action.payload.username;
             state.news = action.payload.news;
             state.share = action.payload.share;
         },
         removeUser(state){
             state.email = null
-            state.password = null
+            state.id = null
             state.username = null
             state.news = null
             state.share = null
