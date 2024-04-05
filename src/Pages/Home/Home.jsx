@@ -1,15 +1,20 @@
-import React from 'react'
-import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
-import { useAuth } from '../../hooks/useAuth'
-
-import './home.scss'
-
-
-
+import React, { useState, useEffect } from 'react';
+import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo';
+import MiniCard from '../../Components/MiniCard/MiniCard';
+import './home.scss';
 
 export default function Home() {
-  const {data} = useGetTrackQuery()
-  console.log(data)
+  const { data } = useGetTrackQuery();
+  const [featured, setFeatured] = useState([])
+
+  useEffect(() => {
+    if (data && data.results) {
+      setFeatured(data.results);
+    }
+  }, [data]);
+
+  console.log(featured)
+
   return (
     <div className="featuredTracks">
       {featured.map((item, index) => (
