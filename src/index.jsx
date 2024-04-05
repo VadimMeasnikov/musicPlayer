@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import {initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore";
 
 import config from "../config.js";
 import { Provider } from "react-redux";
@@ -11,6 +12,9 @@ import "./stylesGlobal/index.scss";
 
 
 initializeApp (config);
+const db = getFirestore(initializeApp (config))
+
+console.log(db)
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
