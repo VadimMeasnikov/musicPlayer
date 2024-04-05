@@ -30,8 +30,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/home' element={<Registration />} />
+        <Route path='/home' element={<Home/>} />
+        <Route path='/' element={<Registration userObj={userObj}/>} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
       </Routes>
