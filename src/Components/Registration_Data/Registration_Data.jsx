@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
-import {initializeApp } from "firebase/app";
-import {addDoc, collection, getFirestore} from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { doc, collection, getFirestore, updateDoc, getDoc, setDoc } from "firebase/firestore";
 import { setUser } from '../../reduxToolkit/slices/userSlice';
 import config from "../../../config";
-
 import arrow from '../../img/Chevron left.png'
 
 import GoBackButton from '../GoBackButton/GoBackButton';
@@ -16,7 +15,7 @@ import './registration_data.scss'
 
 export default function Registration_Data({ regState, userObj }) {
 
- const [userState, setUserState] = useState('')
+  const [userState, setUserState] = useState('')
 
   const {
     userEmail, setUserEmail,
@@ -30,6 +29,55 @@ export default function Registration_Data({ regState, userObj }) {
   const navigate = useNavigate()
   const auth = getAuth()
 
+
+  async function addUserData(user) {
+    const db = getFirestore(initializeApp(config))
+
+    const collectionPath = 'users';
+    const docPath = `${collectionPath}/${user.user.uid}`;
+
+    const usersCollectionRef = collection(db, 'users');
+    const userRef = doc(usersCollectionRef, docPath);
+
+    const userDoc = await getDoc(userRef);
+    console.log(userDoc);
+
+    if (userDoc) {
+      console.log('try');
+      const displayNameObj = {
+        name: userName,
+        news: userNews,
+        share: userShare
+      }
+      try {
+
+        await setDoc(doc(db, docPath), displayNameObj)
+        console.log(userDoc);
+        console.log('Документ успешно создан и данные записаны');
+      }
+      catch (e) {
+        console.error(e)
+      }
+
+      // const userData = userDoc.data()
+
+      // const updatedData = {
+      //   ...userData,
+      //   displayNameObj: {
+      //     name: userName,
+      //     news: userNews,
+      //     share: userShare
+      //   }
+      // };
+
+      // try {
+      //   await updateDoc(userRef, updatedData);
+      //   console.log('Данные пользователя успешно обновлены');
+      // } catch (error) {
+      //   console.log('Документ пользователя не существует');
+      // }
+    }
+  }
   async function createUser(event) {
     event.preventDefault();
 
@@ -50,11 +98,10 @@ export default function Registration_Data({ regState, userObj }) {
           news: userNews,
           share: userShare,
         }))
-        
-        updateProfile(auth.currentUser, {
-          displayName: userName
-        })
 
+        addUserData(user)
+
+        console.log(userNews, userShare);
 
         setUserEmail('')
         setUserPassword('')
@@ -62,23 +109,13 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-       navigate('/')
+
+
+        navigate('/')
+
+
       })
       .catch((e) => console.error(e))
-  }
-
-  async function addUserData(){
-    const db = getFirestore(initializeApp(config))
-
-    try{
-      const usersCollectionRef = collection(db, 'users');
-
-      await addDoc(usersCollectionRef, {})
-    }
-    catch{
-
-    }
-    
   }
 
 
@@ -91,7 +128,7 @@ export default function Registration_Data({ regState, userObj }) {
 
           <h1 className='create_account__title'>Create account</h1>
         </div>
-        <form className="create_account__content" onSubmit={(event) => createUser(event)}>
+        <form className="create_account__content" onSubmit={(event) => { createUser(event) }}>
 
           <div className="user_data__box">
             <label className='user_data_label'>What’s your email?</label>
@@ -134,3 +171,13 @@ export default function Registration_Data({ regState, userObj }) {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
