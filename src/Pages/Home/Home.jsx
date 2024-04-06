@@ -17,6 +17,9 @@ export default function Home() {
   const { data } = useGetTrackQuery();
   const [featured, setFeatured] = useState([])
   const [userData, setUserData] = useState('')
+  
+ 
+
 
   useEffect(() => {
     if (data && data.results) {

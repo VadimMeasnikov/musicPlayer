@@ -2,6 +2,7 @@ import './MiniCard.scss'
 import cardImg from '../../img/cardImg.png'
 
 export default function MiniCard({track }) {
+  console.log('hello')
   return (
     <div className="card">
       <div className="card-img">
