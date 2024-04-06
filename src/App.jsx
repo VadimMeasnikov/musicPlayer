@@ -31,7 +31,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/home' element={<Registration />} />
+        <Route path='/registration' element={<Registration userObj={userObj}/>} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
       </Routes>
