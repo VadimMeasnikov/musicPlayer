@@ -20,12 +20,6 @@ export default function Home() {
   const [greeting, setGreeting] = useState("");
   // Отображение имени на главной странице
   const { username } = useSelector((state) => state.user);
-  // Популярные треки из апишки
-  const { data } = useGetTrackQuery();
-  // Стейт для треков
-  const [featured, setFeatured] = useState([]);
-  // Стейт для приветствия
-  const [greeting, setGreeting] = useState("");
   // Проверка, существует ли массив с треками
   useEffect(() => {
     if (data && data.results) {
