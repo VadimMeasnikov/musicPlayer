@@ -167,7 +167,7 @@ export default function Home() {
           <div className="featuredTracks-title">Popular right now!</div>
           <div className="featuredTracks-results">
             {featured.map((item, index) => (
-              <MiniCard key={index} item={item} />
+              <MiniCard key={index} track={item} />
             ))}
           </div>
         </div>
