@@ -46,13 +46,10 @@ export default function Home() {
     })
   }, [])
 
-  const user = auth.currentUser
-  console.log(user);
-
   return (
     <div className="featuredTracks">
       {featured.map((item, index) => (
-        <MiniCard key={index} item={item} />
+        <MiniCard key={index} track={item} />
       ))}
     </div>
   );

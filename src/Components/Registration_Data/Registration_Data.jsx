@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import React, {  useState } from 'react'
+import { Link,  useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
-import { initializeApp } from "firebase/app";
-import { doc, collection, getFirestore, updateDoc, getDoc, setDoc } from "firebase/firestore";
 import { setUser } from '../../reduxToolkit/slices/userSlice';
-import config from "../../../config";
 import arrow from '../../img/Chevron left.png'
-
-import GoBackButton from '../GoBackButton/GoBackButton';
 
 import './registration_data.scss'
 
@@ -29,55 +24,6 @@ export default function Registration_Data({ regState, userObj }) {
   const navigate = useNavigate()
   const auth = getAuth()
 
-
-  async function addUserData(user) {
-    const db = getFirestore(initializeApp(config))
-
-    const collectionPath = 'users';
-    const docPath = `${collectionPath}/${user.user.uid}`;
-
-    const usersCollectionRef = collection(db, 'users');
-    const userRef = doc(usersCollectionRef, docPath);
-
-    const userDoc = await getDoc(userRef);
-    console.log(userDoc);
-
-    if (userDoc) {
-      console.log('try');
-      const displayNameObj = {
-        name: userName,
-        news: userNews,
-        share: userShare
-      }
-      try {
-
-        await setDoc(doc(db, docPath), displayNameObj)
-        console.log(userDoc);
-        console.log('Документ успешно создан и данные записаны');
-      }
-      catch (e) {
-        console.error(e)
-      }
-
-      // const userData = userDoc.data()
-
-      // const updatedData = {
-      //   ...userData,
-      //   displayNameObj: {
-      //     name: userName,
-      //     news: userNews,
-      //     share: userShare
-      //   }
-      // };
-
-      // try {
-      //   await updateDoc(userRef, updatedData);
-      //   console.log('Данные пользователя успешно обновлены');
-      // } catch (error) {
-      //   console.log('Документ пользователя не существует');
-      // }
-    }
-  }
   async function createUser(event) {
     event.preventDefault();
 
@@ -99,9 +45,9 @@ export default function Registration_Data({ regState, userObj }) {
           share: userShare,
         }))
 
-        addUserData(user)
+     
 
-        console.log(userNews, userShare);
+        console.log(user);
 
         setUserEmail('')
         setUserPassword('')
@@ -109,11 +55,13 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-
-
         navigate('/')
-
-
+        return user
+      })
+      .then(()=> {
+        updateProfile(auth.currentUser, {
+          displayName: userName
+        })
       })
       .catch((e) => console.error(e))
   }

@@ -1,18 +1,17 @@
 import './MiniCard.scss'
 import cardImg from '../../img/cardImg.png'
 
-export default function MiniCard({ item }) {
-  console.log(item.image)
+export default function MiniCard({track }) {
   return (
     <div className="card">
       <div className="card-img">
-        <img src={item.image} alt="img" />
+        <img src={track.image} alt="img" />
       </div>
       <div className="card-title">
         <audio controls>
-          <source src={item.audio} type="audio/mpeg"></source>
+          <source src={track.audio} type="audio/mpeg"></source>
         </audio>
-        <p>{item.name}</p>
+        <p>{track.name}</p>
       </div>
     </div>
   )
