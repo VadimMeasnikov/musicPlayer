@@ -9,9 +9,6 @@ export default function MiniCard({ item }) {
         <img src={item.image} alt="img" />
       </div>
       <div className="card-title">
-        <audio controls>
-          <source src={item.audio} type="audio/mpeg"></source>
-        </audio>
         <p>{item.name}</p>
       </div>
     </div>
