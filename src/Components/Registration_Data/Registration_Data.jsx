@@ -1,11 +1,13 @@
-import React, {  useState } from 'react'
-import { Link,  useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
+import { useAddData, useGetData } from '../../services';
 import arrow from '../../img/Chevron left.png'
 
 import './registration_data.scss'
+
 
 
 export default function Registration_Data({ regState, userObj }) {
@@ -23,6 +25,7 @@ export default function Registration_Data({ regState, userObj }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = getAuth()
+
 
   async function createUser(event) {
     event.preventDefault();
@@ -45,9 +48,10 @@ export default function Registration_Data({ regState, userObj }) {
           share: userShare,
         }))
 
-     
 
-        console.log(user);
+
+        // console.log(userObj);
+        // console.log(user);
 
         setUserEmail('')
         setUserPassword('')
@@ -58,10 +62,25 @@ export default function Registration_Data({ regState, userObj }) {
         navigate('/')
         return user
       })
-      .then(()=> {
+      .then(() => {
         updateProfile(auth.currentUser, {
           displayName: userName
         })
+      })
+      .then(() => {
+
+        const user = auth.currentUser;
+
+        function addData() {
+          const userObj = {
+            email: userEmail,
+            id: user.uid,
+            username: userName,
+            news: userNews,
+            share: userShare,
+          }
+          useAddData().mutate(userObj)
+        }
       })
       .catch((e) => console.error(e))
   }
