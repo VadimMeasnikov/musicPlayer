@@ -1,15 +1,13 @@
 import './MiniCard.scss'
-import cardImg from '../../img/cardImg.png'
 
-export default function MiniCard({ item }) {
-  console.log(item.image)
+export default function MiniCard({track}) {
   return (
     <div className="card">
       <div className="card-img">
-        <img src={item.image} alt="img" />
+        <img src={track.image} alt="img" />
       </div>
       <div className="card-title">
-        <p>{item.name}</p>
+        <p>{track.name}</p>
       </div>
     </div>
   )

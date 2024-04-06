@@ -18,7 +18,7 @@ export default function Registration({ userObj }) {
 
   return (
     <div className='registration'>
-      <div className="registration_content"></div>
+      {/* <div className="registration_content"></div> */}
       {isRegistration ?
         (<Registration_Data regState={regState} userObj={userObj} />)
         :

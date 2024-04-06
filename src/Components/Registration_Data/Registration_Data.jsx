@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile} from "firebase/auth";
+import React, {  useState } from 'react'
+import { Link,  useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
-import {initializeApp } from "firebase/app";
-import {addDoc, collection, getFirestore} from "firebase/firestore";
 import { setUser } from '../../reduxToolkit/slices/userSlice';
-import config from "../../../config";
-
 import arrow from '../../img/Chevron left.png'
-
-import GoBackButton from '../GoBackButton/GoBackButton';
 
 import './registration_data.scss'
 
 
 export default function Registration_Data({ regState, userObj }) {
 
- const [userState, setUserState] = useState('')
+  const [userState, setUserState] = useState('')
 
   const {
     userEmail, setUserEmail,
@@ -50,11 +44,10 @@ export default function Registration_Data({ regState, userObj }) {
           news: userNews,
           share: userShare,
         }))
-        
-        updateProfile(auth.currentUser, {
-          displayName: userName
-        })
 
+     
+
+        console.log(user);
 
         setUserEmail('')
         setUserPassword('')
@@ -62,23 +55,15 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-       navigate('/')
+        navigate('/')
+        return user
+      })
+      .then(()=> {
+        updateProfile(auth.currentUser, {
+          displayName: userName
+        })
       })
       .catch((e) => console.error(e))
-  }
-
-  async function addUserData(){
-    const db = getFirestore(initializeApp(config))
-
-    try{
-      const usersCollectionRef = collection(db, 'users');
-
-      await addDoc(usersCollectionRef, {})
-    }
-    catch{
-
-    }
-    
   }
 
 
@@ -91,7 +76,7 @@ export default function Registration_Data({ regState, userObj }) {
 
           <h1 className='create_account__title'>Create account</h1>
         </div>
-        <form className="create_account__content" onSubmit={(event) => createUser(event)}>
+        <form className="create_account__content" onSubmit={(event) => { createUser(event) }}>
 
           <div className="user_data__box">
             <label className='user_data_label'>What’s your email?</label>
@@ -134,3 +119,13 @@ export default function Registration_Data({ regState, userObj }) {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+

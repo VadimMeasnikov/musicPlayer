@@ -10,9 +10,9 @@ import './stylesGlobal/App.scss'
 
 export default function App() {
 
-  const [userEmail, setUserEmail] = useState(false)
-  const [userPassword, setUserPassword] = useState(false)
-  const [userName, setUserName] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
+  const [userPassword, setUserPassword] = useState('')
+  const [userName, setUserName] = useState('')
   const [userNews, setUserNews] = useState(false)
   const [userShare, setUserShare] = useState(false)
 

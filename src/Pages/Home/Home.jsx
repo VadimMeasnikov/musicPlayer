@@ -6,9 +6,17 @@ import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 // Импорт компонентов
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
-import "./home.scss";
-
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../reduxToolkit/slices/userSlice';
+import {  useNavigate } from 'react-router-dom'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
 export default function Home() {
+  const { data } = useGetTrackQuery();
+  // Стейт для треков
+  const [featured, setFeatured] = useState([]);
+  // Стейт для приветствия
+  const [greeting, setGreeting] = useState("");
   // Отображение имени на главной странице
   const { username } = useSelector((state) => state.user);
   // Популярные треки из апишки
@@ -36,6 +44,30 @@ export default function Home() {
       setGreeting("Good night, ");
     }
   }, []);
+
+  console.log(featured)
+  const auth = getAuth()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(setUser({
+          email: user.email,
+          id: user.uid,
+          password: null,
+          username: user.displayName,
+          news: null,
+          share: null
+        }))
+        setUserData(user)
+      } else {
+        navigate('/registration')
+      }
+    })
+  }, [])
+
   return (
     <div className="wrapper">
       <div className="homePage">
