@@ -75,7 +75,7 @@ export default function Player() {
                     <div className='upper_info'>
                         <a href=""><img src={chewronDown} alt="" height={22} width={22} /></a>
                         <h1>1(Remastered)</h1>
-                        <button> <img src={more} alt="" /></button>
+                        <button onClick={() => {setIsOpen(pr => !pr)}}> <img src={more} alt="" /></button>
                     </div>
                     <img src={track} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>

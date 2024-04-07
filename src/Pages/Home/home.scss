@@ -15,9 +15,10 @@
         text-align: left;
       }
       .homePage-setting {
+        width: 25%;
         display: flex;
         align-items: center;
-        gap: 5px;
+        justify-content: space-between;
       }
     }
     .featuredTracks {
