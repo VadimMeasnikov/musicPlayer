@@ -26,47 +26,40 @@ export default function Player() {
                         <h2>The Beatles</h2>
                         <div className='modal_function'>
                             <div>
-                                <button><img src={Like} alt="" width={21} height={20} /></button>
-                                <h1>Like</h1>
+                                <button><img src={Like} alt="" width={21} height={20} />Like</button>
+                                
                             </div>
                             <div>
-                                <button><img src={Hide} alt="" width={21} height={20} /></button>
-                                <h1>Hide song</h1>
+                                <button><img src={Hide} alt="" width={21} height={20} />Hide song</button>
+                                
                             </div>
                             <div>
-                                <button><img src={Add} alt="" width={21} height={20} /></button>
-                                <h1>Add to playlist</h1>
+                                <button><img src={Add} alt="" width={21} height={20} />Add to playlist</button>
                             </div>
                             <div>
-                                <button><img src={Queue} alt="" width={21} height={20} /></button>
-                                <h1>Add to queue</h1>
+                                <button><img src={Queue} alt="" width={21} height={20} />Add to queue</button>
                             </div>
                             <div>
-                                <button><img src={Share} alt="" width={21} height={20} /></button>
-                                <h1>Share</h1>
+                                <button><img src={Share} alt="" width={21} height={20} />Share</button>
                             </div>
                             <div>
-                                <button><img src={Radio} alt="" width={21} height={20} /></button>
-                                <h1>Go to radio</h1>
+                                <button><img src={Radio} alt="" width={21} height={20} />Go to radio</button>
                             </div>
                             <div>
-                                <button><img src={View} alt="" width={21} height={20} /></button>
-                                <h1>View album</h1>
+                                <button><img src={View} alt="" width={21} height={20} />View album</button>
                             </div>
                             <div>
-                                <button><img src={Artist} alt="" width={21} height={20} /></button>
-                                <h1>View artist</h1>
+                                <button><img src={Artist} alt="" width={21} height={20} />View artist</button>
                             </div>
                             <div>
-                                <button><img src={Credits} alt="" width={21} height={20} /></button>
-                                <h1>Song credits</h1>
+                                <button><img src={Credits} alt="" width={21} height={20} />Song credits</button>
                             </div>
                             <div>
-                                <button><img src={MoonFill} alt="" width={21} height={20} /></button>
-                                <h1>Sleep timer</h1>
+                                <button><img src={MoonFill} alt="" width={21} height={20} />Sleep timer</button>
                             </div>
+                            
                         </div>
-
+                        <button onClick={() => {setIsOpen(pr => !pr)}}>Close</button>
                     </div>
 
 
@@ -75,7 +68,7 @@ export default function Player() {
                     <div className='upper_info'>
                         <a href=""><img src={chewronDown} alt="" height={22} width={22} /></a>
                         <h1>1(Remastered)</h1>
-                        <button> <img src={more} alt="" /></button>
+                        <button onClick={() => {setIsOpen(pr => !pr)}}> <img src={more} alt="" /></button>
                     </div>
                     <img src={track} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>

@@ -105,6 +105,21 @@
 .open {
     visibility: visible;
     opacity: 1;
+    transition: 0.15s;
+}
+
+.track_box_modal {
+    button {
+        border: none;
+        padding: 0;
+        background: none;
+        font-family: Avenir;
+        font-size: 16px;
+        color: white;
+        font-weight: 600;
+        margin-top: 4%;
+        cursor: pointer;
+    }
 }
 
 
@@ -121,6 +136,13 @@
         background: none;
         margin-top: 50%;
         margin-right: 10%;
+        font-size: 16px;
+        white-space: nowrap;
+        
+        img{
+            margin-right: 5%;
+            
+        }
     }
 
     div {
@@ -129,10 +151,5 @@
         color: #ffffff;
     }
 
-    h1 {
 
-        font-size: 16px;
-        white-space: nowrap;
-
-    }
 }
