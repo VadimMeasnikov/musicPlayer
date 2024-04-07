@@ -1,8 +1,9 @@
+import { NavLink } from "react-router-dom";
 import "./navigation.scss";
 export default function Navigation() {
   return (
     <nav className="nav">
-      <div className="nav__item">
+      <NavLink to='/' className="nav__item">
         <svg
           width="20.000000"
           height="20.000000"
@@ -21,8 +22,8 @@ export default function Navigation() {
           />
         </svg>
         <span>Home</span>
-      </div>
-      <div className="nav__item">
+      </NavLink>
+      <NavLink to='/search'  className="nav__item">
         <svg
           width="20.000000"
           height="20.000000"
@@ -41,8 +42,8 @@ export default function Navigation() {
           />
         </svg>
         <span>Search</span>
-      </div>
-      <div className="nav__item">
+      </NavLink>
+      <NavLink  className="nav__item">
         <svg
           width="22.000000"
           height="22.000000"
@@ -81,7 +82,7 @@ export default function Navigation() {
         </svg>
 
         <span>Your Library</span>
-      </div>
+      </NavLink>
     </nav>
   );
 }

@@ -60,6 +60,10 @@ export default function Home() {
           news: null,
           share: null
         }))
+        
+        const {userObjData} = useGetData()
+        console.log(userObjData);
+
       } else {
         navigate('/registration')
       }
@@ -67,8 +71,7 @@ export default function Home() {
   }, [])
 
   
-  const {userObjData} = useGetData()
-  console.log(userObjData);
+
 
   return (
     <div className="wrapper">
