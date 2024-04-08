@@ -1,16 +1,19 @@
-import React, {  useState } from 'react'
-import { Link,  useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
+import { useAddData, useGetData } from '../../services';
 import arrow from '../../img/Chevron left.png'
 
 import './registration_data.scss'
 
 
+
 export default function Registration_Data({ regState, userObj }) {
 
   const [userState, setUserState] = useState('')
+  const [isError, setIsError] = useState(false)
 
   const {
     userEmail, setUserEmail,
@@ -23,6 +26,8 @@ export default function Registration_Data({ regState, userObj }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = getAuth()
+
+
 
   async function createUser(event) {
     event.preventDefault();
@@ -45,9 +50,10 @@ export default function Registration_Data({ regState, userObj }) {
           share: userShare,
         }))
 
-     
 
-        console.log(user);
+
+        // console.log(userObj);
+        // console.log(user);
 
         setUserEmail('')
         setUserPassword('')
@@ -58,12 +64,29 @@ export default function Registration_Data({ regState, userObj }) {
         navigate('/')
         return user
       })
-      .then(()=> {
+      .then(() => {
         updateProfile(auth.currentUser, {
           displayName: userName
         })
       })
-      .catch((e) => console.error(e))
+      .then(() => {
+
+        const user = auth.currentUser;
+
+        function addData() {
+          const userObj = {
+            email: userEmail,
+            id: user.uid,
+            username: userName,
+            news: userNews,
+            share: userShare,
+          }
+          useAddData().mutate(userObj)
+        }
+      })
+      .catch((e) => {
+        setIsError(true)
+      })
   }
 
 
@@ -79,18 +102,18 @@ export default function Registration_Data({ regState, userObj }) {
         <form className="create_account__content" onSubmit={(event) => { createUser(event) }}>
 
           <div className="user_data__box">
-            <label className='user_data_label'>What’s your email?</label>
-            <input className='user_data_input' value={userEmail} onChange={(e) => setUserEmail(e.target.value)} type="email" />
+            <label className={isError ? 'error_label' : 'user_data_label'}>Please, enter your email</label>
+            <input className={isError ? 'error_input' : 'user_data_input'} value={userEmail} onChange={(e) => { setUserEmail(e.target.value); setIsError(false) }} type="email" />
             <label className='user_data_info'>You’ll need to confirm this email later.</label>
           </div>
           <div className="user_data__box">
-            <label className='user_data_label'>Create a password</label>
-            <input className='user_data_input' value={userPassword} onChange={(e) => setUserPassword(e.target.value)} type="password" />
+            <label className={isError ? 'error_label' : 'user_data_label'}>Create your password</label>
+            <input className={isError ? 'error_input' : 'user_data_input'} value={userPassword} onChange={(e) => { setUserPassword(e.target.value); setIsError(false) }} type="password" />
             <label className='user_data_info'>Use atleast 8 characters.</label>
           </div>
           <div className="user_data__box">
-            <label className='user_data_label'>What’s your name?</label>
-            <input className='user_data_input' value={userName} onChange={(e) => setUserName(e.target.value)} type="text" />
+          <label className={isError ? 'error_label' : 'user_data_label'}>Please, enter your username</label>
+            <input className={isError ? 'error_input' : 'user_data_input'} value={userName} onChange={(e) => { setUserName(e.target.value); setIsError(false) }} type="text" />
             <label className='user_data_info'>This appears on your spotify profile</label>
           </div>
 
@@ -113,7 +136,8 @@ export default function Registration_Data({ regState, userObj }) {
               </div>
             </div>
           </div>
-          <button className='create_user__btn' type='submit'>Create an account</button>
+          <button disabled={isError} className='create_user__btn' type='submit'>Create an account</button>
+          {isError && <div className='error_box_extra'><p className='error_box_extra_text'>Упс! Видимо вы уже зарегистрированы</p></div>}
         </form>
       </div>
     </div>

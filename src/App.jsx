@@ -4,6 +4,7 @@ import Home from './Pages/Home/Home.jsx'
 import Registration from './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
+import Player from './Pages/Player/Player.jsx'
 
 import './stylesGlobal/App.scss'
 import Artists from './Pages/Artists/Artists.jsx'
@@ -34,6 +35,7 @@ export default function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/registration' element={<Registration userObj={userObj}/>} />
         <Route path='/login' element={<LogIn />} />
+        <Route path='/player' element={<Player/>}/>
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
       </Routes>
