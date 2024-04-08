@@ -6,6 +6,7 @@ import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
 
 import './stylesGlobal/App.scss'
+import Artists from './Pages/Artists/Artists.jsx'
 
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
         <Route path='/registration' element={<Registration userObj={userObj}/>} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/artists' element={<Artists />} />
       </Routes>
     </Router>
   )

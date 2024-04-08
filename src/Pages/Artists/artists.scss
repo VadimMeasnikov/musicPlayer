@@ -1,0 +1,46 @@
+.artists_container {
+	display: grid;
+	place-items: center;
+}
+
+.top_block {
+	display: flex;
+	align-items: center;
+	padding-top: 40px;
+	text-align: center;
+
+	.back_btn {
+		background-color: #000;
+		border: none;
+		outline: none;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+	}
+
+	.text_block {
+		padding-left: 24px;
+
+		.choose_artists {
+			color: #fff;
+			font-family: Roboto;
+			font-weight: 700;
+			font-size: 16px;
+		}
+    
+	}
+}
+
+.input_block {
+	padding-top: 27px;
+	width: 90%;
+}
+
+.card_block{
+  display: flex;
+	justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+
+}
