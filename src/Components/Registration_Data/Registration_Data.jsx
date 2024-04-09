@@ -61,7 +61,7 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-        navigate('/')
+        navigate('/artists')
         return user
       })
       .then(() => {

@@ -100,7 +100,7 @@ export default function Player() {
                     <div className='track_info'>
                         <div className="track_content_1">
                         <div className='track_info_content'>
-                            <div className="marquee-container"><h2 className='track_name'>From Me To You - Mono/Remastered</h2></div>                          
+                            <div className="marquee-container"><h2 className='track_name'>Вгьи</h2></div>                          
                             <h3 className='track_artist'>The Beatles</h3>
                         </div>
                         <div className="track_content_2">
