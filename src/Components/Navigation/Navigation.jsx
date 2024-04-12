@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./navigation.scss";
 import { Link } from "react-router-dom";
 export default function Navigation() {
@@ -86,9 +87,8 @@ export default function Navigation() {
             </g>
           </svg>
 
-          <span>Your Library</span>
-        </div>
-      </Link>
+        <span>Your Library</span>
+      </div>
     </nav>
   );
 }

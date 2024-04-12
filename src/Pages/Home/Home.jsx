@@ -10,8 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
 import {  useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
-import { useAddData, useGetData } from '../../services';
+import {  useGetData } from '../../services';
 
 import './home.scss';
 
@@ -24,12 +23,14 @@ export default function Home() {
   const [greeting, setGreeting] = useState("");
   // Отображение имени на главной странице
   const { username } = useSelector((state) => state.user);
+
   // Проверка, существует ли массив с треками
   useEffect(() => {
     if (data && data.results) {
       setFeatured(data.results);
     }
   }, [data]);
+
   // Логика времени
   const currentHour = new Date().getHours();
   useEffect(() => {
@@ -44,7 +45,6 @@ export default function Home() {
     }
   }, []);
 
-  console.log(featured)
   const auth = getAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -60,6 +60,10 @@ export default function Home() {
           news: null,
           share: null
         }))
+
+        const {userObjData} = useGetData()
+        console.log(userObjData);
+
       } else {
         navigate('/registration')
       }
@@ -67,8 +71,7 @@ export default function Home() {
   }, [])
 
   
-  const {userObjData} = useGetData()
-  console.log(userObjData);
+
 
   return (
     <div className="wrapper">
