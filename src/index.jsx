@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import {initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import {QueryClient, QueryClientProvider} from 'react-query'
-
 import config from "../config.js";
 import { Provider } from "react-redux";
 import { store } from './reduxToolkit/store.js'

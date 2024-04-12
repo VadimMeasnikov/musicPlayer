@@ -11,7 +11,7 @@ html {
   padding: 25px 17px;
   background: #1b1a1c;
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   .search-page {
     display: flex;
     width: 100%;
@@ -21,7 +21,46 @@ html {
       flex-direction: column;
       width: 100%;
       align-items: start;
+      .searchInput {
+        position: relative;
+        min-width: 100%;
+        & input {
+          height: 46px;
+          display: block;
+          border: none;
+          border-radius: 7px;
+          min-width: 286px;
+          width: 100%;
+          box-sizing: border-box;
+          padding-left: 50px;
+          outline: none;
+          color: rgb(19, 19, 19);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 22px;
+          letter-spacing: 0%;
+          &::placeholder {
+            color: rgb(158, 158, 158);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 22px;
+            letter-spacing: 0%;
+          }
+        }
+        & span {
+          position: absolute;
+          top: 50%;
+          left: 15px;
+          transform: translateY(-50%);
+          background-image: url("../../img/search-icon.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+          height: 20px;
+          width: 20px;
+        }
+      }
       .search-page__title {
+        transition: 1s all ease-in-out;
         color: #ffffff;
         font-size: 25px;
         font-weight: 700;
@@ -63,4 +102,11 @@ html {
       }
     }
   }
+}
+.noResults{
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  text-align: center;
 }

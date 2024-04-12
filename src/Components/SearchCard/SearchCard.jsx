@@ -1,11 +1,14 @@
-import albumIcon from '../../img/Icon.png'
-import './searchcard.scss'
+import albumIcon from "../../img/Icon.png";
+import "./searchcard.scss";
 
-export default function SearchCard() {
+export default function SearchCard({ info }) {
   return (
     <div className="searchCard">
-        <div className="searchCard__title">Card</div>
-        <img src={albumIcon} alt="album" />
+      <img src={info.image} alt="album" />
+      <div className="searchCard-text">
+        <div className="searchCard__title">{info.name}</div>
+        <div className="searchCard__artist">Song • {info.artist_name}</div>
+      </div>
     </div>
-  )
+  );
 }

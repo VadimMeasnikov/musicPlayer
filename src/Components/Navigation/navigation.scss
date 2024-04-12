@@ -9,8 +9,12 @@
   justify-content: space-around;
   align-items: center;
   z-index: 1;
-  .nav__item {
+  & a {
+    display: block;
     flex-basis: 33%;
+  }
+  .nav__item {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
