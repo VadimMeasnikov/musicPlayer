@@ -7,7 +7,7 @@ import "./search.scss";
 export default function Search() {
   const [searchTitle, isSearchTitle] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-  const { data, error, isLoading } = useSearchQuery(searchValue);
+  const { data, error } = useSearchQuery(searchValue);
   const [searchTracks, setSearchTracks] = useState([]);
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
 
@@ -50,7 +50,6 @@ export default function Search() {
           </div>
         </div>
         <div className="search-page__results">
-          {isLoading && <p>Loading...</p>}
           {error && <p>Error: {error.message}</p>}
           {searchTracks && searchTracks.length > 0 ? (
             searchTracks.map((item, index) => (
