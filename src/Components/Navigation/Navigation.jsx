@@ -87,8 +87,9 @@ export default function Navigation() {
             </g>
           </svg>
 
-        <span>Your Library</span>
-      </div>
+          <span>Your Library</span>
+        </div>
+      </Link>
     </nav>
   );
 }
