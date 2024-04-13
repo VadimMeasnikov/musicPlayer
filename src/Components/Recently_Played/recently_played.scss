@@ -1,0 +1,22 @@
+.recently_played {
+    p{
+        color: white;
+    }
+    .recently_played_container {
+        .played_page__title {}
+
+        .liked_songs {
+            .liked_songs_container {
+                .liked_songs_logo {
+                    width: 67px;
+                    height: 67px;
+
+                    .liked_img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

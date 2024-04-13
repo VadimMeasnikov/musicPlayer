@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
-import { useAddData, useGetData } from '../../services';
+import { useAddData } from '../../services';
 import arrow from '../../img/Chevron left.png'
 
 import './registration_data.scss'
@@ -72,6 +72,7 @@ export default function Registration_Data({ regState, userObj }) {
       .then(() => {
 
         const user = auth.currentUser;
+        const useData = useAddData()
 
         function addData() {
           const userObj = {
@@ -81,7 +82,7 @@ export default function Registration_Data({ regState, userObj }) {
             news: userNews,
             share: userShare,
           }
-          useAddData().mutate(userObj)
+          useData.mutate(userObj)
         }
       })
       .catch((e) => {

@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
 import {  useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import {  useGetData } from '../../services';
+// import {  useGetData } from '../../services';
 
 import './home.scss';
 
@@ -61,8 +61,8 @@ export default function Home() {
           share: null
         }))
 
-        const {userObjData} = useGetData()
-        console.log(userObjData);
+        // const {userObjData} = useGetData()
+        // console.log(userObjData);
 
       } else {
         navigate('/registration')

@@ -1,0 +1,38 @@
+.profile {
+
+    h1{
+        font-family: Avenir Next;
+        color: white;
+    }
+
+    .profile_container {
+        width: 95%;
+        margin: 0 auto;
+
+        .profile_info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter_categories {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .filter_ctg__btn {
+                border: 1 px solid white;
+                background: none;
+
+                outline: none;
+                border-radius: 25px;
+
+                font-family: Avenir Next;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 16.39px;
+                color: white;
+            }
+        }
+    }
+}

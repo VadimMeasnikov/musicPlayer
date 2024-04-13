@@ -1,9 +1,8 @@
 import firebase from 'firebase/compat/app'
-import { initializeApp } from "firebase/app";
 import config from "../config.js";
 import 'firebase/compat/database'
-
 import { useQuery, useMutation, useQueryClient } from 'react-query'
+
 
 const app = firebase.initializeApp(config)
 const db = app.database()
@@ -26,7 +25,7 @@ export function useAddData() {
 export function useEditData() {
     const queryClient = useQueryClient()
 
-    return useMutation(async ({id, updateData}) => {
+    return useMutation(async ({ id, updateData }) => {
         await db.ref(`users/${id}`).set(updateData)
     },
         {
@@ -38,10 +37,31 @@ export function useEditData() {
 }
 
 
-export function useGetData() {
-   return useQuery('user', async () => {
-    const snapshot = await db.ref('users').once('value')
-    return snapshot.val()
-   })
-}
+export async function getData(){
+    console.log(db.onValue());
+    console.log(1);
+  try{
+    const users = await db.onValue((res) => {
+      console.log(res);
+    });
+    console.log(users);
+  }
+  catch (e){
+   console.error(e)
+  }
+
+ }
+
+
+
+// export function useGetData() {
+//      console.log(db.ref('users').once('value'));
+    
+//     return useQuery('users', async () => {
+//         const snapshot = await db.ref('users').once('value')
+//         console.log(snapshot);
+//         return snapshot.val()
+  
+//     })
+// }
 
