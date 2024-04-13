@@ -1,0 +1,17 @@
+.go_back__button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+
+    border: none;
+    outline: none;
+
+    .arrow_img {
+        width: 50%;
+        height: 50%;
+    }
+}

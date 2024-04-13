@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom'
-
+import { BrowserRouter as Router, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import Home from './Pages/Home/Home.jsx'
-import Registration from  './Pages/Registration/Registration.jsx'
+import Registration from './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
-import UserSettings from './Pages/UserSettings/Settings.jsx'
-
 
 import './stylesGlobal/App.scss'
+import Artists from './Pages/Artists/Artists.jsx'
+
 
 export default function App() {
-  
-  const [userEmail, setUserEmail] = useState(false)
-  const [userPassword, setUserPassword] = useState(false)
-  const [userName, setUserName] = useState(false)
+
+  const [userEmail, setUserEmail] = useState('')
+  const [userPassword, setUserPassword] = useState('')
+  const [userName, setUserName] = useState('')
   const [userNews, setUserNews] = useState(false)
   const [userShare, setUserShare] = useState(false)
 
-  const userObj ={
+  const userObj = {
     userEmail, setUserEmail,
     userPassword, setUserPassword,
     userName, setUserName,
@@ -26,13 +25,19 @@ export default function App() {
     userShare, setUserShare
   }
 
+  // const { data } = useGetTrackQuery()
+  // console.log(data);
+
   return (
     <Router>
-        <Routes>
-          <Route path='/' element={<Registration userObj={userObj}/>}/>
-          <Route path='/login' element={<LogIn/>}/>
-          <Route path='/search' element={<Search/>}/>
-        </Routes>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/registration' element={<Registration userObj={userObj}/>} />
+        <Route path='/login' element={<LogIn />} />
+        <Route path='/player' element={<Player/>}/>
+        <Route path='/search' element={<Search />} />
+        <Route path='/artists' element={<Artists />} />
+      </Routes>
     </Router>
   )
 }

@@ -4,6 +4,8 @@
     display: grid;
     place-items: center;
 
+    height: auto;
+
     h1 {
         color: white;
     }
@@ -17,6 +19,7 @@
         align-items: center;
 
         .title_box {
+
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -80,6 +83,15 @@
             }
         }
     }
+}
+
+.registration_content{
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(to top, rgba(18, 18, 18, 1), transparent),url(../../img/bg_reg_1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 @keyframes rotation {

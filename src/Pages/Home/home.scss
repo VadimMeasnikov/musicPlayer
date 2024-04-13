@@ -1,0 +1,49 @@
+.wrapper {
+  .homePage {
+    .homePage-titleBox {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .homePage-title {
+        color: rgb(255, 255, 255);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 28px;
+        letter-spacing: 0%;
+        text-align: left;
+      }
+      .homePage-setting {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .featuredTracks {
+      display: flex;
+      flex-direction: column;
+      margin: 20px 0;
+      .featuredTracks-title {
+        color: rgb(255, 255, 255);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 28px;
+        letter-spacing: 0%;
+        text-align: left;
+      }
+      .featuredTracks-results {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 10px 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
+}
