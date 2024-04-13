@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body{
+    background: #101010;   
+}
+.background {
+  background: linear-gradient(
+    180deg,
+    #00667b 0%,
+    #002f38 49.48%,
+    #101010 89.06%
+  );
+  height: 375px;
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      margin: 20px 10px 0 10px;
+      cursor: pointer;
+    }
+  }
+  .profile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    button {
+      margin-top: 30px;
+      background-color: #3e3f3f;
+      border: 0;
+      width: 105px;
+      height: 31px;
+      border-radius: 45px;
+      color: white;
+    }
+  }
+  .profile-statistics {
+    display: flex;
+    color: white;
+    justify-content: space-evenly;
+    margin-top: 40px;
+    &-playlist {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .number {
+        font-family: Avenir Next;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16.39px;
+        text-align: left;
+      }
+      .text {
+        font-family: Avenir Next;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 13.66px;
+        letter-spacing: 0.08em;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
+    &-followers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .number {
+        font-family: Avenir Next;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16.39px;
+        text-align: left;
+      }
+      .text {
+        font-family: Avenir Next;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 13.66px;
+        letter-spacing: 0.08em;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
+    &-following {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .number {
+        font-family: Avenir Next;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16.39px;
+        text-align: left;
+      }
+      .text {
+        font-family: Avenir Next;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 13.66px;
+        letter-spacing: 0.08em;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+.main {
+  background: #101010;
+  height: 100%;
+  h1 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 25.95px;
+    letter-spacing: 0.01em;
+    color: white;
+    margin-left: 7px;
+  }
+  .playlists{
+    height: 195px;
+  }
+  .all-playlists {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    margin: 17px 10px 180px 10px;
+    p {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 20.49px;
+      text-align: center;
+    }
+    img{
+        cursor: pointer;
+    }
+  }
+}

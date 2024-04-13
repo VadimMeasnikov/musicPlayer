@@ -5,6 +5,8 @@ import Home from './Pages/Home/Home.jsx'
 import Registration from  './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
+import UserSettings from './Pages/UserSettings/Settings.jsx'
+
 
 import './stylesGlobal/App.scss'
 
@@ -30,6 +32,7 @@ export default function App() {
           <Route path='/' element={<Registration userObj={userObj}/>}/>
           <Route path='/login' element={<LogIn/>}/>
           <Route path='/search' element={<Search/>}/>
+          <Route path='/userSettings' element={<UserSettings/>}/>
         </Routes>
     </Router>
   )

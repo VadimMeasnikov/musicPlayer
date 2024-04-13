@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.header {
+  display: flex;
+  background: #191919;
+  height: 51px;
+  .header-components {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    color: white;
+    width: 100%;
+    h1 {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 21.86px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    img {
+      position: absolute;
+      margin-left: 30px;
+      cursor: pointer;
+    }
+  }
+}
+main {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 30px 0 25px;
+  flex-direction: column;
+  .Settings-profile {
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    &-information {
+      display: flex;
+      align-items: center;
+      .Settings-profile-text {
+        margin-left: 10px;
+        .name {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 24.59px;
+        }
+        .view {
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 17.76px;
+          text-align: center;
+          color: #b3b3b3;
+        }
+        
+      }
+    }
+    img {
+      cursor: pointer;
+    }
+  }
+  .settings {
+    margin: 70px 0 130px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    &-user {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      align-items: center;
+      p {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 21.86px;
+        text-align: left;
+      }
+      img {
+        cursor: pointer;
+      }
+      
+    }
+  }
+}
