@@ -44,3 +44,42 @@
 
 
 }
+
+.searchInput {
+	position: relative;
+	min-width: 100%;
+	& input {
+		height: 46px;
+		display: block;
+		border: none;
+		border-radius: 7px;
+		min-width: 286px;
+		width: 100%;
+		box-sizing: border-box;
+		padding-left: 50px;
+		outline: none;
+		color: rgb(19, 19, 19);
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 22px;
+		letter-spacing: 0%;
+		&::placeholder {
+			color: rgb(19, 19, 19);
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 22px;
+			letter-spacing: 0%;
+		}
+	}
+	& span {
+		position: absolute;
+		top: 50%;
+		left: 15px;
+		transform: translateY(-50%);
+		background-image: url("../../img/search-icon.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		height: 20px;
+		width: 20px;
+	}
+}

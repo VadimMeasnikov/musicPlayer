@@ -5,7 +5,7 @@
 }
 body,
 html {
-  font-family: "Fira Sans", sans-serif;
+  font-family: "Avenir";
 }
 .wrapper {
   padding: 25px 17px;
@@ -16,6 +16,12 @@ html {
     display: flex;
     width: 100%;
     flex-direction: column;
+    .searchCategories{
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      margin: 10px 0;
+    }
     .search-page__box {
       display: flex;
       flex-direction: column;
@@ -71,7 +77,6 @@ html {
       }
     }
     .search-page__results {
-      padding: 25px 0;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -105,6 +110,8 @@ html {
 }
 .noResults{
   color: white;
+  height: 70vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;  

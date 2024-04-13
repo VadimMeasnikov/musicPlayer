@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Tracks",
+        "path": "tracks/"
+    },
+    {
+        "name": "Albums",
+        "path": "albums/"
+    },
+    {
+        "name": "Artists",
+        "path": "artists/"
+    },
+    {
+        "name": "Users",
+        "path": "users/"
+    }
+]

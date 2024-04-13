@@ -1,0 +1,27 @@
+.library-buttons{
+    display: flex;
+    gap: 20px;
+    button{
+        width: 83px;
+    height: 33px;
+    top: 14px;
+    left: 4px;
+    border-radius: 45px;
+    background: #121212;
+    border: 0.6px solid #7F7F7F;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16.39px;
+    text-align: left;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    }
+    .podcasts{
+        width: 146px;
+        height: 33px;
+    }
+
+}
