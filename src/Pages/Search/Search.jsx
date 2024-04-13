@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "../../Components/Navigation/Navigation";
 import SearchCard from "../../Components/SearchCard/SearchCard";
+import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import "./search.scss";
+import tabsData from "../../tabs.json";
 
 export default function Search() {
+  const [tabs, setTabs] = useState(tabsData);
   const [searchTitle, isSearchTitle] = useState(true);
+  const [activeTab, setActiveTab] = useState(tabs[0].path);
   const [searchValue, setSearchValue] = useState("");
-  const { data, error } = useSearchQuery(searchValue);
   const [searchTracks, setSearchTracks] = useState([]);
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
 
@@ -19,6 +22,9 @@ export default function Search() {
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
 
+  
+  const { data, error } = useSearchQuery(activeTab, debouncedSearchValue);
+
   useEffect(() => {
     if (data && data.results) {
       setSearchTracks(data.results);
@@ -27,6 +33,10 @@ export default function Search() {
       setSearchTracks([]);
     }
   }, [data]);
+
+  const handleTabClick = (path) => {
+    setActiveTab(path);
+  };
 
   return (
     <div className="wrapper">
@@ -49,11 +59,20 @@ export default function Search() {
             />
           </div>
         </div>
+        <div className="searchCategories">
+          {tabs.map((item, index) => (
+            <Tab info={item} key={index} onClick={handleTabClick} />
+          ))}
+        </div>
         <div className="search-page__results">
           {error && <p>Error: {error.message}</p>}
           {searchTracks && searchTracks.length > 0 ? (
             searchTracks.map((item, index) => (
-              <SearchCard key={index} info={item} />
+              <SearchCard
+                key={index}
+                info={item}
+                onClick={() => console.log(item.path)}
+              />
             ))
           ) : (
             <p className="noResults">No results found</p>

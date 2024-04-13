@@ -1,0 +1,11 @@
+.tab {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 50px;
+  transition: 0.3s ease-in-out;
+  color: white;
+  background: rgba(18, 18, 18, 1);
+}
