@@ -7,7 +7,7 @@ export const searchApi = createApi({
     }),
     endpoints: (builder) => ({
         search: builder.query({
-            query: (path, name) => {
+            query: ({path, name}) => {
                 console.log("Search query params:", path, name);
                 return {
                     url: path,

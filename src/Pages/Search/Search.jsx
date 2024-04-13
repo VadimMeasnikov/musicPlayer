@@ -30,7 +30,7 @@ export default function Search() {
   }, [searchValue]);
 
   //мидлвейр поиска
-  const { data, error } = useSearchQuery(activeTab, debouncedSearchValue);
+  const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
   
 
   useEffect(() => {
