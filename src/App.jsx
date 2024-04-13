@@ -32,7 +32,6 @@ export default function App() {
           <Route path='/' element={<Registration userObj={userObj}/>}/>
           <Route path='/login' element={<LogIn/>}/>
           <Route path='/search' element={<Search/>}/>
-          <Route path='/userSettings' element={<UserSettings/>}/>
         </Routes>
     </Router>
   )
