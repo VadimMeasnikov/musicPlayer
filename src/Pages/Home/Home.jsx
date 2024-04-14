@@ -10,9 +10,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
 import {  useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useGetData } from "../../services";
 // import {  useGetData } from '../../services';
 
 import './home.scss';
+
 
 export default function Home() {
   
@@ -70,7 +72,8 @@ export default function Home() {
     })
   }, [])
 
-  
+  const {dataUser} = useGetData()
+  console.log(dataUser);
 
 
   return (

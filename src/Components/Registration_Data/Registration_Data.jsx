@@ -61,7 +61,7 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-        navigate('/artists')
+        navigate('/')
         return user
       })
       .then(() => {
@@ -70,24 +70,25 @@ export default function Registration_Data({ regState, userObj }) {
         })
       })
       .then(() => {
-
-        const user = auth.currentUser;
-        const useData = useAddData()
-
-        function addData() {
-          const userObj = {
-            email: userEmail,
-            id: user.uid,
-            username: userName,
-            news: userNews,
-            share: userShare,
-          }
-          useData.mutate(userObj)
-        }
+        addData()
       })
       .catch((e) => {
         setIsError(true)
       })
+  }
+
+  function addData() {
+    const user = auth.currentUser;
+    const id = user.uid
+    const userObj = {
+      email: userEmail,
+      id: user.uid,
+      username: userName,
+      news: userNews,
+      share: userShare,
+    }
+    useAddData().mutate(userObj)
+    console.log(userObj);
   }
 
 
@@ -113,7 +114,7 @@ export default function Registration_Data({ regState, userObj }) {
             <label className='user_data_info'>Use atleast 8 characters.</label>
           </div>
           <div className="user_data__box">
-          <label className={isError ? 'error_label' : 'user_data_label'}>Please, enter your username</label>
+            <label className={isError ? 'error_label' : 'user_data_label'}>Please, enter your username</label>
             <input className={isError ? 'error_input' : 'user_data_input'} value={userName} onChange={(e) => { setUserName(e.target.value); setIsError(false) }} type="text" />
             <label className='user_data_info'>This appears on your spotify profile</label>
           </div>
@@ -144,6 +145,7 @@ export default function Registration_Data({ regState, userObj }) {
     </div>
   )
 }
+
 
 
 

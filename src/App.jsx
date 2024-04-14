@@ -4,16 +4,13 @@ import Home from './Pages/Home/Home.jsx'
 import Registration from './Pages/Registration/Registration.jsx'
 import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
-<<<<<<< HEAD
 import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
-// import { useGetData } from './services.js'
-import { getData } from './services.js'
+import { useGetData } from './services.js'
 
-=======
+
 // import Player from './Pages/Player/Player.jsx'
->>>>>>> 7ca4cfc8ab0422602f2a37cec06bf858bb07f365
 import './stylesGlobal/App.scss'
 
 
@@ -26,8 +23,7 @@ export default function App() {
   const [userNews, setUserNews] = useState(false)
   const [userShare, setUserShare] = useState(false)
 
-  // const {data} = useGetData()
-  // console.log(data);
+
 
   const userObj = {
     userEmail, setUserEmail,
@@ -37,10 +33,8 @@ export default function App() {
     userShare, setUserShare
   }
 
-  // const { data } = useGetTrackQuery()
-  // console.log(data);
 
- getData()
+
 
   return (
     <Router>

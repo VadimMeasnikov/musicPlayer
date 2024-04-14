@@ -11,7 +11,8 @@ export function useAddData() {
     const queryClient = useQueryClient()
 
     return useMutation(async (newData) => {
-        await db.ref('users').push(newData)
+        await db.ref('users').set(newData)
+        console.log('succesfull');
     },
         {
             onSuccess: () => {
@@ -37,31 +38,29 @@ export function useEditData() {
 }
 
 
-export async function getData(){
-    console.log(db.onValue());
-    console.log(1);
-  try{
-    const users = await db.onValue((res) => {
-      console.log(res);
-    });
-    console.log(users);
-  }
-  catch (e){
-   console.error(e)
-  }
+// export async function getData(){
+//     console.log(db.onValue());
+//     console.log(1);
+//   try{
+//     const users = await db.onValue((res) => {
+//       console.log(res);
+//     });
+//     console.log(users);
+//   }
+//   catch (e){
+//    console.error(e)
+//   }
 
- }
+//  }
 
 
 
-// export function useGetData() {
-//      console.log(db.ref('users').once('value'));
-    
-//     return useQuery('users', async () => {
-//         const snapshot = await db.ref('users').once('value')
-//         console.log(snapshot);
-//         return snapshot.val()
-  
-//     })
-// }
+export function useGetData() {
+    console.log(db);
+    return useQuery('users', async () => {
+        const snapshot = await db.ref('users').once('value')
+        console.log(snapshot.val());
+        return snapshot.val()
+    })
+}
 
