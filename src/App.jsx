@@ -48,7 +48,7 @@ export default function App() {
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
         <Route path='/library' element={<YourLibrary />} />
-        <Route path='/profile' element={<Profile/ >} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
       {/* <button onClick={getData}>Click</button> */}
     </Router>
