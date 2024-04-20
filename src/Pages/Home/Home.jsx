@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
-// Импорт селектора бля использования слайса
 import { useSelector } from "react-redux";
-// Импорт мидвейра для отображения треков
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
-// Импорт компонентов
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../reduxToolkit/slices/userSlice';
-import {  useNavigate } from 'react-router-dom'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from "react-redux";
+import { setUser } from "../../reduxToolkit/slices/userSlice";
+import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useGetData } from "../../services";
+import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 // import {  useGetData } from '../../services';
 
-import './home.scss';
-
+import "./home.scss";
 
 export default function Home() {
-  
   const { data } = useGetTrackQuery();
   // Стейт для треков
   const [featured, setFeatured] = useState([]);
@@ -47,36 +43,61 @@ export default function Home() {
     }
   }, []);
 
-  const auth = getAuth()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const auth = getAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //Создание плейлистов.
+  //Забираю артистов
+  const selectedArtists = useSelector((state) => state.selectedArtists);
+  console.log(selectedArtists);
+  useEffect(() => {
+    createPlaylist();
+  }, [selectedArtists]);
+  async function createPlaylist() {
+    for (const artist of Object.values(selectedArtists)) {
+      const playlistName = `${artist.name} Mix`;
+      try {
+        const responce = await fetch(
+          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&name=${artist.name}`
+        );
+        const playlistTracks = await responce.json();
+        dispatch(addPlaylist({ name: playlistName, tracks: playlistTracks }));
+      } catch (error) {
+        console.error(
+          `Error fetching playlist data for ${artist.name}:`,
+          error
+        );
+      }
+    }
+  }
+  const playlistInfo = useSelector((state) => state.playlists);
+  console.log(playlistInfo);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        
-        const {dataUser} = useGetData()
+        const { dataUser } = useGetData();
         console.log(dataUser);
 
-        dispatch(setUser({
-          email: user.email,
-          id: user.uid,
-          password: null,
-          username: user.displayName,
-          news: null,
-          share: null
-        }))
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            password: null,
+            username: user.displayName,
+            news: null,
+            share: null,
+          })
+        );
 
         // const {userObjData} = useGetData()
         // console.log(userObjData);
-
       } else {
-        navigate('/registration')
+        navigate("/registration");
       }
-    })
-  }, [])
-
-
+    });
+  }, []);
 
   return (
     <div className="wrapper">
@@ -187,7 +208,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Navigation/>
+      <Navigation />
     </div>
   );
 }
