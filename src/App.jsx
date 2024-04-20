@@ -8,6 +8,7 @@ import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
 import YourLibrary from './Pages/YourLibrary/YourLibrary.jsx'
 import { useGetData } from './services.js'
+import Profile from './Pages/Profile/Profile.jsx'
 
 
 // import Player from './Pages/Player/Player.jsx'
@@ -47,6 +48,7 @@ export default function App() {
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
         <Route path='/library' element={<YourLibrary />} />
+        <Route path='/profile' element={<Profile/ >} />
       </Routes>
       {/* <button onClick={getData}>Click</button> */}
     </Router>

@@ -1,0 +1,25 @@
+.profile_card_container {
+	.card_image {
+		width: 67px;
+		height: 67px;
+	}
+	.card_title {
+		font-family: Avenir Next;
+		font-size: 15px;
+		font-weight: 600;
+		color: white;
+	}
+	.card_text {
+		color: #b3b3b3;
+		font-size: 13px;
+		font-weight: 500;
+		font-family: Avenir Next;
+	}
+	.profile_card {
+		width: 200px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 23px;
+	}
+}
