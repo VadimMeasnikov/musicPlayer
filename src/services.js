@@ -38,8 +38,8 @@ export function useAddData() {
 export function useEditData() {
     const queryClient = useQueryClient()
 
-    return useMutation(async ({ id, updateData }) => {
-        await db.ref(`users/${id}`).set(updateData)
+    return useMutation(async ({ id, field, updateData }) => {
+        await db.ref(`users/${id}/${field}`).set(updateData)
     },
         {
             onSuccess: () => {
@@ -52,7 +52,9 @@ export function useEditData() {
 
 export function useGetData() {
     return useQuery('users', async () => {
-        const snapshot = await db.ref('users').once('value');
-        return snapshot.val();
-    });
+        const snapshot = await db.ref('users').once('value')
+        console.log(snapshot.val());
+        return snapshot.val()
+    })
 }
+

@@ -43,19 +43,16 @@ export default function Registration_Data({ regState, userObj }) {
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
         setUserState(user)
-
+        console.log(user.user.uid);
         dispatch(setUser({
           email: userEmail,
-          id: user.uid,
+          id: user.user.uid,
           username: userName,
           news: userNews,
           share: userShare,
+          search: [],
+          artists: []
         }))
-
-
-
-        // console.log(userObj);
-        // console.log(user);
 
         setUserEmail('')
         setUserPassword('')
@@ -64,14 +61,7 @@ export default function Registration_Data({ regState, userObj }) {
         setUserNews(false)
 
         navigate('/artists')
-
-
         return user
-      })
-      .then(() => {
-        updateProfile(auth.currentUser, {
-          displayName: userName
-        })
       })
       .then(() => {
         addDataUser()
@@ -82,21 +72,23 @@ export default function Registration_Data({ regState, userObj }) {
   }
 
   function addDataUser() {
+    console.log('start add data');
 
     const user = auth.currentUser;
-    const id = user.uid
     const userObj = {
       email: userEmail,
       id: user.uid,
       username: userName,
       news: userNews,
       share: userShare,
-      search: [],
-      artists: []
+      search: false,
+      artists: false
     }
     addData.mutate(userObj)
     console.log(userObj);
+    console.log('end add data');
   }
+
 
 
   return (

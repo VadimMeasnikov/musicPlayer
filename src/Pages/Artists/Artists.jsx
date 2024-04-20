@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'; 
-import Artist from '../../Components/Artist/Artist'
-import './artists.scss'
-import backButtonSVG from '../../img/Back.svg'
 import { useGetArtistsQuery } from '../../reduxToolkit/queryApi/getArtists'
 import { useDispatch, useSelector } from 'react-redux';
+import { useEditData } from '../../services';
 import { selectArtist } from '../../reduxToolkit/slices/selectedArtistsSlice';
+
+import Artist from '../../Components/Artist/Artist'
+import backButtonSVG from '../../img/Back.svg'
+
+import './artists.scss'
 
 export default function Artists() {
 	const [artists, setArtists] = useState([])
+	const [selectedArr, setSelectedArr] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
 	const { data } = useGetArtistsQuery()
 	const dispatch = useDispatch();
 	const navigate = useNavigate(); 
+	const user = useSelector(state => state.user)
+	const id = user.id
+	const field = 'artists'
+	const editData = useEditData()
+	console.log(user);
 
 	useEffect(() => {
 		if (data && data.results) {
@@ -23,14 +32,21 @@ export default function Artists() {
 	const handleSearch = event => {
 		setSearchQuery(event.target.value)
 	}
-
 	const selectedArtists = useSelector(state => state.selectedArtists.selectedArtists); 
+	console.log(selectedArtists);
 
-	const handleArtistSelect = (artist) => {
+
+	 function handleArtistSelect(artist){
 		dispatch(selectArtist(artist));
+		setSelectedArr([...selectedArr, artist])
 		console.log('Selected artist:', artist); 
-		if (selectedArtists.length + 1 >= 4) { 
-			navigate('/'); 
+
+		if (selectedArtists.length - 1 === 3) { 
+			 console.log('before adding' + selectedArtists);
+			 console.log('user id is' + id);
+			 editData.mutate({id, field, selectedArtists })
+			 console.log('added artists');
+			 navigate('/')
 		}
 	}
 
