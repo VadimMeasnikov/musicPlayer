@@ -8,6 +8,8 @@ const userSlice = createSlice({
         username: null,
         news: null,
         share: null,
+        search: [],
+        artists: []
     },
     reducers: {
         setUser(state, action){
@@ -16,6 +18,8 @@ const userSlice = createSlice({
             state.username = action.payload.username;
             state.news = action.payload.news;
             state.share = action.payload.share;
+            state.search = action.payload.search;
+            state.artists = action.payload.artists;
         },
         removeUser(state){
             state.email = null
@@ -23,6 +27,8 @@ const userSlice = createSlice({
             state.username = null
             state.news = null
             state.share = null
+            state.search =  null
+            state.artists = null
         }
     }
 })

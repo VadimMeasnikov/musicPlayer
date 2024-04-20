@@ -48,7 +48,7 @@ export default function Navigation() {
           <span>Search</span>
         </div>
       </Link>
-      <Link>
+      <Link to='/library'>
         <div className="nav__item">
           <svg
             width="22.000000"

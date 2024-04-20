@@ -54,6 +54,10 @@ export default function Home() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        
+        const {dataUser} = useGetData()
+        console.log(dataUser);
+
         dispatch(setUser({
           email: user.email,
           id: user.uid,
@@ -72,8 +76,6 @@ export default function Home() {
     })
   }, [])
 
-  const {dataUser} = useGetData()
-  console.log(dataUser);
 
 
   return (

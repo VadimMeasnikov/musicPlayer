@@ -27,6 +27,8 @@ export default function Registration_Data({ regState, userObj }) {
   const navigate = useNavigate()
   const auth = getAuth()
 
+  const addData = useAddData()
+
 
 
   async function createUser(event) {
@@ -36,7 +38,7 @@ export default function Registration_Data({ regState, userObj }) {
       return
     }
 
-    console.log('create user');
+    // console.log('create user');
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
@@ -61,7 +63,9 @@ export default function Registration_Data({ regState, userObj }) {
         setUserShare(false)
         setUserNews(false)
 
-        navigate('/')
+        navigate('/artists')
+
+
         return user
       })
       .then(() => {
@@ -70,14 +74,15 @@ export default function Registration_Data({ regState, userObj }) {
         })
       })
       .then(() => {
-        addData()
+        addDataUser()
       })
       .catch((e) => {
         setIsError(true)
       })
   }
 
-  function addData() {
+  function addDataUser() {
+
     const user = auth.currentUser;
     const id = user.uid
     const userObj = {
@@ -86,8 +91,10 @@ export default function Registration_Data({ regState, userObj }) {
       username: userName,
       news: userNews,
       share: userShare,
+      search: [],
+      artists: []
     }
-    useAddData().mutate(userObj)
+    addData.mutate(userObj)
     console.log(userObj);
   }
 

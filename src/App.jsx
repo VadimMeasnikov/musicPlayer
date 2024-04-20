@@ -6,12 +6,13 @@ import LogIn from './Pages/LogIn/LogIn.jsx'
 import Search from './Pages/Search/Search.jsx'
 import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
-import Profile from './Pages/Profile/Profile.jsx'
+import YourLibrary from './Pages/YourLibrary/YourLibrary.jsx'
 import { useGetData } from './services.js'
 
 
 // import Player from './Pages/Player/Player.jsx'
 import './stylesGlobal/App.scss'
+
 
 
 
@@ -45,7 +46,7 @@ export default function App() {
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/library' element={<YourLibrary />} />
       </Routes>
       {/* <button onClick={getData}>Click</button> */}
     </Router>

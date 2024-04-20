@@ -1,11 +1,13 @@
 import React from 'react'
-import './yourLibrary.scss'
+
 import LibraryButton from '../../Components/LibraryButton/LibraryButton.jsx'
 import Navigation from "../../Components/Navigation/Navigation"
 import imgSort from "../../img/imgSort2.png"
 import imgSort2 from "../../img/imgSort.png"
 import imgSortCube from "../../img/imgSort-cube.png"
 import userImg from "../../img/userImg.png"
+
+import './yourLibrary.scss'
 
 
 export default function YourLibrary() {
@@ -29,6 +31,7 @@ export default function YourLibrary() {
         </div>
         <img src={imgSortCube} alt="" />
       </div>
+      
       <Navigation />
     </div>
     </>

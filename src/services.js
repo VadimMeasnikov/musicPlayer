@@ -7,21 +7,33 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 const app = firebase.initializeApp(config)
 const db = app.database()
 
+// export function useAddData() {
+//     const queryClient = useQueryClient()
+
+//     return useMutation(async (newData) => {
+//         await db.ref('users').set(newData)
+//         console.log('succesfull');
+//     },
+//         {
+//             onSuccess: () => {
+//                 queryClient.invalidateQueries('users')
+//             }
+//         }
+//     )
+// }
+
 export function useAddData() {
-    const queryClient = useQueryClient()
-
+    const queryClient = useQueryClient();
     return useMutation(async (newData) => {
-        await db.ref('users').set(newData)
-        console.log('succesfull');
-    },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('users')
-            }
-        }
-    )
+        console.log(newData);
+        const ref = db.ref('users').push();
+        await ref.set(newData);
+    }, {
+        onSuccess: (newKey) => {
+            queryClient.invalidateQueries('users');
+        },
+    });
 }
-
 
 export function useEditData() {
     const queryClient = useQueryClient()
@@ -38,29 +50,9 @@ export function useEditData() {
 }
 
 
-// export async function getData(){
-//     console.log(db.onValue());
-//     console.log(1);
-//   try{
-//     const users = await db.onValue((res) => {
-//       console.log(res);
-//     });
-//     console.log(users);
-//   }
-//   catch (e){
-//    console.error(e)
-//   }
-
-//  }
-
-
-
 export function useGetData() {
-    console.log(db);
     return useQuery('users', async () => {
-        const snapshot = await db.ref('users').once('value')
-        console.log(snapshot.val());
-        return snapshot.val()
-    })
+        const snapshot = await db.ref('users').once('value');
+        return snapshot.val();
+    });
 }
-
