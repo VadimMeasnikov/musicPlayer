@@ -9,9 +9,11 @@ const userArtistsSlice = createSlice({
         setArtists: (state, action) => {
             state.userAppArtists.push(action.payload); 
         },
-       
+        removeArtists: (state, action) => {
+            state.selectedArtists = state.userAppArtists.filter(artist => artist.id !== action.payload);
+        },
     },
 });
 
-export const { setArtists } = userArtistsSlice.actions; 
+export const { setArtists, removeArtists } = userArtistsSlice.actions; 
 export default userArtistsSlice.reducer; 
