@@ -1,15 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
 import defaultImg from '../../img/default.png'
-import { useDispatch } from 'react-redux';
-
-import { selectArtist } from '../../reduxToolkit/slices/selectedArtistsSlice'; 
+import chosenActor from '../../img/chosen.jpg'
 import './artist.scss'
 
 
 export default function Artist({ item, onSelect }) { 
     const [src, setSrc] = useState(item.image)
     const handleArtistClick = () => {
+        if(src !== chosenActor){
+            setSrc(chosenActor)
+        } else {
+            setSrc(item.image)
+        }
         onSelect(item);    
     };
 
