@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../reduxToolkit/slices/userSlice';
+import { setKey } from '../../reduxToolkit/slices/userKeySlice';
 import { useAddData } from '../../services';
 import arrow from '../../img/Chevron left.png'
 
 import './registration_data.scss'
+
 
 
 
@@ -51,7 +53,7 @@ export default function Registration_Data({ regState, userObj }) {
           news: userNews,
           share: userShare,
           search: [],
-          artists: []
+          // artists: [],
         }))
 
         setUserEmail('')
@@ -68,10 +70,10 @@ export default function Registration_Data({ regState, userObj }) {
       })
       .catch((e) => {
         setIsError(true)
+        console.error(e)
       })
   }
-
-  function addDataUser() {
+  async function addDataUser() {
     console.log('start add data');
 
     const user = auth.currentUser;
@@ -83,12 +85,14 @@ export default function Registration_Data({ regState, userObj }) {
       share: userShare,
       search: false,
       artists: false
-    }
-    addData.mutate(userObj)
-    console.log(userObj);
+    };
+
+    const userKey = await addData.mutateAsync(userObj);
+    dispatch(setKey({
+       key: userKey 
+    }))
     console.log('end add data');
   }
-
 
 
   return (

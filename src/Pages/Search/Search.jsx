@@ -24,7 +24,7 @@ export default function Search() {
     // логика обновления содержимого в инпуте
     const timeoutId = setTimeout(() => {
       setDebouncedSearchValue(searchValue);
-    }, 500);
+    }, 100);
 
     return () => clearTimeout(timeoutId);
   }, [searchValue]);

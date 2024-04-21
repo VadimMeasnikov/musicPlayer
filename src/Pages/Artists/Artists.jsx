@@ -1,56 +1,77 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { useGetArtistsQuery } from '../../reduxToolkit/queryApi/getArtists'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEditData } from '../../services';
-import { selectArtist } from '../../reduxToolkit/slices/selectedArtistsSlice';
+import { setArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 
 import Artist from '../../Components/Artist/Artist'
 import backButtonSVG from '../../img/Back.svg'
 
 import './artists.scss'
 
+
+
 export default function Artists() {
-	const [artists, setArtists] = useState([])
+
+	const [artistsServer, setArtistsServer] = useState([])
 	const [selectedArr, setSelectedArr] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
 	const { data } = useGetArtistsQuery()
 	const dispatch = useDispatch();
-	const navigate = useNavigate(); 
-	const user = useSelector(state => state.user)
-	const id = user.id
+	const navigate = useNavigate();
+	// const userStr = JSON.stringify(useSelector((state) => state.user))
+	// console.log(userStr);
+	// const user = JSON.parse(userStr)
+	const keyObj = useSelector((state) => state.userKey)
+	console.log('key is ' + keyObj.key);
+	const idKey = keyObj.key
 	const field = 'artists'
+	console.log(field);
+	console.log(idKey);
+
 	const editData = useEditData()
-	console.log(user);
+
+
+	const artistArr = JSON.stringify([
+		{ artist: 'artist_1' },
+		{ artist: 'artist_2' },
+		{ artist: 'artist_3' }
+	]);
+	// const artistArr = JSON.parse(artistArrStr)
+	// console.log(artistArr);
 
 	useEffect(() => {
 		if (data && data.results) {
-			setArtists(data.results)
+			setArtistsServer(data.results)
 		}
 	}, [data])
 
 	const handleSearch = event => {
 		setSearchQuery(event.target.value)
 	}
-	const selectedArtists = useSelector(state => state.selectedArtists.selectedArtists); 
-	console.log(selectedArtists);
+	const  userArtists = useSelector(state => state.userArtists);
+	console.log(userArtists.userAppArtists);
+	// console.log(selectedArtists);
 
 
-	 function handleArtistSelect(artist){
-		dispatch(selectArtist(artist));
+
+	function handleArtistSelect(artist) {
+		dispatch(setArtists(artist));
 		setSelectedArr([...selectedArr, artist])
-		console.log('Selected artist:', artist); 
+		console.log('Selected artist:', artist);
+		console.log( userArtists.userAppArtists.length);
+		if ( userArtists.userAppArtists.length >= 2) {
+			const idKey = keyObj.key
+			console.log(JSON.parse(artistArr));
+			editData.mutate({id: idKey, field, updateData: JSON.stringify(userArtists.userAppArtists)})
 
-		if (selectedArtists.length - 1 === 3) { 
-			 console.log('before adding' + selectedArtists);
-			 console.log('user id is' + id);
-			 editData.mutate({id, field, selectedArtists })
-			 console.log('added artists');
-			 navigate('/')
+			console.log('added artists');
+			navigate('/')
 		}
 	}
 
-	const filteredArtists = artists.filter(artist =>
+	const filteredArtists = artistsServer.filter(artist =>
 		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
 

@@ -6,14 +6,9 @@ import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
-import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
-import { useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
-// import {  useGetData } from '../../services';
 
 import "./home.scss";
 
@@ -28,10 +23,6 @@ export default function Home() {
   const [isPageLoading, setIsPageLoading] = useState(false)
 
   const { username } = useSelector((state) => state.user);
-
-
-  // const selected = useSelector(state => state.selectedArtists.selectedArtists)
-  // console.log(selected);
 
   // Проверка, существует ли массив с треками
   useEffect(() => {
@@ -58,32 +49,56 @@ export default function Home() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
+  const userFb = auth.currentUser
+  console.log(user);
+  // useEffect(() => {
+  //    if(userFb){
+  //     console.log(userFb);
+  //     dispatch(setUser({
+  //       email: userFb.email,
+  //       id: userFb.uid,
+  //       username: userFb.username,
+  //       artists: userFb.artists,
+  //       search: userFb.search,
+  //       news: userFb.news,
+  //       share: userFb.share
+  //     }
+  //     ))
+  //    }
+  // }, [])
 
   //Создание плейлистов.
   //Забираю артистов
-  const selectedArtists = useSelector((state) => state.selectedArtists);
-  console.log(selectedArtists);
+  const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
+  const playlistInfo = useSelector((state) => state.playlists);
   useEffect(() => {
-    createPlaylist();
+    if (selectedArtists.length > 0) {
+      console.log('test')
+      createPlaylists(selectedArtists);
+    }
   }, [selectedArtists]);
-  async function createPlaylist() {
-    for (const artist of Object.values(selectedArtists)) {
-      const playlistName = `${artist.name} Mix`;
-      try {
-        const responce = await fetch(
-          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&name=${artist.name}`
+  
+  async function createPlaylists(artists) {
+    console.log(artists);
+    try {
+      artists.map(async (artist) => {
+        console.log(artist)
+        const playlistName = `${artist.name} Mix`;
+        console.log(playlistName);
+        console.log(artist.name);
+        const response = await fetch(
+          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=0000-00-00_2012-01-01`
         );
-        const playlistTracks = await responce.json();
-        dispatch(addPlaylist({ name: playlistName, tracks: playlistTracks }));
-      } catch (error) {
-        console.error(
-          `Error fetching playlist data for ${artist.name}:`,
-          error
-        );
-      }
+        const playlistTracks = await response.json();
+        console.log(playlistTracks);
+        dispatch(addPlaylist({name: playlistName, tracks: playlistTracks}));
+      });
+    } catch (error) {
+      console.error("Error creating playlists:", error);
     }
   }
-  const playlistInfo = useSelector((state) => state.playlists);
+
+  console.log(selectedArtists);
   console.log(playlistInfo);
 
   useEffect(() => {
