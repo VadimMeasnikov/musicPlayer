@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-// Импорт селектора бля использования слайса
 import { useSelector } from "react-redux";
-// Импорт мидвейра для отображения треков
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
-// Импорт компонентов
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+import { useDispatch } from "react-redux";
+import { setUser } from "../../reduxToolkit/slices/userSlice";
+import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useGetData } from "../../services";
+import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 // import {  useGetData } from '../../services';
 
-import './home.scss';
-
+import "./home.scss";
 
 export default function Home() {
 
@@ -56,7 +58,34 @@ export default function Home() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
-  
+
+  //Создание плейлистов.
+  //Забираю артистов
+  const selectedArtists = useSelector((state) => state.selectedArtists);
+  console.log(selectedArtists);
+  useEffect(() => {
+    createPlaylist();
+  }, [selectedArtists]);
+  async function createPlaylist() {
+    for (const artist of Object.values(selectedArtists)) {
+      const playlistName = `${artist.name} Mix`;
+      try {
+        const responce = await fetch(
+          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&name=${artist.name}`
+        );
+        const playlistTracks = await responce.json();
+        dispatch(addPlaylist({ name: playlistName, tracks: playlistTracks }));
+      } catch (error) {
+        console.error(
+          `Error fetching playlist data for ${artist.name}:`,
+          error
+        );
+      }
+    }
+  }
+  const playlistInfo = useSelector((state) => state.playlists);
+  console.log(playlistInfo);
+
   useEffect(() => {
     if (!user.email){
       navigate('/registration')

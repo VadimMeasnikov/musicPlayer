@@ -8,19 +8,15 @@ import './artist.scss'
 
 
 export default function Artist({ item, onSelect }) { 
-
     const [src, setSrc] = useState(item.image)
-    const dispatch = useDispatch();
-
     const handleArtistClick = () => {
-        onSelect(item); 
-        dispatch(selectArtist(item)); 
+        onSelect(item);    
     };
 
     if (src === ""){
         setSrc(defaultImg)
     }
-
+    
     return (
         <div className='artist' onClick={handleArtistClick}>
             <div><button className='choose_actor__button' ><img className='artist_photo' src={src} alt="" /></button></div>
