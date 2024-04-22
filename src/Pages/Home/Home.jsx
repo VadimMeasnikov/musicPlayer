@@ -3,17 +3,11 @@ import { useSelector } from "react-redux";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
-<<<<<<< HEAD
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-=======
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { useGetData } from "../../services";
->>>>>>> 12c29d1e00d2fbf911da83f00a63f93782372be4
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 

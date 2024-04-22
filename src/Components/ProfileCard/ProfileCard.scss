@@ -1,25 +1,37 @@
 .profile_card_container {
-	.card_image {
-		width: 67px;
-		height: 67px;
-	}
-	.card_title {
-		font-family: Avenir Next;
-		font-size: 15px;
-		font-weight: 600;
-		color: white;
-	}
-	.card_text {
-		color: #b3b3b3;
-		font-size: 13px;
-		font-weight: 500;
-		font-family: Avenir Next;
-	}
+
 	.profile_card {
-		width: 200px;
+		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		padding-top: 23px;
+		p {
+			font-family: Arial, Helvetica, sans-serif;
+		}
 	}
+	.card_image {
+		width: 67px;
+		height: 67px;
+	}
+	.text_block{
+		width: calc(100% - 67px);
+		padding: 10px 0 10px 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+	}
+	.card_artist{
+		font-size: 15px;
+		font-weight: 600;
+		color: white;
+	}
+	.card_content{
+		color: #b3b3b3;
+		font-size: 13px;
+		padding-top: 10px;
+		font-weight: 500;
+		color: rgba(179, 179, 179, 1);
+	}
+
 }
