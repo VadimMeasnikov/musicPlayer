@@ -50,25 +50,7 @@ export default function Home() {
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
   const userFb = auth.currentUser
-  console.log(user);
-  // useEffect(() => {
-  //    if(userFb){
-  //     console.log(userFb);
-  //     dispatch(setUser({
-  //       email: userFb.email,
-  //       id: userFb.uid,
-  //       username: userFb.username,
-  //       artists: userFb.artists,
-  //       search: userFb.search,
-  //       news: userFb.news,
-  //       share: userFb.share
-  //     }
-  //     ))
-  //    }
-  // }, [])
 
-  //Создание плейлистов.
-  //Забираю артистов
   const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
   const playlistInfo = useSelector((state) => state.playlists);
   useEffect(() => {
@@ -98,8 +80,8 @@ export default function Home() {
     }
   }
 
-  console.log(selectedArtists);
-  console.log(playlistInfo);
+  // console.log(selectedArtists);
+  // console.log(playlistInfo);
 
   useEffect(() => {
     if (!user.email){
