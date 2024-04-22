@@ -59,40 +59,28 @@ export default function Artists() {
 
 
 
-
 	function handleArtistSelect(artist) {
+    const isArtistSelected = selectedArr.some(
+        selectedArtist => selectedArtist.id === artist.id
+    );
 
+    if (isArtistSelected) {
+        const updatedSelectedArr = selectedArr.filter(
+            selectedArtist => selectedArtist.id !== artist.id
+        );
+        setSelectedArr(updatedSelectedArr);
+        dispatch(removeArtists(artist.id));
+    } else {
+        setSelectedArr([...selectedArr, artist]);
+        dispatch(setArtists(artist));
+    }
 
-		const isArtistSelected = selectedArr.some(
-			selectedArtist => selectedArtist.id === artist.id
-		)
-
-		if (isArtistSelected) {
-			const updatedSelectedArr = selectedArtists.filter(
-				selectedArtist => selectedArtist.id !== artist.id
-			)
-			setSelectedArr(updatedSelectedArr)
-
-			dispatch(removeArtists(artist.id))
-		}
-
-
-		dispatch(setArtists(artist));
-		setSelectedArr([...selectedArr, artist])
-		console.log('Selected artist:', artist);
-		console.log(userArtists.userAppArtists.length);
-
-		if (userArtists.userAppArtists.length >= 10000000000) {
-			const idKey = keyObj.key
-			console.log(JSON.parse(artistArr));
-			editData.mutate({ id: idKey, field, updateData: JSON.stringify(userArtists.userAppArtists) })
-
-			console.log('added artists');
-			navigate('/')
-		}
-
-		setSelectedArr([...selectedArr, artist])
-	}
+    if (selectedArr.length >= 2) {
+        const idKey = keyObj.key;
+        editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArr) });
+        navigate('/');
+    }
+}
 
 	useEffect(() => {
 		console.log(selectedArr);

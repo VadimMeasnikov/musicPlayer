@@ -10,7 +10,7 @@ const userArtistsSlice = createSlice({
             state.userAppArtists.push(action.payload); 
         },
         removeArtists: (state, action) => {
-            state.selectedArtists = state.userAppArtists.filter(artist => artist.id !== action.payload);
+            state.userAppArtists = state.userAppArtists.filter(artist => artist.id !== action.payload);
         },
     },
 });
