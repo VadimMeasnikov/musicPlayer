@@ -1,104 +1,140 @@
 .reg {
-    width: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
 
-    display: grid;
-    place-items: center;
+  height: auto;
 
-    height: auto;
+  h1 {
+    color: white;
+  }
 
-    h1 {
+  .reg_container {
+    width: 95%;
+    height: 100vh;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    row-gap: 50px;
+
+    .title_box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .reg_page__title {
+        font-family: Roboto;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 38px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+
+      .mini_logo {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .reg_funct_box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      row-gap: 10px;
+
+      .sign_up__btn {
+        width: 100%;
+        outline: none;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        border-radius: 500px;
+        font-family: Roboto;
+        transition-property: background-color, border-color, color, box-shadow,
+          filter;
+        transition-duration: 0.3s;
+        border: 1px solid transparent;
+        white-space: normal;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: normal;
+        padding: 17px 0;
+        color: #fff;
+        background-color: #1ed760;
+        height: 48px;
+        &:hover {
+          background-color: #21e065;
+        }
+      }
+      .regGoogleBtn, .regFacebookBtn {
+        position: relative;
+        width: 100%;
+        outline: none;
+        font-family: Roboto;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        border-radius: 500px;
+        transition-property: background-color, border-color, color, box-shadow,
+          filter;
+        transition-duration: 0.3s;
+        border: 1px solid transparent;
+        letter-spacing: normal;
+        white-space: normal;
+        font-weight: bold;
+        text-align: center;
+        padding: 17px 0;
         color: white;
-    }
-
-    .reg_container {
-        width: 85%;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-
-        .title_box {
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-
-            .reg_page__title {
-                font-family: Roboto;
-                font-size: 28px;
-                font-weight: 700;
-                line-height: 38px;
-                letter-spacing: 0em;
-                text-align: center;
-            }
-
-            .mini_logo {
-                width: 53px;
-                height: 53px;
-
-                animation: rotation 7s infinite linear;
-            }
+        box-shadow: inset 0 0 0 2px #616467;
+        background-color: transparent;
+        height: 48px;
+        &:hover {
+          color: #fff;
+          background-color: #616467;
         }
-
-        .reg_funct_box {
-
-            padding: 25px;
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-
-            .sign_up__btn {
-                width: 340px;
-                height: 50px;
-
-                font-family: Roboto;
-                font-size: 18px;
-                font-weight: 700;
-                line-height: 38px;
-                letter-spacing: 0em;
-                text-align: center;
-
-                border: none;
-                outline: none;
-
-                border-radius: 30px;
-
-                background: rgba(30, 215, 96, 1);
-            }
-
-            .log_in__link {
-                text-decoration: none;
-
-                font-family: Roboto;
-                font-size: 18px;
-                font-weight: 700;
-                line-height: 38px;
-                letter-spacing: 0em;
-                color: white;
-            }
+        & img{
+            position: absolute;
+            left: 15px;
+            top: 11px;
+            height: 25px;
+            width: 25px;
         }
+      }
+      .log_in__link {
+        text-decoration: none;
+
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 38px;
+        letter-spacing: 0em;
+        color: white;
+      }
     }
+  }
 }
 
-.registration_content{
-    width: 100%;
-    height: 500px;
-    background: linear-gradient(to top, rgba(18, 18, 18, 1), transparent),url(../../img/bg_reg_1.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.registration_content {
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(to top, rgba(18, 18, 18, 1), transparent),
+    url(../../img/bg_reg_1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @keyframes rotation {
-    from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
