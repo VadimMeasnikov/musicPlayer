@@ -6,8 +6,9 @@ import { useEditData } from '../../services';
 import { setArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import { removeArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import Artist from '../../Components/Artist/Artist'
-import backButtonSVG from '../../img/Back.svg'
 import { FcCheckmark } from "react-icons/fc";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+
 
 import './artists.scss'
 
@@ -109,12 +110,10 @@ export default function Artists() {
 
 
 	return (
-		<div>
+		<div className='artists'>
+			<GoBackButton/>
 			<div className='artists_container'>
 				<div className='top_block'>
-					<button className='back_btn'>
-						<img src={backButtonSVG} alt='Back' />
-					</button>
 					<div className='text_block'>
 						<p className='choose_artists'>Choose 3 or more artists you like.</p>
 					</div>

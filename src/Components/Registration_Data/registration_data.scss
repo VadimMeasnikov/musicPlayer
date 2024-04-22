@@ -199,3 +199,44 @@
     }
   }
 }
+.popUp {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	position: fixed;
+	width: 60%;
+	top: 10%;
+	left: 50%;
+	z-index: 999;
+	background-color: #333;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transform: translate(-50%, 100%);
+	animation: fadeOutAndReturn 5s ease-in-out forwards;
+}
+
+.error:hover {
+	background-color: #555;
+}
+
+@keyframes fadeOutAndReturn {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -200%);
+	}
+
+	50% {
+		opacity: 1;
+		transform: translate(-50%, -50%);
+	}
+
+	100% {
+		background-color: #2E8B57;
+		opacity: 0;
+		transform: translate(-50%, -200%);
+	}
+}
+

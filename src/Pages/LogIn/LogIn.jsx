@@ -9,7 +9,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useGetData } from "../../services";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
 import "./login.scss";
 
 export default function LogIn() {
@@ -86,9 +85,7 @@ export default function LogIn() {
         </div>
         <form onSubmit={(e) => logInUser(e)} className="login_user_form">
           <div className="user_data__box">
-            <label className="user_data_label">
-              Please, enter your email
-            </label>
+            <label className="user_data_label">Please, enter your email</label>
             <input
               className="user_data_input"
               value={emailLogIn}
@@ -127,6 +124,13 @@ export default function LogIn() {
           </button>
         </form>
       </div>
+      {isError && (
+        <div className="popUp">
+          <p className="error_text">
+            This email and password combination is incorrect.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
