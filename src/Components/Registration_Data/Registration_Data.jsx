@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { useAddData } from "../../services";
-import arrow from "../../img/Chevron left.png";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 import "./registration_data.scss";
 
@@ -103,12 +103,7 @@ export default function Registration_Data({ regState, userObj }) {
 
   return (
     <div className="registration_data">
-      <button
-        className="go_back__button"
-        onClick={() => regState.setIsRegistration(false)}
-      >
-        <img src={arrow} alt="" />
-      </button>
+      <GoBackButton onClick={() => regState.setIsRegistration(false)}/>
       <div className="registration_data__container">
         <div className="title_box__reg_data">
           <h1 className="create_account__title">Create account</h1>
