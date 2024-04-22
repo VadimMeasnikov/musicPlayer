@@ -61,24 +61,26 @@ export default function Artists() {
 
 
 	function handleArtistSelect(artist) {
-		dispatch(setArtists(artist));
-		setSelectedArr([...selectedArr, artist])
-		console.log('Selected artist:', artist);
-		console.log(userArtists.userAppArtists.length);
+
 
 		const isArtistSelected = selectedArr.some(
 			selectedArtist => selectedArtist.id === artist.id
 		)
 
 		if (isArtistSelected) {
-			const updatedSelectedArr = selectedArr.filter(
+			const updatedSelectedArr = selectedArtists.filter(
 				selectedArtist => selectedArtist.id !== artist.id
 			)
 			setSelectedArr(updatedSelectedArr)
 
 			dispatch(removeArtists(artist.id))
-			return
 		}
+
+
+		dispatch(setArtists(artist));
+		setSelectedArr([...selectedArr, artist])
+		console.log('Selected artist:', artist);
+		console.log(userArtists.userAppArtists.length);
 
 		if (userArtists.userAppArtists.length >= 10000000000) {
 			const idKey = keyObj.key
@@ -89,9 +91,12 @@ export default function Artists() {
 			navigate('/')
 		}
 
-		dispatch(setArtists(artist))
 		setSelectedArr([...selectedArr, artist])
 	}
+
+	useEffect(() => {
+		console.log(selectedArr);
+	}, [selectedArr])
 
 	useEffect(() => {
 		// Если количество выбранных артистов больше или равно 3, показываем кнопку
@@ -105,55 +110,55 @@ export default function Artists() {
 	// function handleArtistSelect(artist) {
 
 
-		const filteredArtists = artistsServer.filter(artist =>
-			artist.name.toLowerCase().includes(searchQuery.toLowerCase())
-		)
+	const filteredArtists = artistsServer.filter(artist =>
+		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
+	)
 
-		const handleRedirect = () => {
-			if (selectedArtists.length >= 3) {
-				console.log('before adding' + selectedArtists)
-				console.log('user id is' + id)
-				editData.mutate({ id, field, selectedArtists })
-				console.log('added artists')
-				navigate('/')
-			} else{
-				return
-			}
+	const handleRedirect = () => {
+		if (selectedArtists.length >= 3) {
+			console.log('before adding' + selectedArtists)
+			console.log('user id is' + id)
+			editData.mutate({ id, field, selectedArtists })
+			console.log('added artists')
+			navigate('/')
+		} else {
+			return
 		}
+	}
 
-		return (
-			<div>
-				<div className='artists_container'>
-					<div className='top_block'>
-						<button className='back_btn'>
-							<img src={backButtonSVG} alt='Back' />
-						</button>
-						<div className='text_block'>
-							<p className='choose_artists'>Choose 3 or more artists you like.</p>
-						</div>
-					</div>
-					<div className='input_block'>
-						<div className='searchInput'>
-							<span></span>
-							<input
-								type='text'
-								placeholder='Search'
-								value={searchQuery}
-								onChange={handleSearch}
-							/>
-						</div>
-					</div>
-					<div className='card_block'>
-						{filteredArtists.map(item => (
-							<Artist key={item.id} item={item} onSelect={handleArtistSelect} />
-						))}
+	return (
+		<div>
+			<div className='artists_container'>
+				<div className='top_block'>
+					<button className='back_btn'>
+						<img src={backButtonSVG} alt='Back' />
+					</button>
+					<div className='text_block'>
+						<p className='choose_artists'>Choose 3 or more artists you like.</p>
 					</div>
 				</div>
-				{buttonShow && (
-					<button className='fixedButton' onClick={handleRedirect}>
-						Go to Main Page
-					</button>
-				)}
+				<div className='input_block'>
+					<div className='searchInput'>
+						<span></span>
+						<input
+							type='text'
+							placeholder='Search'
+							value={searchQuery}
+							onChange={handleSearch}
+						/>
+					</div>
+				</div>
+				<div className='card_block'>
+					{filteredArtists.map(item => (
+						<Artist key={item.id} item={item} onSelect={handleArtistSelect} />
+					))}
+				</div>
 			</div>
-		)
-	}
+			{buttonShow && (
+				<button className='fixedButton' onClick={handleRedirect}>
+					Go to Main Page
+				</button>
+			)}
+		</div>
+	)
+}
