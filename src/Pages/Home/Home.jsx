@@ -6,8 +6,6 @@ import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { setUser } from "../../reduxToolkit/slices/userSlice";
-import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 
 import "./home.scss";
@@ -51,37 +49,54 @@ export default function Home() {
   const user = useSelector(state => state.user)
   const userFb = auth.currentUser
 
+  //Создание плейлистов.
+  const [loading, setLoading] = useState(true);
+  const [formattedDate, setFormattedDate] = useState("");
+  useEffect(() => {
+    const updateFormattedDate = () => {
+      setFormattedDate(new Date().toISOString().slice(0, 10));
+    };
+    updateFormattedDate();
+    const intervalId = setInterval(updateFormattedDate, 24 * 60 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+  
   const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
   const playlistInfo = useSelector((state) => state.playlists);
   useEffect(() => {
+    if (playlistInfo !== undefined) {
+      setLoading(false);
+    }
+  }, []);
+  useEffect(() => {
     if (selectedArtists.length > 0) {
+      setLoading(true);
       console.log('test')
       createPlaylists(selectedArtists);
     }
-  }, [selectedArtists]);
+  }, [selectedArtists, formattedDate]);
   
   async function createPlaylists(artists) {
-    console.log(artists);
     try {
       artists.map(async (artist) => {
         console.log(artist)
         const playlistName = `${artist.name} Mix`;
-        console.log(playlistName);
-        console.log(artist.name);
         const response = await fetch(
-          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=0000-00-00_2012-01-01`
+          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
         );
         const playlistTracks = await response.json();
-        console.log(playlistTracks);
-        dispatch(addPlaylist({name: playlistName, tracks: playlistTracks}));
+        const formattedTracks = playlistTracks.results[0].tracks;
+        console.log(formattedTracks);
+        dispatch(addPlaylist({name: playlistName, tracks: formattedTracks}));
       });
     } catch (error) {
       console.error("Error creating playlists:", error);
     }
   }
 
-  // console.log(selectedArtists);
-  // console.log(playlistInfo);
+  console.log(selectedArtists);
+  console.log(playlistInfo);
+  //Пока что undefined
 
   useEffect(() => {
     if (!user.email){
