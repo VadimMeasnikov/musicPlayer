@@ -6,10 +6,11 @@
     justify-content: center;
     align-items: center;
     background: #000;
-
     border: none;
     outline: none;
-
+    position: absolute;
+    left: 20px;
+    top: 20px;
     .arrow_img {
         width: 50%;
         height: 50%;
