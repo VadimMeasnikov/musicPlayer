@@ -7,6 +7,8 @@ import { setArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import { removeArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import Artist from '../../Components/Artist/Artist'
 import backButtonSVG from '../../img/Back.svg'
+import { FcCheckmark } from "react-icons/fc";
+
 import './artists.scss'
 
 
@@ -60,32 +62,27 @@ export default function Artists() {
 
 
 	function handleArtistSelect(artist) {
-    const isArtistSelected = selectedArr.some(
-        selectedArtist => selectedArtist.id === artist.id
-    );
+		const isArtistSelected = selectedArr.some(
+			selectedArtist => selectedArtist.id === artist.id
+		);
 
-    if (isArtistSelected) {
-        const updatedSelectedArr = selectedArr.filter(
-            selectedArtist => selectedArtist.id !== artist.id
-        );
-        setSelectedArr(updatedSelectedArr);
-        dispatch(removeArtists(artist.id));
-    } else {
-        setSelectedArr([...selectedArr, artist]);
-        dispatch(setArtists(artist));
-    }
+		if (isArtistSelected) {
+			const updatedSelectedArr = selectedArr.filter(
+				selectedArtist => selectedArtist.id !== artist.id
+			);
+			setSelectedArr(updatedSelectedArr);
+			dispatch(removeArtists(artist.id));
+		} else {
+			setSelectedArr([...selectedArr, artist]);
+			dispatch(setArtists(artist));
+		}
 
-    if (selectedArr.length >= 2) {
-        const idKey = keyObj.key;
-        editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArr) });
-        navigate('/');
-    }
-}
-
-	useEffect(() => {
-		console.log(selectedArr);
-	}, [selectedArr])
-
+		// if (selectedArtists.length >= 3) {
+		// 	console.log('start edit data');
+		// 	editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
+		// 	navigate('/');
+		// }
+	}
 	useEffect(() => {
 		// Если количество выбранных артистов больше или равно 3, показываем кнопку
 		if (selectedArtists.length >= 3) {
@@ -95,24 +92,21 @@ export default function Artists() {
 		}
 	}, [selectedArtists])
 
-	// function handleArtistSelect(artist) {
-
-
 	const filteredArtists = artistsServer.filter(artist =>
 		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
 
 	const handleRedirect = () => {
 		if (selectedArtists.length >= 3) {
-			console.log('before adding' + selectedArtists)
-			console.log('user id is' + id)
-			editData.mutate({ id, field, selectedArtists })
-			console.log('added artists')
-			navigate('/')
+			console.log('start edit data');
+			editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
+			navigate('/');
 		} else {
 			return
 		}
 	}
+
+
 
 	return (
 		<div>
@@ -144,9 +138,24 @@ export default function Artists() {
 			</div>
 			{buttonShow && (
 				<button className='fixedButton' onClick={handleRedirect}>
-					Go to Main Page
+					<div className="success_icon_box">
+						< FcCheckmark className='success_icon' />
+					</div>
+					<p className='success_text'>
+						Perfect! Go to Main page!
+					</p>
 				</button>
 			)}
 		</div>
 	)
 }
+
+
+
+
+
+// function handleArtistSelect(artist) {
+
+
+
+
