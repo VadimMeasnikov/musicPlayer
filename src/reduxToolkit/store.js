@@ -5,6 +5,7 @@ import { searchApi } from "./queryApi/searchJamendo";
 import { artistsApi } from "./queryApi/getArtists";
 import userReducer from "./slices/userSlice";
 import userKeySlice from "./slices/userKeySlice";
+import playlistSlice from "./slices/playlistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
 
 export const store = configureStore({
@@ -14,7 +15,8 @@ export const store = configureStore({
     [searchApi.reducerPath]: searchApi.reducer,
     user: userReducer,
     userKey: userKeySlice,
-    userArtists: userArtistsSlice, 
+    userArtists: userArtistsSlice,
+    playlists: playlistSlice,
   },
   middleware: (getDefault) =>
     getDefault().concat(
