@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import defaultImg from '../../img/default.png'
-import chosenActor from '../../img/chosen.jpg'
+import chosenActor from '../../img/chosen.png'
 import './artist.scss'
 
 

@@ -109,15 +109,6 @@ export default function LogIn() {
               }}
               type="password"
             />
-            <label className="errorLabel">
-              {isError && (
-                <div className="error_box_extra">
-                  <p className="error_box_extra_text">
-                    This email and password combination is incorrect.
-                  </p>
-                </div>
-              )}
-            </label>
           </div>
           <button type="submit" className="login_user__btn">
             Log In

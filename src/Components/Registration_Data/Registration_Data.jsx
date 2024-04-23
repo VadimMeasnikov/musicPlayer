@@ -143,7 +143,7 @@ export default function Registration_Data({ regState, userObj }) {
               }}
               type="password"
             />
-            <label className="user_data_info">Use atleast 6 characters.</label>
+            <label className="user_data_info">Use at least 6 characters.</label>
           </div>
           <div className="user_data__box">
             <label className="user_data_label">
@@ -159,7 +159,7 @@ export default function Registration_Data({ regState, userObj }) {
               type="text"
             />
             <label className="user_data_info">
-              This appears on your spotify profile.
+              This appears on your Spotify profile.
             </label>
           </div>
 
