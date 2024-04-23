@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import favAlbum from '../../img/fav_album.png'
 import likedAlbum from '../../img/liked_album.jpg'
 import point from '../../img/point.png'
@@ -6,8 +7,10 @@ import ProfileCard from '../ProfileCard/ProfileCard'
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import './recently_played.scss'
 
-export default function Recently_Played({ data, status }) {
+export default function Recently_Played({ data, favArtists, playlists, status }) {
     const [isLoading, setIsLoading] = useState(true)
+
+    console.log(playlists);
 
     useEffect(() => {
         if (data) {
@@ -16,6 +19,16 @@ export default function Recently_Played({ data, status }) {
         }
     }, [])
 
+    function getRandomElementsFromArray(array, count) {
+        const randomElements = [];
+        for (let i = 0; i < count; i++) {
+            const randomIndex = Math.floor(Math.random() * array.length);
+            randomElements.push(array[randomIndex]);
+        }
+        return randomElements;
+    }
+
+    const currentPlaylistsArr = getRandomElementsFromArray(playlists, 13)
 
     const filteredData = data.filter((item) => item.status === status);
 
@@ -41,12 +54,22 @@ export default function Recently_Played({ data, status }) {
                             </div>
                         </div>
                     </div>
-
+                    {/* {
+                        favArtists.map((item, key) => (
+                            <ProfileCard data={item} key={uuidv4()}/>
+                        ))
+                    } */}
                     {
-                        filteredData.map((item, key) => (
-                            <ProfileCard data={item} key={item.artist_id} />
+                        currentPlaylistsArr.map((item, key) => (
+                            <ProfileCard data={item} key={uuidv4()} />
                         ))
                     }
+
+                    {/* {
+                        filteredData.map((item, key) => (
+                            <ProfileCard data={item} key={uuidv4()} />
+                        ))
+                    } */}
                 </div>
             </div>
         )

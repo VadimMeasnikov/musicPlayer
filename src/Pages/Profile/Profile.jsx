@@ -7,13 +7,22 @@ import fourSquares from '../../img/fourSquares.svg'
 import ProfileCard from '../../Components/ProfileCard/ProfileCard'
 import Navigation from "../../Components/Navigation/Navigation";
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
+import { useSelector } from 'react-redux'
 import './profile.scss'
+
 
 
 export default function Profile() {
 	const [featured, setFeatured] = useState([])
 	const [selectedStatus, setSelectedStatus] = useState()
 	const { data } = useGetTrackQuery()
+
+	const playlists = useSelector((state) => state.playlists.tracks);
+	const favArtists = useSelector(
+		(state) => state.userArtists.userAppArtists
+	);
+	console.log(favArtists);
+	console.log(playlists);
 
 	useEffect(() => {
 		if (data) {
@@ -23,7 +32,7 @@ export default function Profile() {
 		}
 	}, [data])
 
-	function handleButtonClick(status){
+	function handleButtonClick(status) {
 		setSelectedStatus(status)
 	}
 
@@ -53,7 +62,7 @@ export default function Profile() {
 						</div>
 						<img src={fourSquares} alt='' />
 					</div>
-					<Recently_Played data={featured} status={selectedStatus}/>
+					<Recently_Played data={featured}  favArtists={favArtists} playlists={playlists} status={selectedStatus} />
 					<Navigation />
 				</div>
 			</div>

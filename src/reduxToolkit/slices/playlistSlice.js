@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 const playlistSlice = createSlice({
   name: "playlists",
-  initialState: [],
+  initialState: {
+    tracks: []
+  },
   reducers: {
     addPlaylist: (state, action) => {
-      state.push(action.payload);
+      state.tracks.push(action.payload);
     },
   },
 });

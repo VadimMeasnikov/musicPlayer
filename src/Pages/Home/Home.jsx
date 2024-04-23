@@ -92,7 +92,8 @@ export default function Home() {
           `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
         );
         const playlistTracks = await response.json();
-        const formattedTracks = playlistTracks.results[0].tracks;
+        console.log(playlistTracks);
+        const formattedTracks = playlistTracks.results[0];
         console.log(formattedTracks);
         dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
       });
@@ -105,11 +106,11 @@ export default function Home() {
   console.log(playlistInfo);
   //Пока что undefined
 
-  useEffect(() => {
-    if (!user.email) {
-      navigate("/registration");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user.email) {
+  //     navigate("/registration");
+  //   }
+  // }, []);
 
   return (
     <div className="wrapper">
@@ -231,9 +232,9 @@ export default function Home() {
                 </div>
               ) : (
                 <div>
-                  {playlistInfo.map((item, index) => (
+                  {/* {playlistInfo.map((item, index) => (
                     <MiniCard key={index} track={item} />
-                  ))}
+                  ))} */}
                 </div>
               )}
             </div>
