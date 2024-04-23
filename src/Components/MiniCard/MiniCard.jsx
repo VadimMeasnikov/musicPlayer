@@ -1,6 +1,6 @@
-import './MiniCard.scss'
+import "./MiniCard.scss";
 
-export default function MiniCard({track}) {
+export default function MiniCard({ track }) {
   return (
     <div className="card">
       <div className="card-img">
@@ -10,5 +10,5 @@ export default function MiniCard({track}) {
         <p>{track.name}</p>
       </div>
     </div>
-  )
+  );
 }

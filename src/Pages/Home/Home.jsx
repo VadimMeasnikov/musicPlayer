@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import MiniCard from "../../Components/MiniCard/MiniCard";
+import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard"
 import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +82,7 @@ export default function Home() {
   const selectedArtists = useSelector(
     (state) => state.userArtists.userAppArtists
   );
+  const [artists, setArtists] = useState(selectedArtists);
   const playlistInfo = useSelector((state) => state.playlists);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -229,7 +231,7 @@ export default function Home() {
             </div>
           </div>
           <div className="featuredTracks">
-            <div className="featuredTracks-title">Popular right now!</div>
+            <div className="featuredTracks-title">Today's biggest hits!</div>
             <div className="featuredTracks-results">
               {featured.map((item, index) => (
                 <MiniCard key={index} track={item} />
@@ -237,10 +239,12 @@ export default function Home() {
             </div>
           </div>
           <div className="playlistsMix">
-            {/*<div className="playlistsMix-title">Mixes for you!</div>*/}
+            <div className="playlistsMix-title">Recommended for today</div>
             <div className="playlistsMix-results">
               {loading ? (
-                <CgSpinnerTwoAlt color="white" className="spinner" />
+                <div className="spinnerBox">
+                  <CgSpinnerTwoAlt color="white" className="spinner" display="block"/>
+                </div>
               ) : (
                 <div>
                   {playlistInfo.map((item, index) => (
@@ -248,6 +252,14 @@ export default function Home() {
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+          <div className="suggestedArtists">
+            <div className="suggestedArtists-title">Artists you like</div>
+            <div className="suggestedArtists-results">
+              {artists.map((item, index) => (
+                <ArtistMiniCard key={index} artist={item} />
+              ))}
             </div>
           </div>
           <Navigation />

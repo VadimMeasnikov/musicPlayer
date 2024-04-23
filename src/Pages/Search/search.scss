@@ -8,11 +8,12 @@ html {
   font-family: "Avenir";
 }
 .wrapper {
-  padding: 25px 17px;
+  padding: 0 17px;
   background: #1b1a1c;
   width: 100%;
   min-height: 100vh;
   .search-page {
+    padding: 20px 0 40px 0;
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -30,6 +31,7 @@ html {
       .searchInput {
         position: relative;
         min-width: 100%;
+        margin-top: 20px;
         & input {
           height: 46px;
           display: block;
@@ -67,13 +69,13 @@ html {
       }
       .search-page__title {
         transition: 1s all ease-in-out;
-        color: #ffffff;
-        font-size: 25px;
+        color: rgb(255, 255, 255);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 19px;
         font-weight: 700;
-        line-height: 34px;
+        line-height: 28px;
         letter-spacing: 0%;
-        text-align: center;
-        margin-bottom: 22px;
+        text-align: left;
       }
     }
     .search-page__results {
