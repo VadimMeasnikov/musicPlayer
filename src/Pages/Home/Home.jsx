@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import MiniCard from "../../Components/MiniCard/MiniCard";
-import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard"
+import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +54,10 @@ export default function Home() {
 
   //Создание плейлистов.
   const [formattedDate, setFormattedDate] = useState("");
+  const selectedArtists = useSelector(
+    (state) => state.userArtists.userAppArtists
+  );
+
   useEffect(() => {
     const updateFormattedDate = () => {
       setFormattedDate(new Date().toISOString().slice(0, 10));
@@ -63,27 +67,23 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const selectedArtists = useSelector(
-    (state) => state.userArtists.userAppArtists
-  );
-  const [artists, setArtists] = useState(selectedArtists);
-  const playlistInfo = useSelector((state) => state.playlists);
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (selectedArtists.length > 0) {
+      setLoading(true);
+      console.log("test");
+      createPlaylists(selectedArtists, dispatch, formattedDate);
+    }
+  }, [selectedArtists, dispatch, formattedDate]);
+  const [artists, setArtists] = useState(selectedArtists);
+  const playlistInfo = useSelector((state) => state.playlistsSlice); // .playlists (initial state)
   useEffect(() => {
     if (playlistInfo !== undefined) {
       setLoading(false);
     }
   }, [playlistInfo]);
 
-  useEffect(() => {
-    if (selectedArtists.length > 0) {
-      setLoading(true);
-      console.log("test");
-      createPlaylists(selectedArtists);
-    }
-  }, [selectedArtists, formattedDate]);
-
-  async function createPlaylists(artists) {
+  async function createPlaylists(artists, dispatch, formattedDate) {
     try {
       artists.map(async (artist) => {
         console.log(artist);
@@ -228,7 +228,11 @@ export default function Home() {
             <div className="playlistsMix-results">
               {loading ? (
                 <div className="spinnerBox">
-                  <CgSpinnerTwoAlt color="white" className="spinner" display="block"/>
+                  <CgSpinnerTwoAlt
+                    color="white"
+                    className="spinner"
+                    display="block"
+                  />
                 </div>
               ) : (
                 <div>

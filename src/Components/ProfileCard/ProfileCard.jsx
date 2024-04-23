@@ -4,7 +4,12 @@ import './ProfileCard.scss'
 export default function ProfileCard({data}) {
 	console.log(data);
 	const {image, artist_name} = data
+	const [currentImage, setCurrentImage]
+	const albumImg = data.image
 	const content = 'Artist'
+	if(image == 'undefind'){
+
+	}
 	return (
 		<div className='profile_card_container'>
 			<div className='profile_card'>

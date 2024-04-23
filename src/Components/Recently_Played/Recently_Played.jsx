@@ -28,7 +28,7 @@ export default function Recently_Played({ data, favArtists, playlists, status })
         return randomElements;
     }
 
-    const currentPlaylistsArr = getRandomElementsFromArray(playlists, 13)
+    const currentPlaylistsArr = getRandomElementsFromArray(playlists, 3)
 
     const filteredData = data.filter((item) => item.status === status);
 

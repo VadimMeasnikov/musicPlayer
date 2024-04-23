@@ -5,6 +5,7 @@ import { searchApi } from "./queryApi/searchJamendo";
 import { artistsApi } from "./queryApi/getArtists";
 import userReducer from "./slices/userSlice";
 import userKeySlice from "./slices/userKeySlice";
+import playlistSlice from "./slices/playlistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
 import playlistSlice from "./slices/playlistSlice";
 

@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+  playlists: [],
+};
+
 const playlistSlice = createSlice({
   name: "playlists",
   initialState: {
@@ -10,5 +14,6 @@ const playlistSlice = createSlice({
     },
   },
 });
+
 export const { addPlaylist } = playlistSlice.actions;
 export default playlistSlice.reducer;
