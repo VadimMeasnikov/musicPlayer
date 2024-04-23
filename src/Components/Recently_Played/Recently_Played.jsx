@@ -41,7 +41,6 @@ export default function Recently_Played({ data, favArtists, playlists, status })
             const randomIndex = Math.floor(Math.random() * availableTracks.length);
             randomElements.push(availableTracks[randomIndex]);
         }
-        console.log(randomElements);
         return randomElements;
     }
 
