@@ -20,15 +20,24 @@ export default function Recently_Played({ data, favArtists, playlists, status })
     }, [])
 
     function getRandomElementsFromArray(array, count) {
-        const randomElements = [];
-        for (let i = 0; i < count; i++) {
-            const randomIndex = Math.floor(Math.random() * array.length);
-            randomElements.push(array[randomIndex]);
+        console.log(array);
+        let availableTracks = [];
+        let randomElements = []
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].tracks && array[i].tracks !== undefined) {
+                availableTracks.push(array[i]);
+                console.log(availableTracks);
+            }
         }
+        for (let i = 0; i < count; i++) {
+            const randomIndex = Math.floor(Math.random() * availableTracks.length);
+            randomElements.push(availableTracks[randomIndex]);
+        }
+        console.log(randomElements);
         return randomElements;
     }
 
-    const currentPlaylistsArr = getRandomElementsFromArray(playlists, 3)
+    const currentPlaylistsArr = getRandomElementsFromArray(playlists, 4)
 
     const filteredData = data.filter((item) => item.status === status);
 

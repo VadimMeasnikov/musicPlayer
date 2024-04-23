@@ -7,7 +7,6 @@ import userReducer from "./slices/userSlice";
 import userKeySlice from "./slices/userKeySlice";
 import playlistSlice from "./slices/playlistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
-import playlistSlice from "./slices/playlistSlice";
 
 export const store = configureStore({
   reducer: {
