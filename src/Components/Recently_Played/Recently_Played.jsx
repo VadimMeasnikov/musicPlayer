@@ -19,6 +19,14 @@ export default function Recently_Played({ data, favArtists, playlists, status })
         }
     }, [])
 
+    const exampleArr = [{
+        name: null,
+        tracks: {
+            image: false
+        }
+    }
+    ]
+
     function getRandomElementsFromArray(array, count) {
         console.log(array);
         let availableTracks = [];
@@ -38,7 +46,7 @@ export default function Recently_Played({ data, favArtists, playlists, status })
     }
 
     const currentPlaylistsArr = getRandomElementsFromArray(playlists, 4)
-
+    console.log(favArtists);
     const filteredData = data.filter((item) => item.status === status);
 
     return (
@@ -63,22 +71,22 @@ export default function Recently_Played({ data, favArtists, playlists, status })
                             </div>
                         </div>
                     </div>
-                    {/* {
+                    {
                         favArtists.map((item, key) => (
-                            <ProfileCard data={item} key={uuidv4()}/>
+                            <ProfileCard data={item} dataAlbum={ exampleArr } key={uuidv4()} />
                         ))
-                    } */}
+                    }
                     {
                         currentPlaylistsArr.map((item, key) => (
-                            <ProfileCard data={item} key={uuidv4()} />
+                            <ProfileCard data={ exampleArr } dataAlbum={ item }  key={uuidv4()} />
                         ))
                     }
 
-                    {/* {
+                    {
                         filteredData.map((item, key) => (
-                            <ProfileCard data={item} key={uuidv4()} />
+                            <ProfileCard data={item}  dataAlbum={ exampleArr } key={uuidv4()} />
                         ))
-                    } */}
+                    }
                 </div>
             </div>
         )
