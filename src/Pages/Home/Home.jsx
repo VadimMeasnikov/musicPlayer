@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard";
+import MixMiniCard from "../../Components/MixMiniCard/MixMiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,8 @@ export default function Home() {
   const [isPageLoading, setIsPageLoading] = useState(false);
 
   const { username } = useSelector((state) => state.user);
+
+  const [playlistDataLoaded, setPlaylistDataLoaded] = useState(false);
 
   // Проверка, существует ли массив с треками
   useEffect(() => {
@@ -70,16 +73,23 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const playlistInfo = useSelector((state) => state.playlists.tracks);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (selectedArtists.length > 0) {
+    if (selectedArtists.length > 0 && !playlistDataLoaded) {
       setLoading(true);
-      console.log("test");
       createPlaylists(selectedArtists, dispatch, formattedDate);
     }
-  }, [selectedArtists, dispatch, formattedDate]);
+  }, [selectedArtists, dispatch, formattedDate, playlistDataLoaded]);
+
+  useEffect(() => {
+    if (!playlistDataLoaded && playlistInfo !== undefined) {
+      setLoading(false);
+      setPlaylistDataLoaded(true);
+    }
+  }, [playlistInfo, playlistDataLoaded]);
+
   const [artists, setArtists] = useState(selectedArtists);
-  const playlistInfo = useSelector((state) => state.playlistsSlice); // .playlists (initial state)
   useEffect(() => {
     if (playlistInfo !== undefined) {
       setLoading(false);
@@ -96,7 +106,7 @@ export default function Home() {
         );
         const playlistTracks = await response.json();
         console.log(playlistTracks);
-        const formattedTracks = playlistTracks.results[0];
+        const formattedTracks = playlistTracks.results[0].tracks;
         console.log(formattedTracks);
         dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
       });
@@ -238,10 +248,10 @@ export default function Home() {
                   />
                 </div>
               ) : (
-                <div>
-                  {/* {playlistInfo.map((item, index) => (
-                    <MiniCard key={index} track={item} />
-                  ))} */}
+                <div className="playlistsMix-results">
+                  {playlistInfo.map((item, index) => (
+                    <MixMiniCard key={index} playlist={item} />
+                  ))}
                 </div>
               )}
             </div>
