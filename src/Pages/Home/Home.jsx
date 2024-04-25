@@ -50,6 +50,9 @@ export default function Home() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
+  const usersDbData = useGetData()
+  console.log(usersDbData);
+  console.log(user);
   const userFb = auth.currentUser
 
   //Создание плейлистов.

@@ -7,15 +7,34 @@ import ProfileCard from '../ProfileCard/ProfileCard'
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import './recently_played.scss'
 
-export default function Recently_Played({ data, favArtists, playlists, status }) {
+export default function Recently_Played({ data, favArtists, playlists, statusArr }) {
     const [isLoading, setIsLoading] = useState(true)
 
-    console.log(playlists);
+    const [filteredData, setFilteredData] = useState([])
+    const [onLoading, setOnLoading] = useState(true)
+
+    console.log(statusArr);
+
+    const {
+        status, setStatus
+    } = statusArr
+
+
+    useEffect(() => {
+        console.log(status);
+        if (statusArr.status === undefined) {
+            setOnLoading(true)
+            console.log(1);
+        } else {
+            setOnLoading(false)
+            console.log(2);
+            getFilterArr(status)
+        }
+    }, [status])
 
     useEffect(() => {
         if (data) {
             setIsLoading(false)
-            console.log(data);
         }
     }, [])
 
@@ -28,25 +47,48 @@ export default function Recently_Played({ data, favArtists, playlists, status })
     ]
 
     function getRandomElementsFromArray(array, count) {
-        console.log(array);
-        let availableTracks = [];
+
+        let availableTracks = []
         let randomElements = []
+
         for (let i = 0; i < array.length; i++) {
             if (array[i].tracks && array[i].tracks !== undefined) {
-                availableTracks.push(array[i]);
-                console.log(availableTracks);
+                availableTracks.push(array[i])
             }
         }
-        for (let i = 0; i < count; i++) {
-            const randomIndex = Math.floor(Math.random() * availableTracks.length);
-            randomElements.push(availableTracks[randomIndex]);
+
+        while (randomElements.length < count && availableTracks.length > 0) {
+            const randomIndex = Math.floor(Math.random() * availableTracks.length)
+            const randomElement = availableTracks[randomIndex]
+
+            if (!randomElements.some((element) => element.name === randomElement.name)) {
+                randomElements.push(randomElement)
+            }
+            availableTracks.splice(randomIndex, 1)
         }
         return randomElements;
     }
 
+    // console.log(data);
     const currentPlaylistsArr = getRandomElementsFromArray(playlists, 4)
-    console.log(favArtists);
-    const filteredData = data.filter((item) => item.status === status);
+    // console.log(currentPlaylistsArr);
+
+    // console.log(onLoading);
+
+    function getFilterArr(type) {
+        setStatus(type);
+        switch (type) {
+            case 'Artist':
+                console.log(favArtists);
+                setFilteredData(favArtists);
+                break;
+            case 'Playlist':
+                const randomPlaylists = getRandomElementsFromArray(playlists, 4);
+                console.log(randomPlaylists);
+                setFilteredData(randomPlaylists);
+                break;
+        }
+    }
 
     return (
         isLoading ? (
@@ -70,21 +112,26 @@ export default function Recently_Played({ data, favArtists, playlists, status })
                             </div>
                         </div>
                     </div>
-                    {
-                        favArtists.map((item, key) => (
-                            <ProfileCard data={item} dataAlbum={ exampleArr } key={uuidv4()} />
-                        ))
-                    }
-                    {
-                        currentPlaylistsArr.map((item, key) => (
-                            <ProfileCard data={ exampleArr } dataAlbum={ item }  key={uuidv4()} />
-                        ))
-                    }
+
 
                     {
-                        filteredData.map((item, key) => (
-                            <ProfileCard data={item}  dataAlbum={ exampleArr } key={uuidv4()} />
-                        ))
+                        onLoading ? (
+                            <div>
+                                <p>hello world</p>
+                                {favArtists.map((item, key) => (
+                                    <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()} />
+                                ))}
+                                {currentPlaylistsArr.map((item, key) => (
+                                    <ProfileCard data={exampleArr} dataAlbum={item} key={uuidv4()} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div>
+                                {filteredData.map((item, key) => (
+                                    <ProfileCard data={exampleArr} dataAlbum={item} key={uuidv4()} />
+                                ))}
+                            </div>
+                        )
                     }
                 </div>
             </div>
