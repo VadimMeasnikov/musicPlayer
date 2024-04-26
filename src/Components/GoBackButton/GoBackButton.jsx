@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
-
 import "./goBackButton.scss";
 
-export default function GoBackButton() {
+export default function GoBackButton({onClick}) {
   const navigate = useNavigate();
 
-  const goBack = () => navigate("/");
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    navigate("/");
+  };
 
   return (
-    <button onClick={goBack} className="go_back__button">
+    <button onClick={handleClick} className="go_back__button">
       <svg
         width="20px"
         height="20px"

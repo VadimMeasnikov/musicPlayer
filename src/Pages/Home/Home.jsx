@@ -12,6 +12,7 @@ import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import CurrentArtist from "../CurrentArtist/CurrentArtist";
 
 import "./home.scss";
 
@@ -114,20 +115,33 @@ export default function Home() {
 
   console.log(selectedArtists);
   console.log(playlistInfo);
-  //Пока что undefined
 
-  // useEffect(() => {
-  //   if (!user.email) {
-  //     navigate("/registration");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user.email) {
+      navigate("/registration");
+    }
+  }, []);
 
+  // Страница артиста
+  const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
+  const [artistModalData, setArtistModalData] = useState({});
+  function openCurrentArtistModal() {
+    setIsOpenCurrentArtist(true);
+    console.log("Open");
+  }
+  function closeCurrentArtistModal() {
+    setIsOpenCurrentArtist(false);
+    console.log("Close");
+  }
   return (
     <div className="wrapper">
       {isPageLoading ? (
-        <p>Loading...</p>
+        <div className="spinnerBox">
+          <CgSpinnerTwoAlt color="white" className="spinner" display="block" />
+        </div>
       ) : (
         <div className="homePage">
+          {isOpenCurrentArtist && <CurrentArtist artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal}/>}
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}
@@ -257,7 +271,12 @@ export default function Home() {
             <div className="suggestedArtists-title">Artists you like</div>
             <div className="suggestedArtists-results">
               {artists.map((item, index) => (
-                <ArtistMiniCard key={index} artist={item} />
+                <ArtistMiniCard
+                  key={index}
+                  artist={item}
+                  openCurrentArtistModal={openCurrentArtistModal}
+                  setArtistModalData={setArtistModalData}
+                />
               ))}
             </div>
           </div>
