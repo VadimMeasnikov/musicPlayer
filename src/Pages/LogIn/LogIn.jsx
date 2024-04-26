@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
+import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
+import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -8,8 +10,10 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useGetData } from "../../services";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import "./login.scss";
+
 
 export default function LogIn() {
   const [emailLogIn, setEmailLogIn] = useState("");
@@ -29,11 +33,6 @@ export default function LogIn() {
     }
 
     signInWithEmailAndPassword(auth, emailLogIn, passwordLogIn)
-      .then((user) => {
-        setEmailLogIn("");
-        setPasswordLogIn("");
-        // navigate('/')
-      })
       .then(() => {
         const usersArray = createUsersArray();
         const userFb = auth.currentUser;
@@ -47,12 +46,35 @@ export default function LogIn() {
               email: userDb.email,
               id: userDb.uid,
               username: userDb.username,
-              artists: userDb.artists,
-              search: userDb.search,
               news: userDb.news,
               share: userDb.share,
             })
           );
+          dispatch(
+            setKey({
+              key: userDb.key
+            })
+          )
+          const artistsArr = JSON.parse(userDb.artists)
+          console.log(artistsArr);
+
+
+          artistsArr.map((artist, key) => {
+            dispatch(setArtists({
+              artist
+            }))
+            return artist
+          })
+
+          console.log(
+            artistsArr.map((item, key) => {
+              dispatch(setArtists({
+                item
+              }))
+              return item
+            })
+          );
+
         }
         navigate("/");
       })
@@ -64,6 +86,7 @@ export default function LogIn() {
 
   function getCurrentUser(usersArray, email) {
     const authorizedUser = usersArray.find((user) => user.email === email);
+    console.log(authorizedUser);
     console.log("auth succesfull");
     return authorizedUser || null;
   }

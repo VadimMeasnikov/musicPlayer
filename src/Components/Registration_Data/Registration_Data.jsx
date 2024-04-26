@@ -8,9 +8,10 @@ import {
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { setKey } from "../../reduxToolkit/slices/userKeySlice";
-import { useAddData } from "../../services";
+import { useAddData, useEditData } from "../../services";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import "./registration_data.scss";
+import { update } from "firebase/database";
 
 export default function Registration_Data({ regState, userObj }) {
   const [userState, setUserState] = useState("");
@@ -32,7 +33,7 @@ export default function Registration_Data({ regState, userObj }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
-
+  const editData = useEditData()
   const addData = useAddData();
 
   async function createUser(event) {
@@ -89,6 +90,7 @@ export default function Registration_Data({ regState, userObj }) {
       share: userShare,
       search: false,
       artists: false,
+      key: false
     };
 
     const userKey = await addData.mutateAsync(userObj);
@@ -98,11 +100,16 @@ export default function Registration_Data({ regState, userObj }) {
       })
     );
     console.log("end add data");
+    const field = 'key'
+    console.log(userKey);
+    // editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
+    editData.mutate({id: userKey, field, updateData: userKey})
+    console.log('end edit data');
   }
 
   return (
     <div className="registration_data">
-      <GoBackButton onClick={() => regState.setIsRegistration(false)}/>
+      <GoBackButton onClick={() => regState.setIsRegistration(false)} />
       <div className="registration_data__container">
         <div className="title_box__reg_data">
           <h1 className="create_account__title">Create account</h1>

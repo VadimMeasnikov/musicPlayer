@@ -97,6 +97,7 @@ export default function Artists() {
 		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
 
+	console.log(selectedArtists);
 	const handleRedirect = () => {
 		if (selectedArtists.length >= 3) {
 			console.log('start edit data');

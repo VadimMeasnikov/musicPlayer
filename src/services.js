@@ -35,8 +35,6 @@ export function useEditData() {
         
         console.log(`users/${id}/${field}`);
         console.log('update data is ' + updateData);
-        const dataArr = JSON.parse(updateData)
-        console.log(dataArr);
 
         await db.ref(`users/${id}/${field}`).set(updateData)
     },

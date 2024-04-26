@@ -14,27 +14,27 @@ import './profile.scss'
 
 export default function Profile() {
 	const [featured, setFeatured] = useState([])
-	const [selectedStatus, setSelectedStatus] = useState()
+	const [status, setStatus] = useState(undefined)
 	const { data } = useGetTrackQuery()
 
 	const playlists = useSelector((state) => state.playlists.tracks);
 	const favArtists = useSelector(
 		(state) => state.userArtists.userAppArtists
 	);
-	console.log(favArtists);
-	console.log(playlists);
 
 	useEffect(() => {
 		if (data) {
 			setFeatured(data.results)
-			setSelectedStatus(data.result)
-			console.log(data.results);
+			setStatus(data.result)
 		}
 	}, [data])
 
 	function handleButtonClick(status) {
-		setSelectedStatus(status)
+		setStatus(status)
+		return status
 	}
+
+	const statusArr = {status, setStatus}
 
 	return (
 		<div className='profile'>
@@ -62,7 +62,7 @@ export default function Profile() {
 						</div>
 						<img src={fourSquares} alt='' />
 					</div>
-					<Recently_Played data={featured}  favArtists={favArtists} playlists={playlists} status={selectedStatus} />
+					<Recently_Played data={featured}  favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
 					<Navigation />
 				</div>
 			</div>
