@@ -2,12 +2,22 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import PlayButton from "../../img/PlayButton.png";
+import defaultImg from "../../img/default.png";
 import "./CurrentArtist.scss";
 
 export default function CurrentArtist({
   artistModalData,
   closeCurrentArtistModal,
 }) {
+
+
+  // СДЕЛАТЬ ЛОГИКУ ДОБАВЛЕНИЯ ИЛИ УДАЛЕНИЯ АРТИСТОВ ИЗ SELECETEDARTISTS
+
+
+  const [src, setSrc] = useState(artistModalData.image);
+  if (src === "") {
+    setSrc(defaultImg);
+  }
   
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
@@ -49,7 +59,7 @@ export default function CurrentArtist({
           <h3>{artistModalData.name}</h3>
         </div>
         <div className="currentArtistImageBox">
-          <img src={artistModalData.image} alt="Img" />
+          <img src={src} alt="Img" />
         </div>
         <div className="currentArtistInfoBox">
           <div className="currentArtistButtons">
