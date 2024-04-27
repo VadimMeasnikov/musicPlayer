@@ -8,6 +8,7 @@ export default function CurrentArtist({
   artistModalData,
   closeCurrentArtistModal,
 }) {
+  
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
 

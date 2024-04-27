@@ -13,7 +13,6 @@ import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import CurrentArtist from "../CurrentArtist/CurrentArtist";
-
 import "./home.scss";
 
 export default function Home() {
@@ -77,11 +76,8 @@ export default function Home() {
   const playlistInfo = useSelector((state) => state.playlists.tracks);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (selectedArtists.length > 0 && !playlistDataLoaded) {
-      setLoading(true);
       createPlaylists(selectedArtists, dispatch, formattedDate);
-    }
-  }, [selectedArtists, dispatch, formattedDate, playlistDataLoaded]);
+  }, [selectedArtists, dispatch, formattedDate]);
 
   useEffect(() => {
     if (!playlistDataLoaded && playlistInfo !== undefined) {
@@ -106,18 +102,13 @@ export default function Home() {
           `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
         );
         const playlistTracks = await response.json();
-        console.log(playlistTracks);
         const formattedTracks = playlistTracks.results[0].tracks;
-        console.log(formattedTracks);
         dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
       });
     } catch (error) {
       console.error("Error creating playlists:", error);
     }
   }
-
-  console.log(selectedArtists);
-  console.log(playlistInfo);
 
   useEffect(() => {
     if (!user.email) {
