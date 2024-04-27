@@ -1,0 +1,81 @@
+.profile {
+    padding-top: 30px;
+
+
+	h1,
+	p {
+        font-family: Arial, Helvetica, sans-serif;
+		color: white;
+	}
+
+    button{
+        background: transparent;
+        border: none;
+        outline: none;
+
+    }
+
+	.profile_container {
+		width: 95%;
+		margin: 0 auto;
+
+        .your_library{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+		.profile_logo {
+			display: flex;
+            align-items: center;
+		}
+
+		.title {
+            font-weight: 600;
+            font-size: 24px;
+			padding-left: 10px;
+		}
+
+        .four_buttons{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 30px;
+        }
+
+        .mini_title, .row{
+            display: flex;
+        }
+
+        .row{
+            justify-content: space-between;
+        }
+
+        .near_text{
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .recently_played{
+            padding-top: 30px;
+        }
+
+        .profile_button{
+            border: 0.6px #7F7F7F solid;
+            border-radius: 45px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 13px;
+        }
+		.profile_info {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+
+	}
+}
+
+

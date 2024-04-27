@@ -1,4 +1,4 @@
-.card {
+.artistCard {
   display: flex;
   max-width: 150px;
   flex-direction: column;
@@ -9,20 +9,20 @@
 
   &:hover {
     background: rgba(18, 18, 18, 1);
-    border-radius: 3px;
+    border-radius: 10px;
   }
 
-  .card-img {
+  .artistCard-img {
     width: 100%;
     & img {
       min-width: 140px;
       max-width: 100%;
       min-height: 140px;
-      border-radius: 3px;
+      border-radius: 50%;
     }
   }
 
-  .card-title {
+  .artistCard-title {
     color: rgb(255, 255, 255);
     font-family: Avenir;
     font-size: 12px;

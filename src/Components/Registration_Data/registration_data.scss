@@ -1,225 +1,242 @@
 .registration_data {
-    display: grid;
-    place-items: center;
+  padding: 20px 0;
+  display: grid;
+  place-items: center;
+  position: relative;
+  height: auto;
 
-    height: auto;
+  p {
+    color: white;
+  }
 
-    p {
+  label {
+    color: white;
+  }
+
+  .registration_data__container {
+    width: 85%;
+
+    .title_box__reg_data {
+      height: 32px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .create_account__title {
+        width: 100%;
+        text-align: center;
+        font-family: Avenir;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: center;
         color: white;
+      }
     }
 
-    label {
-        color: white
-    }
+    .create_account__content {
+      margin-top: 25px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
 
-    .registration_data__container {
-        width: 85%;
+      .user_data__box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        margin-bottom: 25px;
 
-        .title_box__reg_data {
-            padding-top: 10px;
-
-            display: flex;
-            align-items: center;
-            width: 100%;
-
-            .create_account__title {
-
-                width: 95%;
-
-                font-family: Avenir;
-                font-size: 16px;
-                font-weight: 700;
-                line-height: 22px;
-                letter-spacing: 0em;
-                text-align: center;
-                color: white;
-            }
+        .user_data_label {
+          font-family: Avenir;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 27px;
+          letter-spacing: 0em;
         }
 
-        .create_account__content {
-
-            margin-top: 25px;
-
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-
-            .user_data__box {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: start;
-
-                margin-bottom: 25px;
-
-                .user_data_label {
-                    font-family: Avenir;
-                    font-size: 20px;
-                    font-weight: 700;
-                    line-height: 27px;
-                    letter-spacing: 0em;
-                }
-
-                .user_data_input {
-                    padding-left: 10px;
-
-                    height: 50px;
-                    width: 100%;
-
-                    font-family: Avenir;
-                    font-size: 20px;
-                    font-weight: 700;
-                    line-height: 27px;
-                    letter-spacing: 0em;
-
-                    color: rgb(255, 255, 255);
-
-                    border: none;
-                    outline: none;
-                    border-radius: 15px;
-
-                    background: rgba(119, 119, 119, 1);
-                }
-
-                .user_data_info {
-                    font-family: Avenir;
-                    font-size: 10px;
-                    font-weight: 400;
-                    line-height: 27px;
-                    letter-spacing: 0em;
-
-                    color: rgb(84, 84, 84);
-                }
-            }
-
-            .user_terms {
-                display: flex;
-                flex-direction: column;
-
-                .user_terms__text {
-                    font-family: Avenir;
-                    font-size: 10px;
-                    font-weight: 600;
-                    line-height: 14px;
-                    letter-spacing: 0em;
-                    text-align: left;
-                }
-
-                .terms_link {
-                    text-decoration: none;
-
-                    font-family: Avenir;
-                    font-size: 10px;
-                    font-weight: 600;
-                    line-height: 14px;
-                    letter-spacing: 0em;
-                    text-align: left;
-
-                    color: rgba(30, 215, 96, 1);
-                }
-            }
-
-            .extra_box {
-                margin-top: 25px;
-
-                .user_extra {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-
-                    .user_extra__text {
-                        width: 75%;
-
-                        font-family: Avenir;
-                        font-size: 10px;
-                        font-weight: 600;
-                        line-height: 14px;
-                        letter-spacing: 0em;
-                        text-align: left;
-
-                    }
-
-                    .user_extra__inp {
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-
-                        border: 2px solid rgba(114, 114, 114, 1);
-                        outline: none;
-
-                        background: none;
-                    }
-                }
-            }
-
-            .create_user__btn {
-                margin: 0 auto;
-
-                margin-top: 50px;
-
-                width: 55%;
-                height: 40px;
-
-                border-radius: 20px;
-
-                font-family: Avenir;
-                font-size: 15px;
-                font-weight: 600;
-                line-height: 20px;
-                letter-spacing: 0em;
-
-                border: none;
-                outline: none;
-
-                background-color: white;
-            }
-
-            .error_label{
-                font-family: Avenir;
-                font-size: 20px;
-                font-weight: 700;
-                line-height: 27px;
-                letter-spacing: 0em;
-
-                color: red;
-            }
-
-            .error_input {
-                padding-left: 10px;
-
-                height: 50px;
-                width: 100%;
-
-                font-family: Avenir;
-                font-size: 20px;
-                font-weight: 700;
-                line-height: 27px;
-                letter-spacing: 0em;
-
-                color: rgb(255, 0, 0);
-
-                border: 2px solid red;
-                outline: none;
-                border-radius: 15px;
-
-                background: rgba(119, 119, 119, 1);
-
-
-            }
-
-            .error_box_extra {
-                width: 100%;
-                text-align: center;
-                .error_box_extra_text {
-                    padding-top: 10px;
-                    color: red;
-                    font-size: 15px;
-                    font-weight: 600;
-                    line-height: 20px;
-                    letter-spacing: 0em;
-                }
-
-            }
+        .user_data_input {
+          padding-left: 10px;
+          height: 50px;
+          width: 100%;
+          font-family: Avenir;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 20px;
+          letter-spacing: 0em;
+          color: rgb(255, 255, 255);
+          border: none;
+          outline: none;
+          border-radius: 6px;
+          background: rgba(119, 119, 119, 1);
         }
+
+        .user_data_info {
+          font-family: Avenir;
+          font-size: 10px;
+          font-weight: bold;
+          letter-spacing: 0em;
+          line-height: 20px;
+          color: rgb(84, 84, 84);
+        }
+      }
+
+      .user_terms {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+
+        .user_terms__text {
+          font-family: Avenir;
+          font-size: 11px;
+          font-weight: 600;
+          line-height: 16px;
+          letter-spacing: 0em;
+          text-align: center;
+        }
+
+        .terms_link {
+          text-decoration: none;
+          font-family: Avenir;
+          font-size: 11px;
+          font-weight: 600;
+          text-decoration: underline;
+          line-height: 16px;
+          letter-spacing: 0em;
+          text-align: left;
+          margin-left: 3px;
+          color: rgba(30, 215, 96, 1);
+        }
+      }
+
+      .extra_box {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+
+        .user_extra {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .user_extra__text {
+            width: 75%;
+            font-family: Avenir;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 14px;
+            letter-spacing: 0em;
+            text-align: left;
+          }
+
+          .user_extra__inp {
+            width: 24px;
+            height: 24px;
+            border-radius: 100%;
+            border: 1px solid rgba(114, 114, 114, 1);
+            outline: none;
+            background: none;
+          }
+        }
+      }
+
+      .create_user__btn {
+        margin: 0 auto;
+        margin-top: 50px;
+        width: 55%;
+        height: 40px;
+        border-radius: 20px;
+        font-family: Avenir;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: 0em;
+        border: none;
+        outline: none;
+        background-color: white;
+      }
+
+      .error_label {
+        font-family: Avenir;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 27px;
+        letter-spacing: 0em;
+        color: red;
+      }
+
+      .error_input {
+        padding-left: 10px;
+        height: 50px;
+        width: 100%;
+        font-family: Avenir;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 27px;
+        letter-spacing: 0em;
+        color: rgb(255, 0, 0);
+        border: 2px solid red;
+        outline: none;
+        border-radius: 15px;
+        background: rgba(119, 119, 119, 1);
+      }
+
+      .error_box_extra {
+        width: 100%;
+        text-align: center;
+        .error_box_extra_text {
+          padding-top: 10px;
+          color: red;
+          font-size: 15px;
+          font-weight: 600;
+          line-height: 20px;
+          letter-spacing: 0em;
+        }
+      }
     }
+  }
 }
+.popUp {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	position: fixed;
+	width: 60%;
+	top: 10%;
+	left: 50%;
+	z-index: 999;
+	background-color: #333;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transform: translate(-50%, 100%);
+	animation: fadeOutAndReturn 5s ease-in-out forwards;
+}
+
+.error:hover {
+	background-color: #555;
+}
+
+@keyframes fadeOutAndReturn {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -200%);
+	}
+
+	50% {
+		opacity: 1;
+		transform: translate(-50%, -50%);
+	}
+
+	100% {
+		background-color: #2E8B57;
+		opacity: 0;
+		transform: translate(-50%, -200%);
+	}
+}
+
