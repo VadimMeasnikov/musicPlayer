@@ -90,6 +90,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
         }
     }
 
+
     return (
         isLoading ? (
             <p> Loading...</p >
@@ -117,7 +118,6 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                     {
                         onLoading ? (
                             <div>
-                                <p>hello world</p>
                                 {favArtists.map((item, key) => (
                                     <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()} />
                                 ))}

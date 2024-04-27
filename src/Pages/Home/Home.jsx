@@ -135,7 +135,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="homePage">
-          {isOpenCurrentArtist && <CurrentArtist artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal}/>}
+          {isOpenCurrentArtist && <CurrentArtist className='artist_modal' artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal}/>}
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}

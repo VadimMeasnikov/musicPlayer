@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react'
 import './ProfileCard.scss'
 
 export default function ProfileCard({ data, dataAlbum }) {
-
 	const [title, setTitle] = useState(null) //Имя альбома
 	const [src, setSrc] = useState('')
 	const [status, setStatus] = useState('Artist')
 
 	useEffect(() => {
-      if(dataAlbum.name == null){
-		setStatus('Artist')
-		setTitle(data.name)
-	  } else {
-		setStatus('Album')
-		setTitle(dataAlbum.name)
-	  }
-	  if(dataAlbum.name == null){
-		setSrc(data.image)
-	  } else {
-         setSrc(dataAlbum.tracks.image)
-	  }
+		if (dataAlbum.name == null) {
+			setStatus('Artist')
+			setTitle(data.name)
+		} else {
+			setStatus('Album')
+			setTitle(dataAlbum.name)
+		}
+		if (dataAlbum.name == null) {
+			setSrc(data.image)
+		} else {
+			setSrc(dataAlbum.tracks[0].album_image)
+		}
 	}, [])
 
 	const content = 'Artist'

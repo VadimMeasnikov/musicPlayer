@@ -13,7 +13,6 @@ import { RxPlay } from "react-icons/rx";
 import useSound from 'use-sound'
 import music_track from "../../tracks/The Beatles - From Me To You.mp3"
 
-
 import repeat_active  from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
 
@@ -28,7 +27,7 @@ export default function Player() {
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
-    const [play, { pause, duration, sound }] = useSound(track);
+    const [play, { pause, duration, sound }] = useSound(music_track);
     
     
 
