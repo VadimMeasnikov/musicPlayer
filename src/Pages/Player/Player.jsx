@@ -10,6 +10,9 @@ import { LiaPauseSolid } from "react-icons/lia";
 import { GrPlay } from "react-icons/gr";
 import { LiaPlaySolid } from "react-icons/lia";
 import { RxPlay } from "react-icons/rx";
+import useSound from 'use-sound'
+import music_track from "../../tracks/The Beatles - From Me To You.mp3"
+
 
 import repeat_active  from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
@@ -23,21 +26,35 @@ import './player.scss'
 export default function Player() {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [isPlay, setIsPlay] = useState(false)
+    const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
+    const [play, { pause, duration, sound }] = useSound(track);
+    
+    
 
     const navigate = useNavigate()
-    const goBackBtn = () => {
-        navigate(-1)
-    }
+    // const goBackBtn = () => {
+    //     navigate(-1)
+    // }
 
-    function handleControlTrack(){
-        setIsPlay(pr => !pr)
-    }
+    //  function handleControlTrack(){
+    //      setIsPlaying(pr => !pr)
+    //  }
 
-    function handleRepeatControl(){
-        setRepeatState(pr => !pr)
-    }
+    // function handleRepeatControl(){
+    //     setRepeatState(pr => !pr)
+    // }
+
+
+    const playingButton = () => {
+        if (isPlaying) {
+          pause(); 
+          setIsPlaying(false);
+        } else {
+          play(); 
+          setIsPlaying(true);
+        }
+      };
 
 
     return (
@@ -100,7 +117,7 @@ export default function Player() {
                     <div className='track_info'>
                         <div className="track_content_1">
                         <div className='track_info_content'>
-                            <div className="marquee-container"><h2 className='track_name'>Вгьи</h2></div>                          
+                            <div className="marquee-container"><h2 className='track_name'>From Me To You</h2></div>                          
                             <h3 className='track_artist'>The Beatles</h3>
                         </div>
                         <div className="track_content_2">
@@ -112,15 +129,15 @@ export default function Player() {
                     <div className='track_function'>
                         <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
                         <button className='track_function__btn prev_track'> <img src={Back} alt="" width={36} height={37} /></button>
-                        {isPlay ? 
+                        {isPlaying ? 
                             (
-                                <button onClick={() => handleControlTrack()} className='track_function__btn play'>
+                                <button onClick={playingButton} className='track_function__btn play'>
                                    <LiaPauseSolid id='stop'/>
                                 </button>
                             )
                             :
                             (
-                                <button onClick={() => handleControlTrack()} className='track_function__btn play'>
+                                <button onClick={playingButton} className='track_function__btn play'>
                                     < RxPlay  id='start'/>
                                 </button>
                             )}

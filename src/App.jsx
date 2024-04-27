@@ -43,6 +43,7 @@ export default function App() {
 
         <Route path='/' element={<Home/>} />
         <Route path='/registration' element={<Registration userObj={userObj}/>} />
+        <Route path='/player' element={<Player/>} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
