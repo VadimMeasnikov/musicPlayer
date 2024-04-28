@@ -160,9 +160,9 @@ export default function Player() {
                 </div>
                 <div className='player_content' >
                     <div className='upper_info'>
-                        <button className='go_back__btn' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
-                        <h1>{trackAlbum}</h1>
-                        <button onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
+                        <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
+                        <h1 className='page_player_title'>{trackAlbum}</h1>
+                        <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
                     </div>
                     <img src={trackImage} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>
