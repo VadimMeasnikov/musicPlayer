@@ -12,6 +12,7 @@
 }
 .currentArtist {
   width: 100%;
+  height: 100%;
   .currentArtistTopPanel {
     width: 100%;
     height: 72px;
@@ -44,27 +45,28 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      .followArtistBtn {
+      .followArtistBtn, .followArtistBtn--active {
         position: relative;
         outline: none;
         font-family: Roboto;
         cursor: pointer;
         font-size: 14px;
         line-height: 1;
-        border-radius: 15px;
+        border-radius: 10px;
         transition-property: background-color, border-color, color, box-shadow,
           filter;
         transition-duration: 0.3s;
-        border: 1px solid transparent;
+        border: 1px solid rgb(124, 124, 124);
         letter-spacing: normal;
         white-space: normal;
         font-weight: bold;
         text-align: center;
-        padding: 17px 30px;
+        padding: 12px 20px;
         color: white;
-        box-shadow: inset 0 0 0 2px #616467;
         background-color: transparent;
-        height: 48px;
+      }
+      .followArtistBtn--active{
+        border: 1px solid white;
       }
       .playBtn {
         width: 48px;

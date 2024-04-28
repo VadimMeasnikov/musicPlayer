@@ -86,9 +86,15 @@ export default function CurrentArtist({
         </div>
         <div className="currentArtistInfoBox">
           <div className="currentArtistButtons">
-            <button onClick={handleUserFollowing} className="followArtistBtn">
-              {isFollowed ? "Following" : "Follow"}
-            </button>
+            {isFollowed ? (
+              <button onClick={handleUserFollowing} className="followArtistBtn--active">
+                Following
+              </button>
+            ) : (
+              <button onClick={handleUserFollowing} className="followArtistBtn">
+                Follow
+              </button>
+            )}
             <img className="playBtn" src={PlayButton} alt="Play" />
           </div>
           <div className="currentArtistTopTracks">
