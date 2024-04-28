@@ -22,6 +22,8 @@ export default function Player() {
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
 
+    const [isRotation, setIsRotation] = useState(false)
+
     const [trackData, setTrackData] = useState(null)
     const [trackName, setTrackName] = useState("")
     const [trackArtist, setTrackArtist] = useState("")
@@ -77,6 +79,11 @@ export default function Player() {
             setTrackImage(currentTrack.image)
             setTrackAudio(currentTrack.audio)
             setTrackData(trackObj)
+
+            if(currentTrack.name.length >= 25){
+                setIsRotation(true)
+            }
+        
             return trackObj
         }
         catch (e) {
@@ -119,6 +126,7 @@ export default function Player() {
                         <h1>1(Remastered)</h1>
                         <h2>The Beatles</h2>
                         <div className='modal_function'>
+                            <button onClick={() => { setIsOpen(pr => !pr) }}>Close</button>
                             <div>
                                 <button><img src={Like} alt="" width={21} height={20} />Like</button>
 
@@ -153,7 +161,7 @@ export default function Player() {
                             </div>
 
                         </div>
-                        <button onClick={() => { setIsOpen(pr => !pr) }}>Close</button>
+
                     </div>
 
 
@@ -167,8 +175,8 @@ export default function Player() {
                     <img src={trackImage} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>
                         <div className="track_content_1">
-                            <div className='track_info_content'>
-                                <div className="marquee-container"><h2 className='track_name'>{trackName}</h2></div>
+                            <div className="track_info_content ">
+                                <div className={`marquee-container ${isRotation? ('rotation') : ('no_rotation')}`}><h2 className='track_name'>{trackName}</h2></div>
                                 <h3 className='track_artist'>{trackArtist}</h3>
                             </div>
                             <div className="track_content_2">

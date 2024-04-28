@@ -81,7 +81,7 @@
             justify-content: start;
             overflow: hidden;
 
-            .marquee-container {
+            .rotation {
                 white-space: nowrap;
                 animation: marquee 15s linear infinite;
             }
@@ -173,14 +173,14 @@
 }
 
 
-.track_modal {
+.track_modal{
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100vh;
     z-index: 999999;
-    // background: linear-gradient(#490F0A, #121212);
+    background: inherit;
     visibility: hidden;
     overflow-y: auto;
     opacity: 0;
@@ -215,7 +215,8 @@
 .open {
     visibility: visible;
     opacity: 1;
-    transition: 0.15s;
+    transition: 0.25s;
+    background-color: rgba(0, 0, 0, 0.777);
 }
 
 .track_box_modal {
@@ -260,6 +261,20 @@
         flex-direction: row;
         color: #ffffff;
     }
+}
 
+.player {
+    animation: fadeIn 0.25s ease-in;
+}
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
