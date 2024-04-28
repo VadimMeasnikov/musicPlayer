@@ -17,13 +17,6 @@ import GetCurrentColor from '../../GetCurrentColor'
 import './player.scss'
 
 
-
-
-
-
-
-
-
 export default function Player() {
 
     const [isOpen, setIsOpen] = useState(false)

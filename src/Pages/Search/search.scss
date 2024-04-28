@@ -48,6 +48,7 @@ html {
           line-height: 22px;
           letter-spacing: 0%;
           &::placeholder {
+            font-family: Avenir;
             color: rgb(158, 158, 158);
             font-size: 16px;
             font-weight: 600;
@@ -70,7 +71,7 @@ html {
       .search-page__title {
         transition: 1s all ease-in-out;
         color: rgb(255, 255, 255);
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Avenir;
         font-size: 19px;
         font-weight: 700;
         line-height: 28px;

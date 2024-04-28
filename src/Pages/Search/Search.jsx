@@ -3,7 +3,7 @@ import Navigation from "../../Components/Navigation/Navigation";
 import SearchCard from "../../Components/SearchCard/SearchCard";
 import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
-import { Link } from "react-router-dom";
+import { CgSpinnerTwoAlt } from "react-icons/cg";
 import tabsData from "../../tabs.json";
 import "./search.scss";
 
@@ -20,6 +20,8 @@ export default function Search() {
   const [searchTracks, setSearchTracks] = useState([]);
   // обновленный результат поиска
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // логика обновления содержимого в инпуте
@@ -39,11 +41,11 @@ export default function Search() {
     if (data && data.results) {
       setSearchTracks(data.results);
       console.log(data);
+      setLoading(false);
     } else {
       setSearchTracks([]);
     }
   }, [data]);
-
 
   // логика обновления активного таба
   // для запроса в api
@@ -78,18 +80,29 @@ export default function Search() {
           ))}
         </div>
         <div className="search-page__results">
-          {error && <p>Error: {error.message}</p>}
-          {searchTracks && searchTracks.length > 0 ? (
-          
-              searchTracks.map((item, index) => (
-              <SearchCard
-                key={index}
-                info={item}
-                onClick={() => console.log(item.path)}
+          {loading ? (
+            <div className="spinnerBox">
+              <CgSpinnerTwoAlt
+                color="white"
+                className="spinner"
+                display="block"
               />
-              ))
+            </div>
           ) : (
-            <p className="noResults">No results found</p>
+            <>
+              {error && <p>Error: {error.message}</p>}
+              {searchTracks && searchTracks.length > 0 ? (
+                searchTracks.map((item, index) => (
+                  <SearchCard
+                    key={index}
+                    info={item}
+                    onClick={() => console.log(item.path)}
+                  />
+                ))
+              ) : (
+                <p className="noResults">No results found</p>
+              )}
+            </>
           )}
         </div>
       </div>
