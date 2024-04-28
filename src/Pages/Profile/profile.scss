@@ -1,5 +1,5 @@
 .profile {
-    padding-top: 30px;
+
 
 
 	h1,
@@ -18,7 +18,7 @@
 	.profile_container {
 		width: 95%;
 		margin: 0 auto;
-
+        padding-top: 30px;
         .your_library{
             display: flex;
             justify-content: space-between;
@@ -78,4 +78,21 @@
 	}
 }
 
-
+.fade-in {
+    animation: fadeIn 0.25s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .hidden {
+    display: none;
+  }

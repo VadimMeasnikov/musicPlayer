@@ -110,11 +110,11 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
-    if (!user.email) {
-      navigate("/registration");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user.email) {
+  //     navigate("/registration");
+  //   }
+  // }, []);
 
   // Страница артиста
   const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);

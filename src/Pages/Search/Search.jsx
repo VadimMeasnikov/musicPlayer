@@ -3,8 +3,9 @@ import Navigation from "../../Components/Navigation/Navigation";
 import SearchCard from "../../Components/SearchCard/SearchCard";
 import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
-import "./search.scss";
+import { Link } from "react-router-dom";
 import tabsData from "../../tabs.json";
+import "./search.scss";
 
 export default function Search() {
   // данные для табов(tabs.json)
@@ -31,7 +32,7 @@ export default function Search() {
 
   //мидлвейр поиска
   const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
-  
+
 
   useEffect(() => {
     // проверка, есть ли ответ из api
@@ -79,13 +80,14 @@ export default function Search() {
         <div className="search-page__results">
           {error && <p>Error: {error.message}</p>}
           {searchTracks && searchTracks.length > 0 ? (
-            searchTracks.map((item, index) => (
+          
+              searchTracks.map((item, index) => (
               <SearchCard
                 key={index}
                 info={item}
                 onClick={() => console.log(item.path)}
               />
-            ))
+              ))
           ) : (
             <p className="noResults">No results found</p>
           )}
