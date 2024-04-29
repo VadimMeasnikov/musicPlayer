@@ -14,7 +14,7 @@ import useSound from 'use-sound'
 import music_track from "../../tracks/The Beatles - From Me To You.mp3"
 
 
-import repeat_active  from '../../img/trackFunction/Repeat.png'
+import repeat_active from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
 
 import './player.scss'
@@ -25,12 +25,21 @@ import './player.scss'
 
 export default function Player() {
 
+
+
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
-    const [play, { pause, duration, sound }] = useSound(track);
-    
-    
+    const [play, { pause, duration, sound }] = useSound(music_track);
+    const [currTime, setCurrTime] = useState({
+        min: "",
+        sec: "",
+    });
+
+    const [seconds, setSeconds] = useState();
+
+
+
 
     const navigate = useNavigate()
     // const goBackBtn = () => {
@@ -48,16 +57,37 @@ export default function Player() {
 
     const playingButton = () => {
         if (isPlaying) {
-          pause(); 
-          setIsPlaying(false);
+            pause();
+            setIsPlaying(false);
         } else {
-          play(); 
-          setIsPlaying(true);
+            play();
+            setIsPlaying(true);
         }
-      };
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (sound) {
+                setSeconds(sound.seek([]));
+                const min = Math.floor(sound.seek([]) / 60);
+                const sec = Math.floor(sound.seek([]) % 60);
+                setCurrTime({
+                    min,
+                    sec,
+                });
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [sound]);
+
+
+
 
 
     return (
+
+
+
         <div className='player'>
             <div className='player_container'>
                 <div className={isOpen ? 'track_modal open' : 'track_modal'}>
@@ -116,39 +146,58 @@ export default function Player() {
                     <img src={track} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>
                         <div className="track_content_1">
-                        <div className='track_info_content'>
-                            <div className="marquee-container"><h2 className='track_name'>From Me To You</h2></div>                          
-                            <h3 className='track_artist'>The Beatles</h3>
+                            <div className='track_info_content'>
+                                <div className="marquee-container"><h2 className='track_name'>From Me To You</h2></div>
+                                <h3 className='track_artist'>The Beatles</h3>
+                            </div>
+                            <div className="track_content_2">
+                                <button className='add_fav_song_btn'><img src={Like} alt="" /></button>
+                            </div>
                         </div>
-                        <div className="track_content_2">
-                            <button className='add_fav_song_btn'><img src={Like} alt="" /></button>
-                        </div>
-                        </div>                    
-                        <img src={time} alt="" />
+                        
+                            
+                            <input
+                                type="range"
+                                min="0"
+                                max={duration / 1000}
+                                default="0"
+                                value={seconds}
+                                className="timeline"
+                                onChange={(e) => {
+                                    sound.seek([e.target.value]);
+                                }}
+                            />
+                            <div className="track_time">
+                                <p>
+                                    {currTime.min}:{currTime.sec}
+                                </p>
+                                
+                            </div>
+                        
                     </div>
                     <div className='track_function'>
                         <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
                         <button className='track_function__btn prev_track'> <img src={Back} alt="" width={36} height={37} /></button>
-                        {isPlaying ? 
+                        {isPlaying ?
                             (
                                 <button onClick={playingButton} className='track_function__btn play'>
-                                   <LiaPauseSolid id='stop'/>
+                                    <LiaPauseSolid id='stop' />
                                 </button>
                             )
                             :
                             (
                                 <button onClick={playingButton} className='track_function__btn play'>
-                                    < RxPlay  id='start'/>
+                                    < RxPlay id='start' />
                                 </button>
                             )}
                         {/* <button className='track_function__btn play'> <img src={Play} alt="" width={67} height={67} /></button> */}
                         <button className='track_function__btn next_track'> <img src={Back} alt="" width={36} height={37} className='vector' /></button>
                         <button onClick={() => handleRepeatControl()} className='track_function__btn repeat'>
-                            {repeatState ? 
-                            (<img className='repeat_img' src={repeat_active} alt="" />)
-                            :
-                            (<img className='repeat_img' src={repeat} alt="" />)
-                            }                           
+                            {repeatState ?
+                                (<img className='repeat_img' src={repeat_active} alt="" />)
+                                :
+                                (<img className='repeat_img' src={repeat} alt="" />)
+                            }
                         </button>
                     </div>
                 </div>
