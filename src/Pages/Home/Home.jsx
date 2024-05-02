@@ -12,7 +12,6 @@ import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import CurrentArtist from "../CurrentArtist/CurrentArtist";
 import "./home.scss";
 
 export default function Home() {
@@ -115,18 +114,6 @@ export default function Home() {
   //     navigate("/registration");
   //   }
   // }, []);
-
-  // Страница артиста
-  const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
-  const [artistModalData, setArtistModalData] = useState({});
-  function openCurrentArtistModal() {
-    setIsOpenCurrentArtist(true);
-    console.log("Open");
-  }
-  function closeCurrentArtistModal() {
-    setIsOpenCurrentArtist(false);
-    console.log("Close");
-  }
   return (
     <div className="wrapper">
       {isPageLoading ? (
@@ -135,7 +122,6 @@ export default function Home() {
         </div>
       ) : (
         <div className="homePage">
-          {isOpenCurrentArtist && <CurrentArtist className='artist_modal' artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal}/>}
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}
@@ -268,8 +254,6 @@ export default function Home() {
                 <ArtistMiniCard
                   key={index}
                   artist={item}
-                  openCurrentArtistModal={openCurrentArtistModal}
-                  setArtistModalData={setArtistModalData}
                 />
               ))}
             </div>

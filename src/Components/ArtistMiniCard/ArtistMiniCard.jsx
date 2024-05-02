@@ -1,30 +1,31 @@
 import "./artistminicard.scss";
 import defaultImg from "../../img/default.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
 
-export default function MiniCard({
-  artist,
-  openCurrentArtistModal,
-  setArtistModalData,
-}) {
+export default function MiniCard({ artist }) {
   const [src, setSrc] = useState(artist.image);
-  if (src === "") {
-    setSrc(defaultImg);
-  }
+  useEffect(() => {
+    if (!artist.image) {
+      setSrc(defaultImg);
+    }
+  }, [artist.image]);
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(addArtistData(artist));
+  };
   return (
-    <div
-      className="artistCard"
-      onClick={() => {
-        openCurrentArtistModal();
-        setArtistModalData(artist);
-      }}
-    >
-      <div className="artistCard-img">
-        <img src={src} alt="img" />
+    <NavLink onClick={handleClick} to="/artist">
+      <div className="artistCard">
+        <div className="artistCard-img">
+          <img src={src} alt="img" />
+        </div>
+        <div className="artistCard-title">
+          <p>{artist.name}</p>
+        </div>
       </div>
-      <div className="artistCard-title">
-        <p>{artist.name}</p>
-      </div>
-    </div>
+    </NavLink>
   );
 }

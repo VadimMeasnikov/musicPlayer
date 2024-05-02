@@ -6,6 +6,7 @@ import { artistsApi } from "./queryApi/getArtists";
 import userReducer from "./slices/userSlice";
 import userKeySlice from "./slices/userKeySlice";
 import playlistSlice from "./slices/playlistSlice";
+import artistSlice from "./slices/artistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
 
 export const store = configureStore({
@@ -16,7 +17,8 @@ export const store = configureStore({
     user: userReducer,
     userKey: userKeySlice,
     userArtists: userArtistsSlice, 
-    playlists: playlistSlice
+    playlists: playlistSlice,
+    artist: artistSlice
   },
   middleware: (getDefault) =>
     getDefault().concat(

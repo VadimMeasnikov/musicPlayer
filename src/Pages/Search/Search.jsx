@@ -96,7 +96,7 @@ export default function Search() {
                   <SearchCard
                     key={index}
                     info={item}
-                    onClick={() => console.log(item.path)}
+                    onClick={console}
                   />
                 ))
               ) : (
