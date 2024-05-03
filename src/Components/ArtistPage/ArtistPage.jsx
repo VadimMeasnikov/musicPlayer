@@ -6,10 +6,21 @@ import GoBackButton from "../GoBackButton/GoBackButton";
 import { clearArtistData } from "../../reduxToolkit/slices/artistSlice";
 import "./ArtistPage.scss";
 import PlayButton from "../../img/PlayButton.png";
+import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 
 export default function ArtistPage() {
   const artistData = useSelector((state) => state.artist.artistData);
   console.log(artistData);
+  const { data, error } = useSearchQuery({ path: "artists/albums/", name: artistData.name });
+  const [artistAlbums, setArtistAlbums] = useState([]);
+  useEffect(()=>{
+    if(data && data.results){
+      setArtistAlbums(data.results[0].albums);
+    } else {
+      setArtistAlbums([]);
+    }
+  },[data]);
+  console.log(artistAlbums);
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
   const [itemsToShow, setItemsToShow] = useState(5);
@@ -108,6 +119,19 @@ export default function ArtistPage() {
               <button onClick={showMore}>See more</button>
             ) : (
               <button onClick={showLess}>Show less</button>
+            )}
+          </div>
+          <div className="artistPage-topTracks">
+            <h1>Discography</h1>
+            {artistAlbums && (
+              <ol className="albums">
+                {artistAlbums.slice(0, 3).map((item) => (
+                  <li key={item.id}>
+                    <img src={item.image} alt="Img" />
+                    <span>{item.name}</span>
+                  </li>
+                ))}
+              </ol>
             )}
           </div>
         </div>

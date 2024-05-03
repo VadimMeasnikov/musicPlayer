@@ -13,28 +13,18 @@ import { useGetData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import "./home.scss";
-
 export default function Home() {
   const { data } = useGetTrackQuery();
-  // Стейт для треков
   const [featured, setFeatured] = useState([]);
-  // Стейт для приветствия
   const [greeting, setGreeting] = useState("");
-  // Отображение имени на главной странице
   const [isPageLoading, setIsPageLoading] = useState(false);
-
   const { username } = useSelector((state) => state.user);
-
   const [playlistDataLoaded, setPlaylistDataLoaded] = useState(false);
-
-  // Проверка, существует ли массив с треками
   useEffect(() => {
     if (data && data.results) {
       setFeatured(data.results);
     }
   }, [data]);
-
-  // Логика времени
   const currentHour = new Date().getHours();
   useEffect(() => {
     if (currentHour >= 4 && currentHour < 12) {
@@ -47,22 +37,18 @@ export default function Home() {
       setGreeting("Good night, ");
     }
   }, []);
-
-  const auth = getAuth()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const user = useSelector(state => state.user)
-  const usersDbData = useGetData()
-  console.log(usersDbData);
-  console.log(user);
+  const auth = getAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(state => state.user);
+  const usersDbData = useGetData();
+  // console.log(usersDbData);
+  // console.log(user);
   const userFb = auth.currentUser
-
-  //Создание плейлистов.
   const [formattedDate, setFormattedDate] = useState("");
   const selectedArtists = useSelector(
     (state) => state.userArtists.userAppArtists
   );
-
   useEffect(() => {
     const updateFormattedDate = () => {
       setFormattedDate(new Date().toISOString().slice(0, 10));
@@ -71,31 +57,27 @@ export default function Home() {
     const intervalId = setInterval(updateFormattedDate, 24 * 60 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, []);
-
   const playlistInfo = useSelector((state) => state.playlists.tracks);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
       createPlaylists(selectedArtists, dispatch, formattedDate);
   }, [selectedArtists, dispatch, formattedDate]);
-
   useEffect(() => {
     if (!playlistDataLoaded && playlistInfo !== undefined) {
       setLoading(false);
       setPlaylistDataLoaded(true);
     }
   }, [playlistInfo, playlistDataLoaded]);
-
   const [artists, setArtists] = useState(selectedArtists);
   useEffect(() => {
     if (playlistInfo !== undefined) {
       setLoading(false);
     }
   }, [playlistInfo]);
-
   async function createPlaylists(artists, dispatch, formattedDate) {
     try {
       artists.map(async (artist) => {
-        console.log(artist);
+        // console.log(artist);
         const playlistName = `${artist.name} Mix`;
         const response = await fetch(
           `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
@@ -108,12 +90,11 @@ export default function Home() {
       console.error("Error creating playlists:", error);
     }
   }
-
-  // useEffect(() => {
-  //   if (!user.email) {
-  //     navigate("/registration");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user.email) {
+      navigate("/registration");
+    }
+  }, []);
   return (
     <div className="wrapper">
       {isPageLoading ? (

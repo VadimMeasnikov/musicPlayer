@@ -7,7 +7,7 @@ export const artistsApi = createApi({
     }),
     endpoints: (builder) => ({
         getArtists: builder.query({
-            query: () => 'artists/?client_id=354e8ba5&format=jsonpretty&limit=21', 
+            query: () => 'artists/?client_id=354e8ba5&format=jsonpretty&limit=23', 
         })
     })
 });

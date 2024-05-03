@@ -131,7 +131,7 @@ export default function Artists() {
 					</div>
 				</div>
 				<div className='card_block'>
-					{filteredArtists.map(item => (
+					{filteredArtists.filter(item => item.image !== "").map(item => (
 						<Artist key={item.id} item={item} onSelect={handleArtistSelect} />
 					))}
 				</div>
@@ -149,13 +149,3 @@ export default function Artists() {
 		</div>
 	)
 }
-
-
-
-
-
-// function handleArtistSelect(artist) {
-
-
-
-
