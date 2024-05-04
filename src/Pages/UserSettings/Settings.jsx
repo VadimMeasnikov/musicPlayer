@@ -10,7 +10,7 @@ import "./settings.scss"
 export default function Settings({modalArr}) {
     const {isSettings, setIsSettings} = modalArr
     return (
-        <>
+        <div className='wrapper'>
             <div className="header">
                 <div className="header-components">
                     <button className='go_back__btn' onClick={() => setIsSettings(false)}> <img src={ChevronLeft} alt="" /></button>                  
@@ -76,6 +76,6 @@ export default function Settings({modalArr}) {
                 </div>
                 <Navigation />
             </main>
-        </>
+        </div>
     )
 }

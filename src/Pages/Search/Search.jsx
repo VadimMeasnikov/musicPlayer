@@ -5,7 +5,9 @@ import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import tabsData from "../../tabs.json";
+import { useDispatch } from "react-redux";
 import "./search.scss";
+
 
 export default function Search() {
   // данные для табов(tabs.json)

@@ -57,6 +57,7 @@ export default function LogIn() {
           )
 
           const artistsArr = JSON.parse(userDb.artists)
+          console.log(typeof artistsArr);
           artistsArr.map((artist, key) => {
             console.log(artist);
             dispatch(setArtists(artist));

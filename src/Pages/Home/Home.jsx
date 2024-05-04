@@ -16,17 +16,20 @@ import CurrentArtist from "../CurrentArtist/CurrentArtist";
 import "./home.scss";
 
 export default function Home() {
+
+  const usersDbData = useGetData();
   const { data } = useGetTrackQuery();
   // Стейт для треков
   const [featured, setFeatured] = useState([]);
   // Стейт для приветствия
   const [greeting, setGreeting] = useState("");
   // Отображение имени на главной странице
-  const [isPageLoading, setIsPageLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   const { username } = useSelector((state) => state.user);
 
   const [playlistDataLoaded, setPlaylistDataLoaded] = useState(false);
+
 
   // Проверка, существует ли массив с треками
   useEffect(() => {
@@ -37,7 +40,11 @@ export default function Home() {
 
   // Логика времени
   const currentHour = new Date().getHours();
+  const auth = getAuth()
+  const userRd = useSelector(state => state.user)
+
   useEffect(() => {
+
     if (currentHour >= 4 && currentHour < 12) {
       setGreeting("Good morning, ");
     } else if (currentHour >= 12 && currentHour < 17) {
@@ -47,16 +54,72 @@ export default function Home() {
     } else {
       setGreeting("Good night, ");
     }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user && !userRd.email) {
+        console.log(user);
+        processUsersData()
+      } else{
+        setIsPageLoading(false)
+      }
+    });
   }, []);
 
-  const auth = getAuth()
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
+  const userFb = auth.currentUser;
+
+
+  async function processUsersData() {
+    try {
+      const usersArray = await createUsersArray();
+      const key = userFb.displayName;
+      const user = await getCurrentUser(usersArray, key)
+
+      const artists = getCurrentUserData(user)
+      console.log(artists);
+      setIsPageLoading(false)
+      return user
+    } catch (error) {
+      console.error('Error processing users data: ', error);
+    }
+  }
+
+  function createUsersArray() {
+    return new Promise((resolve) => {
+      console.log(usersDbData);
+      console.log(usersDbData.data);
+      const usersArray = Object.entries(usersDbData.data).map(([key, value]) => {
+        return { id: key, ...value };
+      });
+      console.log(usersArray);
+      resolve(usersArray);
+    });
+  }
+
+  function getCurrentUserData(user) {
+    console.log(user);
+    const artistsArr = JSON.parse(user.artists)
+
+    console.log(artistsArr);
+
+    artistsArr.map((artist) => (
+      dispatch(setArtists(artist))
+    ))
+    return artistsArr
+  }
+
+
+
+  function getCurrentUser(usersArray, key) {
+    const currentUser = usersArray.find((user) => user.key === key);
+    console.log(currentUser);
+    return currentUser;
+  }
+
   const user = useSelector(state => state.user)
-  const usersDbData = useGetData()
-  console.log(usersDbData);
-  console.log(user);
-  const userFb = auth.currentUser
 
   //Создание плейлистов.
   const [formattedDate, setFormattedDate] = useState("");
@@ -73,10 +136,13 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+
+
+
   const playlistInfo = useSelector((state) => state.playlists.tracks);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-      createPlaylists(selectedArtists, dispatch, formattedDate);
+    createPlaylists(selectedArtists, dispatch, formattedDate);
   }, [selectedArtists, dispatch, formattedDate]);
 
   useEffect(() => {
@@ -96,7 +162,6 @@ export default function Home() {
   async function createPlaylists(artists, dispatch, formattedDate) {
     try {
       artists.map(async (artist) => {
-        console.log(artist);
         const playlistName = `${artist.name} Mix`;
         const response = await fetch(
           `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
@@ -110,11 +175,7 @@ export default function Home() {
     }
   }
 
-  // useEffect(() => {
-  //   if (!user.email) {
-  //     navigate("/registration");
-  //   }
-  // }, []);
+
 
   // Страница артиста
   const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
@@ -135,7 +196,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="homePage">
-          {isOpenCurrentArtist && <CurrentArtist className='artist_modal' artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal}/>}
+          {isOpenCurrentArtist && <CurrentArtist className='artist_modal' artistModalData={artistModalData} closeCurrentArtistModal={closeCurrentArtistModal} />}
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}

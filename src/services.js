@@ -32,10 +32,6 @@ export function useEditData() {
     const queryClient = useQueryClient()
 
     return useMutation(async ({ id, field, updateData }) => {
-        
-        console.log(`users/${id}/${field}`);
-        console.log('update data is ' + updateData);
-
         await db.ref(`users/${id}/${field}`).set(updateData)
     },
         {
@@ -50,7 +46,6 @@ export function useEditData() {
 export function useGetData() {
     return useQuery('users', async () => {
         const snapshot = await db.ref('users').once('value')
-        console.log(snapshot.val());
         return snapshot.val()
     })
 }
