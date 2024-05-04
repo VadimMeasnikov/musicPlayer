@@ -10,51 +10,37 @@ import "./search.scss";
 
 
 export default function Search() {
-  // данные для табов(tabs.json)
   const [tabs, setTabs] = useState(tabsData);
-  // заголовок
   const [searchTitle, isSearchTitle] = useState(true);
-  // активный таб
   const [activeTab, setActiveTab] = useState(tabs[0].path);
-  // содержимое инпута
   const [searchValue, setSearchValue] = useState("");
-  // результат поиска
   const [searchTracks, setSearchTracks] = useState([]);
-  // обновленный результат поиска
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
-
   const [loading, setLoading] = useState(true);
-
+  const [itemsToShow, setItemsToshow] = useState(100);
+  const showMore = () => {
+    setItemsToshow(200);
+  }
   useEffect(() => {
-    // логика обновления содержимого в инпуте
     const timeoutId = setTimeout(() => {
       setDebouncedSearchValue(searchValue);
     }, 100);
-
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
-
-  //мидлвейр поиска
   const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
-
-
   useEffect(() => {
-    // проверка, есть ли ответ из api
     if (data && data.results) {
       setSearchTracks(data.results);
-      console.log(data);
       setLoading(false);
+      setItemsToshow(100)
     } else {
       setSearchTracks([]);
+      setItemsToshow(null)
     }
   }, [data]);
-
-  // логика обновления активного таба
-  // для запроса в api
   const handleTabClick = (path) => {
     setActiveTab(path);
   };
-
   return (
     <div className="wrapper">
       <div className="search-page">
@@ -94,11 +80,11 @@ export default function Search() {
             <>
               {error && <p>Error: {error.message}</p>}
               {searchTracks && searchTracks.length > 0 ? (
-                searchTracks.map((item, index) => (
+                searchTracks.filter(item => item.image !== "").slice(0, itemsToShow).map((item, index) => (
                   <SearchCard
                     key={index}
                     info={item}
-                    onClick={() => console.log(item.path)}
+                    onClick={console}
                   />
                 ))
               ) : (
@@ -107,6 +93,7 @@ export default function Search() {
             </>
           )}
         </div>
+        { itemsToShow == 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
       </div>
       <Navigation />
     </div>
