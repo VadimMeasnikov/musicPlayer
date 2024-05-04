@@ -29,8 +29,10 @@ export default function Search() {
     if (data && data.results) {
       setSearchTracks(data.results);
       setLoading(false);
+      setItemsToshow(100)
     } else {
       setSearchTracks([]);
+      setItemsToshow(null)
     }
   }, [data]);
   const handleTabClick = (path) => {

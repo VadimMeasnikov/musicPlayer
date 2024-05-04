@@ -7,19 +7,27 @@ import { clearArtistData } from "../../reduxToolkit/slices/artistSlice";
 import "./ArtistPage.scss";
 import PlayButton from "../../img/PlayButton.png";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
+import Discography from "../Discography/Discography";
 
 export default function ArtistPage() {
+  const [showAlbums, setShowAlbums] = useState(false);
+  const closeDiscography = () => {
+    setShowAlbums(false);
+  };
   const artistData = useSelector((state) => state.artist.artistData);
   console.log(artistData);
-  const { data, error } = useSearchQuery({ path: "artists/albums/", name: artistData.name });
+  const { data, error } = useSearchQuery({
+    path: "artists/albums/",
+    name: artistData.name,
+  });
   const [artistAlbums, setArtistAlbums] = useState([]);
-  useEffect(()=>{
-    if(data && data.results){
+  useEffect(() => {
+    if (data && data.results) {
       setArtistAlbums(data.results[0].albums);
     } else {
       setArtistAlbums([]);
     }
-  },[data]);
+  }, [data]);
   console.log(artistAlbums);
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
@@ -121,8 +129,17 @@ export default function ArtistPage() {
               <button onClick={showLess}>Show less</button>
             )}
           </div>
-          <div className="artistPage-topTracks">
-            <h1>Discography</h1>
+          <div className="artistPage-discography">
+            <div className="artistPage-discographyPanel">
+              <h1>Discography</h1>
+              <button
+                onClick={() => {
+                  setShowAlbums(true);
+                }}
+              >
+                See more
+              </button>
+            </div>
             {artistAlbums && (
               <ol className="albums">
                 {artistAlbums.slice(0, 3).map((item) => (
@@ -136,6 +153,13 @@ export default function ArtistPage() {
           </div>
         </div>
       </div>
+      {showAlbums && (
+        <Discography
+          data={artistData}
+          albums={artistAlbums}
+          close={closeDiscography}
+        />
+      )}
     </div>
   );
 }
