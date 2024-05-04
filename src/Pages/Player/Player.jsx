@@ -93,10 +93,10 @@ export default function Player() {
                 <div className={isOpen ? 'track_modal open' : 'track_modal'}>
                     <div className='track_box_modal'>
 
-                        <img src={track} width={164} height={169} alt="" />
+                        <img src={trackImage} width={164} height={169} alt="" />
 
-                        <h1>1(Remastered)</h1>
-                        <h2>The Beatles</h2>
+                        <h1>{trackName}</h1>
+                        <h2>{trackArtist}</h2>
                         <div className='modal_function'>
                             <div>
                                 <button><img src={Like} alt="" width={21} height={20} />Like</button>

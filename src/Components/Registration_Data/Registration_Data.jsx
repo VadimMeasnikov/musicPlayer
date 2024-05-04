@@ -99,12 +99,17 @@ export default function Registration_Data({ regState, userObj }) {
         key: userKey,
       })
     );
-    console.log("end add data");
+    updateProfile(user, {
+      displayName: userKey
+    })
+    .catch((e) => console.error(e))
+
     const field = 'key'
     console.log(userKey);
-    // editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
     editData.mutate({id: userKey, field, updateData: userKey})
     console.log('end edit data');
+
+    console.log(user);
   }
 
   return (
