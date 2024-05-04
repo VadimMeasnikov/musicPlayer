@@ -63,7 +63,7 @@
 
 .track_info {
     padding: 25px 0 25px 0;
-
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -278,3 +278,24 @@
         transform: translateY(0);
     }
 }
+
+
+
+.track_time {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    color: #828282;
+    font-size: smaller;
+  }
+  
+  .timeline {
+    margin-top: 5%;
+    width: 95%;
+    background-color: #27ae60;
+  }
+  
+  input[type="range"] {
+    background-color: #27ae60;
+  }
