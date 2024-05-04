@@ -43,10 +43,9 @@ export function useEditData() {
 }
 
 
-export function useGetData() {
-    return useQuery('users', async () => {
-        const snapshot = await db.ref('users').once('value')
-        return snapshot.val()
-    })
+export async function getAllUsersData() {
+    const snapshot = await db.ref('users').once('value');
+    const data = snapshot.val();
+    return data;
 }
 

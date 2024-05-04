@@ -7,7 +7,7 @@ import Search from './Pages/Search/Search.jsx'
 import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
 import ArtistPage from './Components/ArtistPage/ArtistPage.jsx'
-import { useGetData } from './services.js'
+import { getAllUsersData } from './services.js'
 import Profile from './Pages/Profile/Profile.jsx'
 
 

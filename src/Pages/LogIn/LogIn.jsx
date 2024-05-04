@@ -9,7 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useGetData } from "../../services";
+import { getAllUsersData } from "../../services";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import "./login.scss";
@@ -24,7 +24,7 @@ export default function LogIn() {
   const auth = getAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usersData = useGetData();
+  const { dataUsers, isLoading } = getAllUsersData();
 
   async function logInUser(e) {
     e.preventDefault();
@@ -34,36 +34,44 @@ export default function LogIn() {
 
     signInWithEmailAndPassword(auth, emailLogIn, passwordLogIn)
       .then(() => {
-        const usersArray = createUsersArray();
-        const userFb = auth.currentUser;
-        console.log(usersArray);
-        const userDb = getCurrentUser(usersArray, userFb.email);
-
-        if (userDb) {
-          console.log(userDb);
-          dispatch(
-            setUser({
-              email: userDb.email,
-              id: userDb.uid,
-              username: userDb.username,
-              news: userDb.news,
-              share: userDb.share,
-            })
-          );
-          dispatch(
-            setKey({
-              key: userDb.key
-            })
-          )
-
-          const artistsArr = JSON.parse(userDb.artists)
-          console.log(typeof artistsArr);
-          artistsArr.map((artist, key) => {
-            console.log(artist);
-            dispatch(setArtists(artist));
-            return artist;
+        getAllUsersData()
+          .then((data) => {
+            const usersArray = createUsersArray(data);
+            console.log(usersArray);
+            return usersArray
           })
-        }
+          .then((array) => {
+            const userFb = auth.currentUser;
+            const userDb = getCurrentUser(array, userFb.email);
+            return userDb
+          })
+          .then((userDb) => {
+            if (userDb) {
+              console.log(userDb);
+              dispatch(
+                setUser({
+                  email: userDb.email,
+                  id: userDb.uid,
+                  username: userDb.username,
+                  news: userDb.news,
+                  share: userDb.share,
+                })
+              );
+              dispatch(
+                setKey({
+                  key: userDb.key
+                })
+              )
+
+              const artistsArr = JSON.parse(userDb.artists)
+              console.log(typeof artistsArr);
+              artistsArr.map((artist, key) => {
+                console.log(artist);
+                dispatch(setArtists(artist));
+                return artist;
+              })
+            }
+          })
         navigate("/");
       })
       .catch((e) => {
@@ -79,9 +87,9 @@ export default function LogIn() {
     return authorizedUser || null;
   }
 
-  function createUsersArray() {
-    console.log(usersData);
-    const usersArray = Object.entries(usersData.data).map(([key, value]) => {
+  function createUsersArray(usersObj) {
+    console.log(usersObj);
+    const usersArray = Object.entries(usersObj).map(([key, value]) => {
       return { id: key, ...value };
     });
     return usersArray; // Возвращает массив пользователей
