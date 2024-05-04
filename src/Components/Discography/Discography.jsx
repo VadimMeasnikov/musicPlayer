@@ -9,7 +9,6 @@ import { FaCirclePause } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 
 export default function Discography({ data, albums, close }) {
-  console.log(data.name, albums);
   const [tracks, setTracks] = useState([]);
   useEffect(() => {
     getAlbums(data);
@@ -21,7 +20,6 @@ export default function Discography({ data, albums, close }) {
     const albumTracks = await responce.json();
     setTracks(albumTracks.results);
   }
-  console.log(tracks);
   return (
     <div className="discography">
       <div className="discography-topPanel">

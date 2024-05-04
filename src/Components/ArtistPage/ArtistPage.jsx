@@ -15,7 +15,6 @@ export default function ArtistPage() {
     setShowAlbums(false);
   };
   const artistData = useSelector((state) => state.artist.artistData);
-  console.log(artistData);
   const { data, error } = useSearchQuery({
     path: "artists/albums/",
     name: artistData.name,
@@ -28,7 +27,6 @@ export default function ArtistPage() {
       setArtistAlbums([]);
     }
   }, [data]);
-  console.log(artistAlbums);
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
   const [itemsToShow, setItemsToShow] = useState(5);
