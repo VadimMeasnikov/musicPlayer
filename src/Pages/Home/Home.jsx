@@ -71,7 +71,7 @@ export default function Home() {
           id: user.id,
           share: user.share,
           news: user.news,
-          username: user.username
+          username: user.username,
          }))
          return user
         })
