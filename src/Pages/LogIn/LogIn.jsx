@@ -55,26 +55,13 @@ export default function LogIn() {
               key: userDb.key
             })
           )
+
           const artistsArr = JSON.parse(userDb.artists)
-          console.log(artistsArr);
-
-
           artistsArr.map((artist, key) => {
-            dispatch(setArtists({
-              artist
-            }))
-            return artist
+            console.log(artist);
+            dispatch(setArtists(artist));
+            return artist;
           })
-
-          console.log(
-            artistsArr.map((item, key) => {
-              dispatch(setArtists({
-                item
-              }))
-              return item
-            })
-          );
-
         }
         navigate("/");
       })

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
+import { removeArtists } from "../../reduxToolkit/slices/userArtistsSlice";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import PlayButton from "../../img/PlayButton.png";
 import defaultImg from "../../img/default.png";
@@ -9,16 +11,12 @@ export default function CurrentArtist({
   artistModalData,
   closeCurrentArtistModal,
 }) {
-
-
-  // СДЕЛАТЬ ЛОГИКУ ДОБАВЛЕНИЯ ИЛИ УДАЛЕНИЯ АРТИСТОВ ИЗ SELECETEDARTISTS
-
-
   const [src, setSrc] = useState(artistModalData.image);
+
   if (src === "") {
     setSrc(defaultImg);
   }
-  
+
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
 
@@ -46,8 +44,33 @@ export default function CurrentArtist({
   const selectedArtists = useSelector(
     (state) => state.userArtists.userAppArtists
   );
-  const isFollowed = selectedArtists.includes(artistModalData);
-  
+
+  //Логика подписки на исполнителя
+  const [isFollowed, setIsFollowed] = useState(false);
+  const [selectedArr, setSelectedArr] = useState([]);
+
+  useEffect(() => {
+    const isArtistFollowed = selectedArtists.some(
+      (selectedArtist) => selectedArtist.id === artistModalData.id
+    );
+    setIsFollowed(isArtistFollowed);
+  }, [artistModalData, selectedArr]);
+
+  const dispatch = useDispatch();
+  function handleUserFollowing() {
+    if (isFollowed) {
+      const updatedSelectedArr = selectedArtists.filter(
+        (selectedArtist) => selectedArtist.id !== artistModalData.id
+      );
+      setSelectedArr(updatedSelectedArr);
+      dispatch(removeArtists(artistModalData.id));
+    } else {
+      setSelectedArr([...selectedArr, artistModalData]);
+      dispatch(setArtists(artistModalData));
+    }
+  }
+  //------------------------------
+
   return (
     <div className="currentArtistModal">
       <div className="currentArtist">
@@ -63,10 +86,14 @@ export default function CurrentArtist({
         </div>
         <div className="currentArtistInfoBox">
           <div className="currentArtistButtons">
-          {isFollowed ? (
-              <button className="followArtistBtn">Following</button>
+            {isFollowed ? (
+              <button onClick={handleUserFollowing} className="followArtistBtn--active">
+                Following
+              </button>
             ) : (
-              <button className="followArtistBtn">Follow</button>
+              <button onClick={handleUserFollowing} className="followArtistBtn">
+                Follow
+              </button>
             )}
             <img className="playBtn" src={PlayButton} alt="Play" />
           </div>

@@ -8,7 +8,7 @@
 .player_container {
     display: grid;
     place-items: center;
-    transition:  2s;
+    transition: 2s;
 }
 
 .player_content {
@@ -21,15 +21,34 @@
     padding-top: 45px;
     width: 85%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
-    button {
-        border: none;
-        padding: 0;
-        background: none;
+    .page_player_title,
+    .more_info__btn,
+    .go_back__btn_player {
+        width: 33%;
+        text-align: center;
     }
+
+
+    .go_back__btn_player{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    .more_info__btn{
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        border: none;
+        background: none;
+        outline: none;;
+    }
+
 
     button:hover {
         cursor: pointer;
@@ -61,7 +80,8 @@
             flex-direction: column;
             justify-content: start;
             overflow: hidden;
-            .marquee-container {  
+
+            .rotation {
                 white-space: nowrap;
                 animation: marquee 15s linear infinite;
             }
@@ -85,8 +105,9 @@
         }
 
     }
-    .track_content_2{
-        .add_fav_song_btn{
+
+    .track_content_2 {
+        .add_fav_song_btn {
             border: none;
             background: none;
             outline: none;
@@ -132,13 +153,14 @@
         }
     }
 
-    .repeat{
+    .repeat {
 
 
         display: flex;
         justify-content: center;
         align-items: center;
-        .repeat_img{
+
+        .repeat_img {
             width: 30px;
             height: 30px;
 
@@ -151,14 +173,14 @@
 }
 
 
-.track_modal {
+.track_modal{
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100vh;
     z-index: 999999;
-    background: linear-gradient(#490F0A, #121212);
+    background: inherit;
     visibility: hidden;
     overflow-y: auto;
     opacity: 0;
@@ -193,7 +215,8 @@
 .open {
     visibility: visible;
     opacity: 1;
-    transition: 0.15s;
+    transition: 0.25s;
+    background-color: rgba(0, 0, 0, 0.777);
 }
 
 .track_box_modal {
@@ -238,8 +261,23 @@
         flex-direction: row;
         color: #ffffff;
     }
+}
 
+.player {
+    animation: fadeIn 0.25s ease-in;
+}
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 }
 
 
