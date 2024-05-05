@@ -12,25 +12,43 @@ import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { getAllUsersData } from "../../services";
 import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { setKey } from "../../reduxToolkit/slices/userKeySlice";
+import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
 // import CurrentArtist from "../CurrentArtist/CurrentArtist";
 import "./home.scss";
 
 
+
+
 export default function Home() {
 
-  const {dataUsers, isLoading} = getAllUsersData();
+  const { dataUsers, isLoading } = getAllUsersData();
   const { data } = useGetTrackQuery();
   // Стейт для треков
   const [featured, setFeatured] = useState([]);
   // Стейт для приветствия
   const [greeting, setGreeting] = useState("");
+  const [userArtists, setUserArtists] = useState([])
   // Отображение имени на главной странице
   const [isPageLoading, setIsPageLoading] = useState(true);
-
-  const { username } = useSelector((state) => state.user);
-
+  const [formattedDate, setFormattedDate] = useState("");
   const [playlistDataLoaded, setPlaylistDataLoaded] = useState(false);
+  const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
+  const [artistModalData, setArtistModalData] = useState({});
 
+  const currentHour = new Date().getHours();
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const auth = getAuth()
+  const userFb = auth.currentUser;
+
+  const userRd = useSelector(state => state.user)
+  const { username } = useSelector((state) => state.user);
+  const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
+  console.log(selectedArtists);
+  const playlistInfo = useSelector((state) => state.playlists.tracks);
 
   // Проверка, существует ли массив с треками
   useEffect(() => {
@@ -40,9 +58,7 @@ export default function Home() {
   }, [data]);
 
   // Логика времени
-  const currentHour = new Date().getHours();
-  const auth = getAuth()
-  const userRd = useSelector(state => state.user)
+
 
   useEffect(() => {
 
@@ -58,85 +74,65 @@ export default function Home() {
 
     onAuthStateChanged(auth, (user) => {
       if (user && !userRd.email) {
+        console.log(user);
         getAllUsersData()
-        .then((data) => {
-          const newArr = createUsersArray(data)
-          return newArr
-        })
-        .then((array) => {
-         const user = getCurrentUser(array)
-         console.log(user);
-         dispatch(setUser({
-          email: user.email,
-          id: user.id,
-          share: user.share,
-          news: user.news,
-          username: user.username,
-         }))
-         return user
-        })
-      } else{
+          .then((data) => {
+            const newArr = createUsersArray(data)
+            return newArr
+          })
+          .then((array) => {
+            const key = auth.currentUser.displayName
+            const user = getCurrentUser(array, key)
+
+            dispatch(setUser({
+              email: user.email,
+              id: user.id,
+              share: user.share,
+              news: user.news,
+              username: user.username,
+            }))
+
+            dispatch(
+              setKey({
+                key: user.key
+              })
+            )
+
+            const artists = JSON.parse(user.artists)
+            artists.map((artist) => (
+              dispatch(setArtists(artist))
+            ))
+            setUserArtists(artists)
+            return user
+          })
+          .catch((e) => { console.error(e) })
+      } else {
         setIsPageLoading(false)
       }
     });
   }, []);
 
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  
-  const userFb = auth.currentUser;
-
-
-  // async function processUsersData() {
-  //   try {
-  //     const usersArray = await createUsersArray();
-  //     const key = userFb.displayName;
-  //     const user = await getCurrentUser(usersArray, key)
-
-  //     const artists = getCurrentUserData(user)
-  //     console.log(artists);
-  //     setIsPageLoading(false)
-  //     return user
-  //   } catch (error) {
-  //     console.error('Error processing users data: ', error);
-  //   }
-  // }
 
   function createUsersArray(usersObj) {
-    console.log(usersObj);
-      return Object.entries(usersObj).map(([key, value]) => {
-        return { id: key, ...value };
-      });
+    return Object.entries(usersObj).map(([key, value]) => {
+      return { id: key, ...value };
+    });
   }
-
-  function getCurrentUserData(user) {
-    console.log(user);
-    const artistsArr = JSON.parse(user.artists)
-
-    console.log(artistsArr);
-
-    artistsArr.map((artist) => (
-      dispatch(setArtists(artist))
-    ))
-    return artistsArr
-  }
-
-
 
   function getCurrentUser(usersArray, key) {
     const currentUser = usersArray.find((user) => user.key === key);
-    console.log(currentUser);
     return currentUser;
   }
 
-  const user = useSelector(state => state.user)
 
-  //Создание плейлистов.
-  const [formattedDate, setFormattedDate] = useState("");
-  const selectedArtists = useSelector(
-    (state) => state.userArtists.userAppArtists
-  );
+  useEffect(() => {
+    if (selectedArtists) {
+      console.log(selectedArtists);
+      setUserArtists(selectedArtists)
+    }
+  }, [selectedArtists])
+
 
   useEffect(() => {
     const updateFormattedDate = () => {
@@ -150,11 +146,12 @@ export default function Home() {
 
 
 
-  const playlistInfo = useSelector((state) => state.playlists.tracks);
+
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    createPlaylists(selectedArtists, dispatch, formattedDate);
-  }, [selectedArtists, dispatch, formattedDate]);
+    createPlaylists(userArtists, dispatch, formattedDate);
+  }, [userArtists, dispatch, formattedDate]);
 
   useEffect(() => {
     if (!playlistDataLoaded && playlistInfo !== undefined) {
@@ -163,7 +160,7 @@ export default function Home() {
     }
   }, [playlistInfo, playlistDataLoaded]);
 
-  const [artists, setArtists] = useState(selectedArtists);
+
   useEffect(() => {
     if (playlistInfo !== undefined) {
       setLoading(false);
@@ -181,23 +178,18 @@ export default function Home() {
         const formattedTracks = playlistTracks.results[0].tracks;
         dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
       });
+      setIsPageLoading(false)
     } catch (error) {
       console.error("Error creating playlists:", error);
     }
   }
 
-
-
   // Страница артиста
-  const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
-  const [artistModalData, setArtistModalData] = useState({});
   function openCurrentArtistModal() {
     setIsOpenCurrentArtist(true);
-    console.log("Open");
   }
   function closeCurrentArtistModal() {
     setIsOpenCurrentArtist(false);
-    console.log("Close");
   }
   return (
     <div className="wrapper">
@@ -207,7 +199,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="homePage">
-    
+
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}
@@ -336,7 +328,7 @@ export default function Home() {
           <div className="suggestedArtists">
             <div className="suggestedArtists-title">Artists you like</div>
             <div className="suggestedArtists-results">
-              {artists.map((item, index) => (
+              {userArtists.map((item, index) => (
                 <ArtistMiniCard
                   key={index}
                   artist={item}

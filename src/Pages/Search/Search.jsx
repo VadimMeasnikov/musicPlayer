@@ -28,6 +28,7 @@ export default function Search() {
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
   const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
+  console.log(data);
   useEffect(() => {
     if (data && data.results) {
       setSearchTracks(data.results);

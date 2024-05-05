@@ -19,8 +19,8 @@
 
 .upper_info {
     padding-top: 45px;
-    width: 85%;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
 
@@ -28,10 +28,10 @@
     .more_info__btn,
     .go_back__btn_player {
         width: 33%;
+    }
+    .page_player_title{
         text-align: center;
     }
-
-
     .go_back__btn_player{
         display: flex;
         justify-content: start;

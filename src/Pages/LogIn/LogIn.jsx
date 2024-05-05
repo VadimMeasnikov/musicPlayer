@@ -70,6 +70,7 @@ export default function LogIn() {
                 dispatch(setArtists(artist));
                 return artist;
               })
+              
             }
           })
         navigate("/");

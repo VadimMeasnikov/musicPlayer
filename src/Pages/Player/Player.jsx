@@ -3,19 +3,21 @@ import chewronDown from '../../img/Chevron down.png'
 import more from '../../img/more.png'
 import track from '../../img/track.png'
 import time from '../../img/Frame 372.png'
+import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import { Back, Shuffle, Vector } from '../../img/trackFunction/index'
 import { Like, Share, Radio, MoonFill, Hide, Add, Credits, Queue, View, Artist } from '../../img/modalPlayerImgs/modalIndex'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { LiaPauseSolid } from "react-icons/lia";
 import { GrPlay } from "react-icons/gr";
 import { LiaPlaySolid } from "react-icons/lia";
 import { RxPlay } from "react-icons/rx";
+import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import useSound from 'use-sound'
+import tabsData from "../../tabs.json";
 import music_track from "../../tracks/The Beatles - From Me To You.mp3"
-
-
 import repeat_active from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
+import GetCurrentColor from '../../GetCurrentColor'
 
 import './player.scss'
 
@@ -23,10 +25,22 @@ import './player.scss'
 
 
 
+
 export default function Player() {
 
+    const [trackName, setTrackName] = useState('')
+    const [trackArtist, setTrackArtist] = useState('')
+    const [trackAudio, setTrackAudio] = useState('')
+    const [trackImage, setTrackImage] = useState('')
+    const [trackAlbum, setTrackAlbum] = useState('')
 
+    const [averageColor, setAverageColor] = useState('')
 
+    const [seconds, setSeconds] = useState(0);
+    const navigate = useNavigate()
+    const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
+    const [tabs, setTabs] = useState(tabsData);
+    const [activeTab, setActiveTab] = useState(tabs[0].path);
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
@@ -36,24 +50,34 @@ export default function Player() {
         sec: "",
     });
 
-    const [seconds, setSeconds] = useState();
+    const { trackId } = useParams()
+    console.log(trackId);
+    const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
+    console.log(data);
 
 
+    useEffect(() => {
+        if (trackId !== undefined && data !== undefined && data.results !== undefined) {
+            getCurrentTrack(data.results, trackId)
+            console.log(getCurrentTrack(data.results, trackId));
+        }
+    }, [trackId, data])
 
+    function goBackBtn() {
+        navigate(-1)
+    }
 
-    const navigate = useNavigate()
-    // const goBackBtn = () => {
-    //     navigate(-1)
-    // }
-
-    //  function handleControlTrack(){
-    //      setIsPlaying(pr => !pr)
-    //  }
-
-    // function handleRepeatControl(){
-    //     setRepeatState(pr => !pr)
-    // }
-
+    function getCurrentTrack(array, id) {
+        const currentTrack = array.find((track) => track.id === id)
+        console.log(currentTrack);
+        setTrackName(currentTrack.name)
+        setTrackArtist(currentTrack.artist_name)
+        console.log(currentTrack.image);
+        setTrackAlbum(currentTrack.album_name)
+        setTrackImage(currentTrack.image)
+        setTrackAudio(currentTrack.audio)
+        return currentTrack
+    }
 
     const playingButton = () => {
         if (isPlaying) {
@@ -80,15 +104,18 @@ export default function Player() {
         return () => clearInterval(interval);
     }, [sound]);
 
+    const handleColorGeneration = (color) => {
+        setAverageColor(color);
+        console.log(color);
+    };
 
-
+    const bg =  `linear-gradient(to bottom, ${averageColor}, rgb(0, 0, 0))`
 
 
     return (
 
-
-
-        <div className='player'>
+        <div className='player' style={{background : bg}}>
+            <GetCurrentColor imageUrl={trackImage} onColorGenerated={handleColorGeneration} />
             <div className='player_container'>
                 <div className={isOpen ? 'track_modal open' : 'track_modal'}>
                     <div className='track_box_modal'>
@@ -139,41 +166,41 @@ export default function Player() {
                 </div>
                 <div className='player_content'>
                     <div className='upper_info'>
-                        <button className='go_back__btn' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
-                        <h1>1(Remastered)</h1>
-                        <button onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
+                        <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
+                        <h1 className='page_player_title'>{trackAlbum}</h1>
+                        <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
                     </div>
-                    <img src={track} alt="" width={380} height={380} className='track_img' />
+                    <img src={trackImage} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>
                         <div className="track_content_1">
                             <div className='track_info_content'>
-                                <div className="marquee-container"><h2 className='track_name'>From Me To You</h2></div>
-                                <h3 className='track_artist'>The Beatles</h3>
+                                <div className="marquee-container"><h2 className='track_name'>{trackName}</h2></div>
+                                <h3 className='track_artist'>{trackArtist}</h3>
                             </div>
                             <div className="track_content_2">
                                 <button className='add_fav_song_btn'><img src={Like} alt="" /></button>
                             </div>
                         </div>
-                        
-                            
-                            <input
-                                type="range"
-                                min="0"
-                                max={duration / 1000}
-                                default="0"
-                                value={seconds}
-                                className="timeline"
-                                onChange={(e) => {
-                                    sound.seek([e.target.value]);
-                                }}
-                            />
-                            <div className="track_time">
-                                <p>
-                                    {currTime.min}:{currTime.sec}
-                                </p>
-                                
-                            </div>
-                        
+
+
+                        <input
+                            type="range"
+                            min="0"
+                            max={duration / 1000}
+                            default="0"
+                            value={seconds}
+                            className="timeline"
+                            onChange={(e) => {
+                                sound.seek([e.target.value]);
+                            }}
+                        />
+                        <div className="track_time">
+                            <p>
+                                {currTime.min}:{currTime.sec}
+                            </p>
+
+                        </div>
+
                     </div>
                     <div className='track_function'>
                         <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
