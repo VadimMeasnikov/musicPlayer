@@ -9,6 +9,7 @@ import playlistSlice from "./slices/playlistSlice";
 import artistSlice from "./slices/artistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
 import userSearch from "./slices/userSearch";
+import favouriteTracks from "./slices/favouriteTracks";
 
 export const store = configureStore({
   reducer: {
@@ -19,8 +20,9 @@ export const store = configureStore({
     userKey: userKeySlice,
     userArtists: userArtistsSlice, 
     playlists: playlistSlice,
-    search: userSearch
-    // artist: artistSlice
+    search: userSearch,
+    likes: favouriteTracks,
+    artist: artistSlice
   },
   middleware: (getDefault) =>
     getDefault().concat(

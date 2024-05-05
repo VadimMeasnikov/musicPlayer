@@ -3,13 +3,11 @@ import { useState, useEffect } from "react";
 import defaultImg from "../../img/default.png";
 import "./searchcard.scss";
 import { useDispatch } from "react-redux";
-import {
-  addArtistData,
-  clearArtistData,
-} from "../../reduxToolkit/slices/artistSlice";
+import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
 
 export default function SearchCard({ info }) {
   const [src, setSrc] = useState(info.image);
+  console.log(info)
   useEffect(() => {
     if (!info.image) {
       setSrc(defaultImg);
@@ -17,14 +15,14 @@ export default function SearchCard({ info }) {
   }, [info.image]);
   const dispatch = useDispatch();
   const [linkTo, setLinkTo] = useState("");
-  useEffect(()=>{
+  useEffect(() => {
     if (info.image.includes("artist")) {
       handleClick;
-      setLinkTo("/artist")
+      setLinkTo("/artist");
     } else {
       setLinkTo(`/player/${info.id}`);
     }
-  },[dispatch, info.image])
+  }, [dispatch, info.image]);
   const handleClick = () => {
     dispatch(addArtistData(info));
   };
@@ -38,6 +36,5 @@ export default function SearchCard({ info }) {
         </div>
       </div>
     </Link>
-
   );
 }

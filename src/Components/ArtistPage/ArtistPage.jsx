@@ -8,6 +8,9 @@ import "./ArtistPage.scss";
 import PlayButton from "../../img/PlayButton.png";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import Discography from "../Discography/Discography";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
 
 export default function ArtistPage() {
   const [showAlbums, setShowAlbums] = useState(false);
@@ -85,6 +88,32 @@ export default function ArtistPage() {
       dispatch(setArtists(artistData));
     }
   }
+
+  const likedTracksStore = useSelector((state) => state.likes.likedTracks);
+  const [likedTracks, setLikedTracks] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
+  console.log(likedTracks);
+
+  useEffect(() => {
+    setLikedTracks(likedTracksStore);
+  }, [likedTracksStore]);
+
+  const handleTrackLike = (track) => {
+    const isTrackLiked = likedTracksStore.some(
+      (likedTrack) => likedTrack.id === track.id
+    );
+    setIsLiked(isTrackLiked);
+    if (!isTrackLiked) {
+      setLikedTracks(track);
+      dispatch(addLikedTrack(track));
+    } else {
+      const updatedLikedTracks = likedTracks.filter(
+        (likedTrack) => likedTrack.id !== track.id
+      );
+      setLikedTracks(updatedLikedTracks);
+      dispatch(removeLikedTracks(track.id));
+    }
+  };
   return (
     <div className="artistPage">
       <div className="artistPage-topPanel">
@@ -117,6 +146,19 @@ export default function ArtistPage() {
                   <li key={item.id}>
                     <img src={item.image} alt="Img" />
                     <span>{item.name}</span>
+                    <button
+                      onClick={() => {
+                        handleTrackLike(item);
+                      }}
+                    >
+                      {likedTracksStore.some(
+                        (likedTrack) => likedTrack.id === item.id
+                      ) ? (
+                        <FaHeart />
+                      ) : (
+                        <FaRegHeart />
+                      )}
+                    </button>
                   </li>
                 ))}
               </ol>
