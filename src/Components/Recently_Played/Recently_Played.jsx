@@ -13,7 +13,6 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
     const [filteredData, setFilteredData] = useState([])
     const [onLoading, setOnLoading] = useState(true)
 
-    console.log(statusArr);
 
     const {
         status, setStatus
@@ -21,13 +20,10 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
 
 
     useEffect(() => {
-        console.log(status);
         if (statusArr.status === undefined) {
             setOnLoading(true)
-            console.log(1);
         } else {
             setOnLoading(false)
-            console.log(2);
             getFilterArr(status)
         }
     }, [status])

@@ -108,7 +108,6 @@ export default function Registration_Data({ regState, userObj }) {
     console.log(userKey);
     editData.mutate({id: userKey, field, updateData: userKey})
     console.log('end edit data');
-
     console.log(user);
   }
 

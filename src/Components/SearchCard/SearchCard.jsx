@@ -7,7 +7,6 @@ import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
 
 export default function SearchCard({ info }) {
   const [src, setSrc] = useState(info.image);
-  console.log(info)
   useEffect(() => {
     if (!info.image) {
       setSrc(defaultImg);
