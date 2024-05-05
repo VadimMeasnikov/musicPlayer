@@ -29,10 +29,12 @@
     .go_back__btn_player {
         width: 33%;
     }
-    .page_player_title{
+
+    .page_player_title {
         text-align: center;
     }
-    .go_back__btn_player{
+
+    .go_back__btn_player {
         display: flex;
         justify-content: start;
         align-items: center;
@@ -40,13 +42,15 @@
         background: none;
         outline: none;
     }
-    .more_info__btn{
+
+    .more_info__btn {
         display: flex;
         justify-content: end;
         align-items: center;
         border: none;
         background: none;
-        outline: none;;
+        outline: none;
+        ;
     }
 
 
@@ -107,10 +111,16 @@
     }
 
     .track_content_2 {
-        .add_fav_song_btn {
+        .likeBtn {
             border: none;
-            background: none;
-            outline: none;
+            background-color: transparent;
+            margin: 0;
+
+            .likeBtnSVG {
+                height: 20px;
+                width: 20px;
+                color: white;
+            }
         }
     }
 }
@@ -173,7 +183,7 @@
 }
 
 
-.track_modal{
+.track_modal {
     position: fixed;
     left: 0;
     top: 0;
@@ -288,14 +298,14 @@
     justify-content: space-between;
     color: #828282;
     font-size: smaller;
-  }
-  
-  .timeline {
+}
+
+.timeline {
     margin-top: 5%;
     width: 95%;
     background-color: #27ae60;
-  }
-  
-  input[type="range"] {
+}
+
+input[type="range"] {
     background-color: #27ae60;
-  }
+}

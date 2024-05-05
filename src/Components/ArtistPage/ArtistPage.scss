@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .artistPage-topPanel {
     top: 0;
     left: 0;
@@ -12,32 +13,39 @@
     position: fixed;
     display: flex;
     align-items: center;
+
     .GoBackBtn {
       background-color: rgba(0, 0, 0, 0.5);
     }
+
     h3 {
       color: white;
       margin-left: 72px;
       margin-top: 5px;
     }
   }
+
   .artistPage-content {
     width: 100%;
+
     .artistPage-image {
       display: block;
       width: 100%;
       height: auto;
     }
+
     .artistPage-info {
       padding: 20px;
       width: 100%;
       display: flex;
       flex-direction: column;
+
       .artistPage-buttons {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
+
         .followArtistBtn,
         .followArtistBtn--active {
           position: relative;
@@ -59,19 +67,23 @@
           color: white;
           background-color: transparent;
         }
+
         .followArtistBtn--active {
           border: 1px solid white;
         }
+
         .playBtn {
           width: 48px;
           height: 48px;
         }
       }
+
       .artistPage-topTracks {
         display: flex;
         flex-direction: column;
         align-items: start;
         margin: 20px 0;
+
         & button {
           border: none;
           background: none;
@@ -80,6 +92,7 @@
           font-size: 16px;
           margin: 10px 0;
         }
+
         & h1 {
           font-family: Avenir;
           font-size: 28px;
@@ -89,26 +102,46 @@
           text-align: center;
           color: white;
         }
+
         .tracks {
           margin: 10px 0;
           display: flex;
           flex-direction: column;
           row-gap: 10px;
+          width: 100%;
+
           & li {
+            width: 100%;
             display: flex;
             align-items: center;
             gap: 10px;
+            position: relative;
+
             & img {
               height: 60px;
               width: 60px;
               display: block;
               border-radius: 5px;
             }
+
             & span {
               color: white;
             }
+            .likeBtn {
+              border: none;
+              background-color: none;
+              margin: 0;
+              position: absolute;
+              z-index: 10;
+              top: 0;
+              right: 0;
+              .likeBtnSVG{
+                margin: 22px;
+              }
+            }
           }
         }
+
         .albums {
           display: flex;
           align-items: center;
@@ -118,10 +151,12 @@
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
           gap: 10px;
+
           & li {
             display: flex;
             flex-direction: column;
             align-items: center;
+
             & span {
               color: rgb(255, 255, 255);
               font-family: Avenir;
@@ -138,11 +173,13 @@
           }
         }
       }
+
       .artistPage-topTracks {
         display: flex;
         flex-direction: column;
         align-items: start;
         margin: 20px 0;
+
         & button {
           border: none;
           background: none;
@@ -151,6 +188,7 @@
           font-size: 16px;
           margin: 10px 0;
         }
+
         & h1 {
           font-family: Avenir;
           font-size: 28px;
@@ -160,37 +198,44 @@
           text-align: center;
           color: white;
         }
+
         .tracks {
           margin: 10px 0;
           display: flex;
           flex-direction: column;
           row-gap: 10px;
+
           & li {
             display: flex;
             align-items: center;
             gap: 10px;
+
             & img {
               height: 60px;
               width: 60px;
               display: block;
               border-radius: 5px;
             }
+
             & span {
               color: white;
             }
           }
         }
       }
+
       .artistPage-discography {
         display: flex;
         flex-direction: column;
         align-items: start;
         margin: 20px 0;
+
         .artistPage-discographyPanel {
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: space-between;
+
           & button {
             border: none;
             background: none;
@@ -199,6 +244,7 @@
             font-size: 16px;
             margin: 10px 0;
           }
+
           & h1 {
             font-family: Avenir;
             font-size: 28px;
@@ -209,6 +255,7 @@
             color: white;
           }
         }
+
         .albums {
           display: flex;
           align-items: center;
@@ -218,10 +265,12 @@
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
           gap: 10px;
+
           & li {
             display: flex;
             flex-direction: column;
             align-items: center;
+
             & span {
               color: rgb(255, 255, 255);
               font-family: Avenir;

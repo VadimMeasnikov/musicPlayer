@@ -200,14 +200,6 @@ export default function Home() {
       console.error("Error creating playlists:", error);
     }
   }
-
-  // Страница артиста
-  function openCurrentArtistModal() {
-    setIsOpenCurrentArtist(true);
-  }
-  function closeCurrentArtistModal() {
-    setIsOpenCurrentArtist(false);
-  }
   return (
     <div className="wrapper">
       {isPageLoading ? (
@@ -349,8 +341,6 @@ export default function Home() {
                 <ArtistMiniCard
                   key={index}
                   artist={item}
-                  openCurrentArtistModal={openCurrentArtistModal}
-                  setArtistModalData={setArtistModalData}
                 />
               ))}
             </div>

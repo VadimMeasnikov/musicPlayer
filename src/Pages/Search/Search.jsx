@@ -94,7 +94,7 @@ export default function Search() {
             </>
           )}
         </div>
-        { itemsToShow == 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
+        {itemsToShow == 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
       </div>
       <Navigation />
     </div>
