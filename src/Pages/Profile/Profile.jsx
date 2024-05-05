@@ -22,6 +22,7 @@ export default function Profile() {
 	const favArtists = useSelector(
 		(state) => state.userArtists.userAppArtists
 	);
+	const favTracks = useSelector((state)=> state.likes.likedTracks)
 
 	useEffect(() => {
 		if (data) {
@@ -67,7 +68,7 @@ export default function Profile() {
 							</div>
 							<img src={fourSquares} alt='' />
 						</div>
-						<Recently_Played data={featured} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
+						<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
 						<Navigation />
 					</div>
 				</div>

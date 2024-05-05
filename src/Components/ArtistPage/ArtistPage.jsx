@@ -91,7 +91,6 @@ export default function ArtistPage() {
 
   const likedTracksStore = useSelector((state) => state.likes.likedTracks);
   const [likedTracks, setLikedTracks] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
   console.log(likedTracks);
 
   useEffect(() => {
@@ -102,7 +101,6 @@ export default function ArtistPage() {
     const isTrackLiked = likedTracksStore.some(
       (likedTrack) => likedTrack.id === track.id
     );
-    setIsLiked(isTrackLiked);
     if (!isTrackLiked) {
       setLikedTracks(track);
       dispatch(addLikedTrack(track));
@@ -146,7 +144,7 @@ export default function ArtistPage() {
                   <li key={item.id}>
                     <img src={item.image} alt="Img" />
                     <span>{item.name}</span>
-                    <button
+                    <button className="likeBtn"
                       onClick={() => {
                         handleTrackLike(item);
                       }}
@@ -154,9 +152,9 @@ export default function ArtistPage() {
                       {likedTracksStore.some(
                         (likedTrack) => likedTrack.id === item.id
                       ) ? (
-                        <FaHeart />
+                        <FaHeart className="likeBtnSVG"/>
                       ) : (
-                        <FaRegHeart />
+                        <FaRegHeart className="likeBtnSVG"/>
                       )}
                     </button>
                   </li>
@@ -196,7 +194,6 @@ export default function ArtistPage() {
       {showAlbums && (
         <Discography
           data={artistData}
-          albums={artistAlbums}
           close={closeDiscography}
         />
       )}

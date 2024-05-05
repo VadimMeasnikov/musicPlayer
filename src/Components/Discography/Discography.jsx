@@ -19,7 +19,7 @@ export default function Discography({ data, albums, close }) {
     );
     const albumTracks = await responce.json();
     setTracks(albumTracks.results);
-  }
+  } 
   return (
     <div className="discography">
       <div className="discography-topPanel">

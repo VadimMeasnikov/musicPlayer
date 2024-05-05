@@ -19,6 +19,12 @@ import repeat_active from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
 import GetCurrentColor from '../../GetCurrentColor'
 
+// likes
+import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
+import { useDispatch, useSelector } from "react-redux";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+
 import './player.scss'
 
 
@@ -27,6 +33,7 @@ import './player.scss'
 
 
 export default function Player() {
+    const dispatch = useDispatch();
 
     const [trackName, setTrackName] = useState('')
     const [trackArtist, setTrackArtist] = useState('')
@@ -51,15 +58,16 @@ export default function Player() {
     });
 
     const { trackId } = useParams()
-    console.log(trackId);
+    // console.log(trackId);
     const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
-    console.log(data);
+    // console.log(data);
 
 
     useEffect(() => {
         if (trackId !== undefined && data !== undefined && data.results !== undefined) {
-            getCurrentTrack(data.results, trackId)
-            console.log(getCurrentTrack(data.results, trackId));
+            const track = getCurrentTrack(data.results, trackId);
+            setCurrentTrack(track);
+            /* console.log(getCurrentTrack(data.results, trackId));*/
         }
     }, [trackId, data])
 
@@ -106,15 +114,41 @@ export default function Player() {
 
     const handleColorGeneration = (color) => {
         setAverageColor(color);
-        console.log(color);
+        // console.log(color);
     };
 
-    const bg =  `linear-gradient(to bottom, ${averageColor}, rgb(0, 0, 0))`
+    const bg = `linear-gradient(to bottom, ${averageColor}, rgb(0, 0, 0))`
+
+
+    // likes
+    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
+    const [likedTracks, setLikedTracks] = useState([]);
+    const [currentTrack, setCurrentTrack] = useState();
+    console.log(currentTrack)
+    console.log(likedTracks);
+    useEffect(() => {
+        setLikedTracks(likedTracksStore);
+    }, [likedTracksStore]);
+    const handleTrackLike = (track) => {
+        const isTrackLiked = likedTracksStore.some(
+            (likedTrack) => likedTrack.id === track.id
+        );
+        if (!isTrackLiked) {
+            setLikedTracks(track);
+            dispatch(addLikedTrack(track));
+        } else {
+            const updatedLikedTracks = likedTracks.filter(
+                (likedTrack) => likedTrack.id !== track.id
+            );
+            setLikedTracks(updatedLikedTracks);
+            dispatch(removeLikedTracks(track.id));
+        }
+    };
 
 
     return (
 
-        <div className='player' style={{background : bg}}>
+        <div className='player' style={{ background: bg }}>
             <GetCurrentColor imageUrl={trackImage} onColorGenerated={handleColorGeneration} />
             <div className='player_container'>
                 <div className={isOpen ? 'track_modal open' : 'track_modal'}>
@@ -126,12 +160,25 @@ export default function Player() {
                         <h2>{trackArtist}</h2>
                         <div className='modal_function'>
                             <div>
-                                <button><img src={Like} alt="" width={21} height={20} />Like</button>
-
-                            </div>
-                            <div>
-                                <button><img src={Hide} alt="" width={21} height={20} />Hide song</button>
-
+                                <button className="likeBtn"
+                                    onClick={() => {
+                                        handleTrackLike(currentTrack);
+                                    }}
+                                >
+                                    {likedTracksStore.some(
+                                        (likedTrack) => likedTrack.id === currentTrack.id
+                                    ) ? (
+                                        <div className="">
+                                            <FaHeart className='likeBtnSVG' />
+                                            <p>Unlike</p>
+                                        </div>
+                                    ) : (
+                                        <div className="">
+                                            <FaRegHeart className='likeBtnSVG' />
+                                            <p>Like</p>
+                                        </div>
+                                    )}
+                                </button>
                             </div>
                             <div>
                                 <button><img src={Add} alt="" width={21} height={20} />Add to playlist</button>
@@ -140,24 +187,11 @@ export default function Player() {
                                 <button><img src={Queue} alt="" width={21} height={20} />Add to queue</button>
                             </div>
                             <div>
-                                <button><img src={Share} alt="" width={21} height={20} />Share</button>
-                            </div>
-                            <div>
-                                <button><img src={Radio} alt="" width={21} height={20} />Go to radio</button>
-                            </div>
-                            <div>
                                 <button><img src={View} alt="" width={21} height={20} />View album</button>
                             </div>
                             <div>
                                 <button><img src={Artist} alt="" width={21} height={20} />View artist</button>
                             </div>
-                            <div>
-                                <button><img src={Credits} alt="" width={21} height={20} />Song credits</button>
-                            </div>
-                            <div>
-                                <button><img src={MoonFill} alt="" width={21} height={20} />Sleep timer</button>
-                            </div>
-
                         </div>
                         <button onClick={() => { setIsOpen(pr => !pr) }}>Close</button>
                     </div>
@@ -178,7 +212,19 @@ export default function Player() {
                                 <h3 className='track_artist'>{trackArtist}</h3>
                             </div>
                             <div className="track_content_2">
-                                <button className='add_fav_song_btn'><img src={Like} alt="" /></button>
+                                <button className="likeBtn"
+                                    onClick={() => {
+                                        handleTrackLike(currentTrack);
+                                    }}
+                                >
+                                    {likedTracksStore.some(
+                                        (likedTrack) => likedTrack.id === currentTrack.id
+                                    ) ? (
+                                        <FaHeart className='likeBtnSVG' />
+                                    ) : (
+                                        <FaRegHeart className='likeBtnSVG' />
+                                    )}
+                                </button>
                             </div>
                         </div>
 
