@@ -23,7 +23,6 @@ export default function Profile() {
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
-	console.log(photo);
 
 	const playlists = useSelector((state) => state.playlists.tracks);
 	const favArtists = useSelector(

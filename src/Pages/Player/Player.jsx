@@ -117,8 +117,7 @@ export default function Player() {
     const likedTracksStore = useSelector((state) => state.likes.likedTracks);
     const [likedTracks, setLikedTracks] = useState([]);
     const [currentTrack, setCurrentTrack] = useState();
-    console.log(currentTrack)
-    console.log(likedTracks);
+
     useEffect(() => {
         setLikedTracks(likedTracksStore);
     }, [likedTracksStore]);

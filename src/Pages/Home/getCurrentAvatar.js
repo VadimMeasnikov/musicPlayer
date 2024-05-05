@@ -5,7 +5,6 @@ export async function getCurrentAvatar(userId) {
   const imgRef = ref(imageDb, `images/${userId}.png`);
   try {
     const avatar = await getDownloadURL(imgRef);
-    console.log(avatar);
     return avatar;
   } catch (error) {
     console.error('Error getting avatar URL:', error);

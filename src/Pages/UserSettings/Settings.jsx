@@ -27,10 +27,6 @@ export default function Settings({ modalArr }) {
     const user = useSelector(state => state.user)
     const photo = useSelector(state => state.userPhoto.photo);
 
-    console.log(user);
-    console.log(photo);
-    console.log(user.username);
-
     useEffect(() =>{
       if(photo && photo !== undefined){
         setUserPhoto(photo)
@@ -42,19 +38,12 @@ export default function Settings({ modalArr }) {
      async function handleAvatarChange(e) {
         if (e.target.files[0]) {
             useAvatar(e.target.files[0], userFb)
-            // console.log(e.target.files[0]);
-            // const avatar = `/src/img/${e.target.files[0].name}`
-            // dispatch(setPhoto({photo: avatar}))         2
-            //    1
             const avatar = getCurrentAvatar(userFb.uid)
             return avatar
         }
     }
     getCurrentAvatar(userFb.uid)
     .then((avatar) => {
-        console.log('i am ready');
-        console.log(avatar);
-         console.log('this is avatar');
         setUserPhoto(avatar)
         return avatar
     })

@@ -80,7 +80,6 @@ export default function Home() {
 
     onAuthStateChanged(auth, (user) => {
       if (user && !userRd.email) {
-        console.log(user);
         getAllUsersData()
           .then((data) => {
             const newArr = createUsersArray(data)
@@ -89,7 +88,6 @@ export default function Home() {
           .then((array) => {
             const key = auth.currentUser.displayName
             const user = getCurrentUser(array, key)
-            console.log(user);
 
             getCurrentAvatar(user.id)
             .then((avatar) => {  
