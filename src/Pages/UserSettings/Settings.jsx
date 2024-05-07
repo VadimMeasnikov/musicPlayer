@@ -39,17 +39,17 @@ export default function Settings({ modalArr }) {
         if (e.target.files[0]) {
             useAvatar(e.target.files[0], userFb)
             const avatar = getCurrentAvatar(userFb.uid)
-            return avatar
         }
+        getCurrentAvatar(userFb.uid)
+        .then((avatar) => {
+            setUserPhoto(avatar)
+            return avatar
+        })
+        .then((avatar) => {
+            dispatch(setPhoto({photo: avatar}))
+        })
     }
-    getCurrentAvatar(userFb.uid)
-    .then((avatar) => {
-        setUserPhoto(avatar)
-        return avatar
-    })
-    .then((avatar) => {
-        dispatch(setPhoto({photo: avatar}))
-    })
+
 
     return (
         <div className='setting__page'>
@@ -64,7 +64,7 @@ export default function Settings({ modalArr }) {
                     <div className="Settings-profile-information">
                         <div className="user__photo_box"><img className='user__photo' src={userPhoto} alt="" /></div>
                         <div className="Settings-profile-text">
-                            <p className='name'>maya</p>
+                            <p className='name'>{user.username}</p>
                             <p className='view'>View Profile</p>
                         </div>
                     </div>

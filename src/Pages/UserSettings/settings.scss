@@ -29,7 +29,6 @@
 main {
   display: flex;
   justify-content: space-between;
-  // margin: 30px 30px 0 25px;
   flex-direction: column;
 
   .Settings-profile {
@@ -48,7 +47,7 @@ main {
       align-items: center;
 
       .Settings-profile-text {
-        margin-left: 10px;
+        padding-left: 15px;
 
         .name {
           font-size: 18px;
@@ -60,7 +59,7 @@ main {
           font-size: 13px;
           font-weight: 500;
           line-height: 17.76px;
-          text-align: center;
+          text-align: left;
           color: #b3b3b3;
         }
 

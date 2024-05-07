@@ -1,0 +1,50 @@
+.edit_profile {
+    p {
+        color: white
+    }
+
+    .edit_profile_container {
+        width: 85%;
+        margin: 0 auto;
+        .edit_profile__title_box {
+            width: 75%;
+            height: 50px;
+
+            justify-content: space-between;
+
+
+            display: flex;
+            align-items: center;
+
+            text-align: center;
+            color: white;
+        }
+
+        .user_profile_content {
+            margin-top: 25px;
+
+            width: 100px;
+            height: 55px;
+
+            display: flex;
+            justify-content: space-between;
+
+            .user_logo__box {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .user__photo {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+
+            .user_text__content {
+                padding-top: 5px;
+            }
+        }
+    }
+}
