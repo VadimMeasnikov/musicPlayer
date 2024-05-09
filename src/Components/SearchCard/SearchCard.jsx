@@ -4,6 +4,7 @@ import defaultImg from "../../img/default.png";
 import "./searchcard.scss";
 import { useDispatch } from "react-redux";
 import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
+import { addAlbum } from "../../reduxToolkit/slices/albumSlice";
 
 export default function SearchCard({ info }) {
   const [src, setSrc] = useState(info.image);
@@ -17,14 +18,21 @@ export default function SearchCard({ info }) {
   const [linkTo, setLinkTo] = useState("");
   useEffect(() => {
     if (info.image.includes("artist")) {
-      handleClick;
+      handleClick("addArtistData");
       setLinkTo("/artist");
+    } else if (info.hasOwnProperty("zip")) {
+      handleClick("addAlbum");
+      setLinkTo("/album")
     } else {
       setLinkTo(`/player/${info.id}`);
     }
   }, [dispatch, info.image]);
-  const handleClick = () => {
-    dispatch(addArtistData(info));
+  const handleClick = (slicePath) => {
+    if (slicePath == "addArtistData") {
+      dispatch(addArtistData(info));
+    } else if (slicePath == "addAlbum") {
+      dispatch(addAlbum(info));
+    }
   };
   return (
     <Link to={linkTo} onClick={handleClick}>
