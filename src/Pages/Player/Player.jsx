@@ -58,16 +58,12 @@ export default function Player() {
     });
 
     const { trackId } = useParams()
-    // console.log(trackId);
     const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
-    // console.log(data);
 
 
     useEffect(() => {
         if (trackId !== undefined && data !== undefined && data.results !== undefined) {
-            const track = getCurrentTrack(data.results, trackId);
-            setCurrentTrack(track);
-            /* console.log(getCurrentTrack(data.results, trackId));*/
+            getCurrentTrack(data.results, trackId)
         }
     }, [trackId, data])
 
@@ -77,10 +73,8 @@ export default function Player() {
 
     function getCurrentTrack(array, id) {
         const currentTrack = array.find((track) => track.id === id)
-        console.log(currentTrack);
         setTrackName(currentTrack.name)
         setTrackArtist(currentTrack.artist_name)
-        console.log(currentTrack.image);
         setTrackAlbum(currentTrack.album_name)
         setTrackImage(currentTrack.image)
         setTrackAudio(currentTrack.audio)
@@ -114,7 +108,6 @@ export default function Player() {
 
     const handleColorGeneration = (color) => {
         setAverageColor(color);
-        // console.log(color);
     };
 
     const bg = `linear-gradient(to bottom, ${averageColor}, rgb(0, 0, 0))`
@@ -124,8 +117,7 @@ export default function Player() {
     const likedTracksStore = useSelector((state) => state.likes.likedTracks);
     const [likedTracks, setLikedTracks] = useState([]);
     const [currentTrack, setCurrentTrack] = useState();
-    console.log(currentTrack)
-    console.log(likedTracks);
+
     useEffect(() => {
         setLikedTracks(likedTracksStore);
     }, [likedTracksStore]);

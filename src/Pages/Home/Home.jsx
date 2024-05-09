@@ -14,8 +14,12 @@ import { addPlaylist } from "../../reduxToolkit/slices/playlistSlice";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
+import { getCurrentAvatar } from "./getCurrentAvatar";
+import { setPhoto } from "../../reduxToolkit/slices/userPhoto";
 // import CurrentArtist from "../CurrentArtist/CurrentArtist";
 import "./home.scss";
+
+
 
 
 
@@ -47,8 +51,10 @@ export default function Home() {
   const userRd = useSelector(state => state.user)
   const { username } = useSelector((state) => state.user);
   const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
-  console.log(selectedArtists);
   const playlistInfo = useSelector((state) => state.playlists.tracks);
+
+  const userAgent = navigator.userAgent;
+  // Примеры проверок для разных устройств
 
   // Проверка, существует ли массив с треками
   useEffect(() => {
@@ -74,7 +80,6 @@ export default function Home() {
 
     onAuthStateChanged(auth, (user) => {
       if (user && !userRd.email) {
-        console.log(user);
         getAllUsersData()
           .then((data) => {
             const newArr = createUsersArray(data)
@@ -83,6 +88,17 @@ export default function Home() {
           .then((array) => {
             const key = auth.currentUser.displayName
             const user = getCurrentUser(array, key)
+
+            getCurrentAvatar(user.id)
+            .then((avatar) => {  
+              dispatch(setPhoto({
+                photo : avatar
+              }
+              ))       
+            })
+            .catch(e => {
+              console.error(e)
+            })
 
             dispatch(setUser({
               email: user.email,
@@ -128,7 +144,6 @@ export default function Home() {
 
   useEffect(() => {
     if (selectedArtists) {
-      console.log(selectedArtists);
       setUserArtists(selectedArtists)
     }
   }, [selectedArtists])

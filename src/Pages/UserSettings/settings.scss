@@ -29,16 +29,21 @@
 main {
   display: flex;
   justify-content: space-between;
-  margin: 30px 30px 0 25px;
+  // margin: 30px 30px 0 25px;
   flex-direction: column;
 
   .Settings-profile {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    // margin-top: 20px;
     display: flex;
     align-items: center;
     color: white;
     justify-content: space-between;
 
     &-information {
+      padding-left: 25px;
+      padding-right: 25px;
       display: flex;
       align-items: center;
 
@@ -65,21 +70,26 @@ main {
     img {
       cursor: pointer;
     }
+
   }
 
   .settings {
     margin: 70px 0 130px 0;
     display: flex;
     flex-direction: column;
-    gap: 35px;
 
     &-user {
       display: flex;
       justify-content: space-between;
       color: white;
       align-items: center;
+      height: 75px;
 
+      // padding-left: 25px;
+      // padding-right: 25px;
       p {
+        padding-left: 25px;
+
         font-size: 16px;
         font-weight: 500;
         line-height: 21.86px;
@@ -87,11 +97,21 @@ main {
       }
 
       img {
+        padding-right: 25px;
         cursor: pointer;
       }
 
     }
+
+    &-user:hover {
+      background-color: rgba(12, 12, 13, 0.8);
+    }
   }
+}
+
+.Settings-profile:hover {
+
+  background-color: rgba(12, 12, 13, 0.8);
 }
 
 .go_back__btn {
@@ -103,3 +123,28 @@ main {
   border-radius: 50%;
 }
 
+.setting__page {
+  width: 100%;
+  height: 100%;
+  background: #1b1a1c;
+}
+
+.user-chevronRight {
+  padding-right: 25px;
+}
+
+.user__photo_box {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .user__photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}

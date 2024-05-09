@@ -11,6 +11,7 @@ import userArtistsSlice from "./slices/userArtistsSlice";
 import userSearch from "./slices/userSearch";
 import favouriteTracks from "./slices/favouriteTracks";
 import albumSlice from "./slices/albumSlice";
+import userPhotoSlice from "./slices/userPhoto";
 
 export const store = configureStore({
   reducer: {
@@ -18,12 +19,13 @@ export const store = configureStore({
     [artistsApi.reducerPath]: artistsApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
     user: userReducer,
+    userPhoto: userPhotoSlice,
     userKey: userKeySlice,
     userArtists: userArtistsSlice, 
     playlists: playlistSlice,
     search: userSearch,
     likes: favouriteTracks,
-    artist: artistSlice,
+    artist: artistSlice,,
     album: albumSlice
   },
   middleware: (getDefault) =>

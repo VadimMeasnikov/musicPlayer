@@ -8,7 +8,6 @@ import { addAlbum } from "../../reduxToolkit/slices/albumSlice";
 
 export default function SearchCard({ info }) {
   const [src, setSrc] = useState(info.image);
-  console.log(info)
   useEffect(() => {
     if (!info.image) {
       setSrc(defaultImg);

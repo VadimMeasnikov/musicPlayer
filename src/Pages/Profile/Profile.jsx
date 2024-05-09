@@ -8,7 +8,10 @@ import Settings from '../UserSettings/Settings'
 import Navigation from "../../Components/Navigation/Navigation";
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import { useSelector } from 'react-redux'
+
+import defaultImg from '../../img/default.png'
 import './profile.scss'
+
 
 
 
@@ -16,7 +19,10 @@ export default function Profile() {
 	const [featured, setFeatured] = useState([])
 	const [status, setStatus] = useState(undefined)
 	const [isSettings, setIsSettings] = useState(false)
+	const [userPhoto, setUserPhoto] = useState(defaultImg)
 	const { data } = useGetTrackQuery()
+
+	const photo = useSelector(state => state.userPhoto.photo)
 
 	const playlists = useSelector((state) => state.playlists.tracks);
 	const favArtists = useSelector(
@@ -30,6 +36,14 @@ export default function Profile() {
 			setStatus(data.result)
 		}
 	}, [data])
+
+	useEffect(() =>{
+		if(photo && photo !== undefined){
+		  setUserPhoto(photo)
+		} else {
+		  setUserPhoto(defaultImg)
+		}
+	  }, [photo])
 
 	function handleButtonClick(status) {
 		setStatus(status)
@@ -47,7 +61,7 @@ export default function Profile() {
 				<div className={`profile_container ${isSettings ? 'hidden' : 'fade-in'}`}>
 					<div className='your_library'>
 						<div className='profile_logo'>
-							<img src={exampleAvatar} alt='' />
+							<img className='user__photo' src={userPhoto} alt='' />
 							<p className='title'>Your Library</p>
 						</div>
 						<button onClick={() => setIsSettings(true)} className='plus_btn'>

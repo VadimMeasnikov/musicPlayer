@@ -8,10 +8,12 @@ import config from "../config.js";
 import { Provider } from "react-redux";
 import { store } from './reduxToolkit/store.js'
 import "./stylesGlobal/index.scss";
-
+import { getStorage } from "firebase/storage";
 
 
 initializeApp (config);
+
+export const imageDb = getStorage(initializeApp(config))
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client = {new QueryClient()}>
@@ -20,3 +22,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </Provider>
     </QueryClientProvider>
 );
+
+
