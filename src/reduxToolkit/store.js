@@ -25,7 +25,7 @@ export const store = configureStore({
     playlists: playlistSlice,
     search: userSearch,
     likes: favouriteTracks,
-    artist: artistSlice,,
+    artist: artistSlice,
     album: albumSlice
   },
   middleware: (getDefault) =>

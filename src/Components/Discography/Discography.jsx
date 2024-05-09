@@ -32,8 +32,8 @@ export default function Discography({ data, albums, close }) {
           {tracks && (
             <div className="discography-item">
               {tracks.reverse().map((item) => (
-                <div className="discography-itemContent">
-                  <div key={item.id} className="discography-itemInfo">
+                <div key={item.id} className="discography-itemContent">
+                  <div className="discography-itemInfo">
                     <img src={item.image} alt="image" />
                     <div className="discography-itemTextInfo">
                       <div className="name">

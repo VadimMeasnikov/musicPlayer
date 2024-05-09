@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const albumSlice = createSlice({
     name: "album",
     initialState: {
-        album: []
+        albumData: []
     },
     reducers: {
         addAlbum: (state, action) => {
