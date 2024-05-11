@@ -8,6 +8,7 @@ import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
 import ArtistPage from './Components/ArtistPage/ArtistPage.jsx'
 import AlbumPage from './Pages/AlbumPage/AlbumPage.jsx'
+import Liked from './Pages/Liked/Liked.jsx'
 import { getAllUsersData } from './services.js'
 import Profile from './Pages/Profile/Profile.jsx'
 
@@ -53,6 +54,7 @@ export default function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/artist' element={<ArtistPage />} />
         <Route path='/album' element={<AlbumPage/>} />
+        <Route path="/liked" element={<Liked/>}/>
       </Routes>
       {/* <button onClick={getData}>Click</button> */}
     </Router>
