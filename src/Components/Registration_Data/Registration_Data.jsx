@@ -10,8 +10,8 @@ import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { useAddData, useEditData } from "../../services";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+
 import "./registration_data.scss";
-import { update } from "firebase/database";
 
 export default function Registration_Data({ regState, userObj }) {
   const [userState, setUserState] = useState("");
@@ -102,14 +102,15 @@ export default function Registration_Data({ regState, userObj }) {
     updateProfile(user, {
       displayName: userKey
     })
-    .catch((e) => console.error(e))
+      .catch((e) => console.error(e))
 
     const field = 'key'
     console.log(userKey);
-    editData.mutate({id: userKey, field, updateData: userKey})
+    editData.mutate({ id: userKey, field, updateData: userKey })
     console.log('end edit data');
     console.log(user);
   }
+
 
   return (
     <div className="registration_data">
@@ -125,11 +126,11 @@ export default function Registration_Data({ regState, userObj }) {
           }}
         >
           <div className="user_data__box">
-            <label className="user_data_label">
+          <label className={isError ? ("error_label") : ("user_data_label")} >
               What's your email?
             </label>
             <input
-              className="user_data_input"
+              className={isError ? ("error_input") : ("user_data_input")}
               value={userEmail}
               onChange={(e) => {
                 setUserEmail(e.target.value);
@@ -142,11 +143,11 @@ export default function Registration_Data({ regState, userObj }) {
             </label>
           </div>
           <div className="user_data__box">
-            <label className="user_data_label">
+          <label className={isError ? ("error_label") : ("user_data_label")} >
               Create a password
             </label>
             <input
-              className="user_data_input"
+              className={isError ? ("error_input") : ("user_data_input")}
               value={userPassword}
               onChange={(e) => {
                 setUserPassword(e.target.value);
@@ -157,11 +158,11 @@ export default function Registration_Data({ regState, userObj }) {
             <label className="user_data_info">Use at least 6 characters.</label>
           </div>
           <div className="user_data__box">
-            <label className="user_data_label">
+            <label className={isError ? ("error_label") : ("user_data_label")} >
               What's your name?
             </label>
             <input
-              className="user_data_input"
+              className={isError ? ("error_input") : ("user_data_input")}
               value={userName}
               onChange={(e) => {
                 setUserName(e.target.value);
@@ -228,11 +229,6 @@ export default function Registration_Data({ regState, userObj }) {
           </button>
         </form>
       </div>
-      {isError && (
-        <div className="popUp">
-          <p className="error_text">Oops! Apparently you are already registered</p>
-        </div>
-      )}
     </div>
   );
 }

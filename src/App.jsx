@@ -7,6 +7,7 @@ import Search from './Pages/Search/Search.jsx'
 import Player from './Pages/Player/Player.jsx'
 import Artists from './Pages/Artists/Artists.jsx'
 import ArtistPage from './Components/ArtistPage/ArtistPage.jsx'
+import EditProfile from './Pages/EditProfile/EditProfile.jsx'
 import AlbumPage from './Pages/AlbumPage/AlbumPage.jsx'
 import Liked from './Pages/Liked/Liked.jsx'
 import { getAllUsersData } from './services.js'
@@ -50,13 +51,12 @@ export default function App() {
         <Route path='/login' element={<LogIn />} />
         <Route path='/search' element={<Search />} />
         <Route path='/artists' element={<Artists />} />
-        {/* <Route path='/library' element={<YourLibrary />} /> */}
         <Route path='/profile' element={<Profile />} />
         <Route path='/artist' element={<ArtistPage />} />
+        <Route path='/editprofile' element={<EditProfile />} />
         <Route path='/album' element={<AlbumPage/>} />
         <Route path="/liked" element={<Liked/>}/>
       </Routes>
-      {/* <button onClick={getData}>Click</button> */}
     </Router>
   )
 }
