@@ -8,7 +8,8 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import leftArrow from '../../img/ChevronLeft.png'
+import { Link, useNavigate } from "react-router-dom";
 import { getAllUsersData } from "../../services";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -70,7 +71,7 @@ export default function LogIn() {
                 dispatch(setArtists(artist));
                 return artist;
               })
-              
+
             }
           })
         navigate("/");
@@ -98,9 +99,9 @@ export default function LogIn() {
 
   return (
     <div className="login">
-      <GoBackButton className="go_back" />
       <div className="login_container">
         <div className="title_box_login">
+        <Link to='/registration' className="go_back__btn_log"><img src={leftArrow} alt="" /></Link>
           <h1 className="title_text_login">Log In</h1>
         </div>
         <form onSubmit={(e) => logInUser(e)} className="login_user_form">

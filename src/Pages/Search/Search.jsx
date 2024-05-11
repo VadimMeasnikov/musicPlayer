@@ -4,8 +4,11 @@ import SearchCard from "../../Components/SearchCard/SearchCard";
 import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import tabsData from "../../tabs.json";
-import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux"
+import { useSelector } from 'react-redux';
 import "./search.scss";
 
 
@@ -18,9 +21,24 @@ export default function Search() {
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemsToShow, setItemsToshow] = useState(100);
+
+  const auth = getAuth()
+  const user = useSelector(state => state.user)
+  const navigate = useNavigate()
+
   const showMore = () => {
     setItemsToshow(200);
   }
+
+  
+	useEffect(() => {
+		onAuthStateChanged(auth, (userSt => {
+			if (user.email == null) {
+				navigate('/')
+			}
+		}))
+	}, [])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchValue(searchValue);

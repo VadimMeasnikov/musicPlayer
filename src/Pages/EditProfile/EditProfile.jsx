@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
+import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useAvatar } from '../../hooks/useAvatar'
 import { getCurrentAvatar } from '../Home/getCurrentAvatar'
 import { setPhoto } from '../../reduxToolkit/slices/userPhoto'
@@ -23,6 +23,7 @@ export default function EditProfile() {
     const dispatch = useDispatch()
     const auth = getAuth()
     const userFb = auth.currentUser
+
 
     const user = useSelector(state => state.user)
     const photo = useSelector(state => state.userPhoto.photo);

@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
 import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { useAddData, useEditData } from "../../services";
-import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import leftArrow from '../../img/ChevronLeft.png'
 
 import "./registration_data.scss";
 
@@ -114,9 +114,11 @@ export default function Registration_Data({ regState, userObj }) {
 
   return (
     <div className="registration_data">
-      <GoBackButton onClick={() => regState.setIsRegistration(false)} />
+
+
       <div className="registration_data__container">
         <div className="title_box__reg_data">
+          <button onClick={() => regState.setIsRegistration(false)} className="go_back__btn_reg"><img src={leftArrow} alt="" /></button>
           <h1 className="create_account__title">Create account</h1>
         </div>
         <form
@@ -126,7 +128,7 @@ export default function Registration_Data({ regState, userObj }) {
           }}
         >
           <div className="user_data__box">
-          <label className={isError ? ("error_label") : ("user_data_label")} >
+            <label className={isError ? ("error_label") : ("user_data_label")} >
               What's your email?
             </label>
             <input
@@ -143,7 +145,7 @@ export default function Registration_Data({ regState, userObj }) {
             </label>
           </div>
           <div className="user_data__box">
-          <label className={isError ? ("error_label") : ("user_data_label")} >
+            <label className={isError ? ("error_label") : ("user_data_label")} >
               Create a password
             </label>
             <input

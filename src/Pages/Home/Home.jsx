@@ -90,15 +90,15 @@ export default function Home() {
             const user = getCurrentUser(array, key)
 
             getCurrentAvatar(user.id)
-            .then((avatar) => {  
-              dispatch(setPhoto({
-                photo : avatar
-              }
-              ))       
-            })
-            .catch(e => {
-              console.error(e)
-            })
+              .then((avatar) => {
+                dispatch(setPhoto({
+                  photo: avatar
+                }
+                ))
+              })
+              .catch(e => {
+                console.error(e)
+              })
 
             dispatch(setUser({
               email: user.email,
@@ -119,15 +119,15 @@ export default function Home() {
               dispatch(setArtists(artist))
             ))
             setUserArtists(artists)
+            setIsPageLoading(false)
             return user
           })
           .catch((e) => { console.error(e) })
-      } else {
-        setIsPageLoading(false)
+      } else if (!user || userRd.email == null) {
+          navigate('/registration')
       }
     });
   }, []);
-
 
 
   function createUsersArray(usersObj) {

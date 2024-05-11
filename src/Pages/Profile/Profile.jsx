@@ -6,10 +6,11 @@ import fourSquares from '../../img/fourSquares.svg'
 import Navigation from "../../Components/Navigation/Navigation";
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import { useSelector } from 'react-redux'
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Settings from '../../Components/Settings/Settings'
-
 import defaultImg from '../../img/default.png'
+import { useNavigate } from 'react-router-dom'
+import { CgSpinnerTwoAlt } from "react-icons/cg";
 import './profile.scss'
 
 
@@ -20,16 +21,33 @@ export default function Profile() {
 	const [status, setStatus] = useState(undefined)
 	const [isSettings, setIsSettings] = useState(false)
 	const [userPhoto, setUserPhoto] = useState(defaultImg)
-    const photoObj = {userPhoto, setUserPhoto}
+	const [isPageLoading, setIsPageLoading] = useState(false)
+	const photoObj = { userPhoto, setUserPhoto }
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
+	const user = useSelector(state => state.user)
+	console.log(user);
+	const navigate = useNavigate()
+
+	const auth = getAuth()
+	const userFb = auth.currentUser
 
 	const playlists = useSelector((state) => state.playlists.tracks);
 	const favArtists = useSelector(
 		(state) => state.userArtists.userAppArtists
 	);
 	const favTracks = useSelector((state) => state.likes.likedTracks)
+
+
+	useEffect(() => {
+		onAuthStateChanged(auth, (userSt => {
+			if (user.email == null) {
+				setIsPageLoading(true)
+				navigate('/')
+			}
+		}))
+	}, [])
 
 	useEffect(() => {
 		if (data) {
@@ -56,38 +74,42 @@ export default function Profile() {
 
 	return (
 		<div className='profile'>
-			{isSettings ? (
-				<Settings modalArr={modalArr} photoObj={photoObj}  className='settings' />
+			{isPageLoading ? (
+				<CgSpinnerTwoAlt />
 			) : (
-				<div className={`profile_container ${isSettings ? 'hidden' : 'fade-in'}`}>
-					<div className='your_library'>
-						<div className='profile_logo'>
-							<img className='user__photo' src={userPhoto} alt='' />
-							<p className='title'>Your Library</p>
-						</div>
-						<button onClick={() => setIsSettings(true)} className='plus_btn'>
-							<img src={openBtn} alt='' />
-						</button>
-					</div>
-					<div className='four_buttons'>
-						<button onClick={() => handleButtonClick('Playlist')} className='profile_button'>Playlists</button>
-						<button onClick={() => handleButtonClick('Artist')} className='profile_button'>Artists</button>
-						<button onClick={() => handleButtonClick('Album')} className='profile_button'>Albums</button>
-						<button onClick={() => handleButtonClick('Podcast & Show')} className='profile_button'>Podcasts & Shows</button>
-					</div>
-					<div className='recently_played'>
-						<div className='row'>
-							<div className='mini_title'>
-								<img src={twoArrows} alt='' />
-								<p className='near_text'>Recently Played</p>
+				isSettings ? (
+					<Settings modalArr={modalArr} photoObj={photoObj} className='settings' />
+				) : (
+					<div className={`profile_container ${isSettings ? 'hidden' : 'fade-in'}`}>
+						<div className='your_library'>
+							<div className='profile_logo'>
+								<img className='user__photo' src={userPhoto} alt='' />
+								<p className='title'>Your Library</p>
 							</div>
-							<img src={fourSquares} alt='' />
+							<button onClick={() => setIsSettings(true)} className='plus_btn'>
+								<img src={openBtn} alt='' />
+							</button>
 						</div>
-						<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
-						<Navigation />
+						<div className='four_buttons'>
+							<button onClick={() => handleButtonClick('Playlist')} className='profile_button'>Playlists</button>
+							<button onClick={() => handleButtonClick('Artist')} className='profile_button'>Artists</button>
+							<button onClick={() => handleButtonClick('Album')} className='profile_button'>Albums</button>
+							<button onClick={() => handleButtonClick('Podcast & Show')} className='profile_button'>Podcasts & Shows</button>
+						</div>
+						<div className='recently_played'>
+							<div className='row'>
+								<div className='mini_title'>
+									<img src={twoArrows} alt='' />
+									<p className='near_text'>Recently Played</p>
+								</div>
+								<img src={fourSquares} alt='' />
+							</div>
+							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
+							<Navigation />
+						</div>
 					</div>
-				</div>
+				)
 			)}
 		</div>
-	)
+	);
 }
