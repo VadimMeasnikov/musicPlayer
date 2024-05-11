@@ -10,6 +10,7 @@ import artistSlice from "./slices/artistSlice";
 import userArtistsSlice from "./slices/userArtistsSlice"; 
 import userSearch from "./slices/userSearch";
 import favouriteTracks from "./slices/favouriteTracks";
+import albumSlice from "./slices/albumSlice";
 import userPhotoSlice from "./slices/userPhoto";
 
 export const store = configureStore({
@@ -25,6 +26,7 @@ export const store = configureStore({
     search: userSearch,
     likes: favouriteTracks,
     artist: artistSlice,
+    album: albumSlice
   },
   middleware: (getDefault) =>
     getDefault().concat(

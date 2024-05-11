@@ -4,31 +4,42 @@ import defaultImg from "../../img/default.png";
 import "./searchcard.scss";
 import { useDispatch } from "react-redux";
 import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
+import { addAlbum } from "../../reduxToolkit/slices/albumSlice";
 
 export default function SearchCard({ info }) {
   const [src, setSrc] = useState(info.image);
   useEffect(() => {
-    if (!info.image) {
+    if (info && !info.image) {
       setSrc(defaultImg);
     }
-  }, [info.image]);
+  }, [info]);
+
   const dispatch = useDispatch();
   const [linkTo, setLinkTo] = useState("");
   useEffect(() => {
-    if (info.image.includes("artist")) {
-      handleClick;
-      setLinkTo("/artist");
-    } else {
-      setLinkTo(`/player/${info.id}`);
+    if (info) {
+      if (info.image && info.image.includes("artist")) {
+        setLinkTo("/artist");
+      } else if (info.zip) {
+        setLinkTo("/album");
+      } else {
+        setLinkTo(`/player/${info.id}`);
+      }
     }
-  }, [dispatch, info.image]);
+  }, [info]);
+
   const handleClick = () => {
-    dispatch(addArtistData(info));
+    if (info && info.image && info.image.includes("artist")) {
+      dispatch(addArtistData(info));
+    } else if (info && info.zip) {
+      dispatch(addAlbum(info));
+    }
   };
+
   return (
     <Link to={linkTo} onClick={handleClick}>
       <div className="searchCard">
-        <img src={info.image} alt="album" />
+        <img src={src} alt="album" />
         <div className="searchCard-text">
           <div className="searchCard__title">{info.name}</div>
           <div className="searchCard__artist">{info.artist_name}</div>
