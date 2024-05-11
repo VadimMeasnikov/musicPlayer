@@ -10,49 +10,23 @@ import { useAvatar } from '../../hooks/useAvatar'
 import { getAuth } from 'firebase/auth'
 import { setPhoto } from '../../reduxToolkit/slices/userPhoto'
 import { useDispatch } from 'react-redux'
-import { getCurrentAvatar } from '../Home/getCurrentAvatar'
+import { getCurrentAvatar } from '../../Pages/Home/getCurrentAvatar'
+import { Link } from 'react-router-dom'
+
+
 import "./settings.scss"
 
 
-export default function Settings({ modalArr }) {
+export default function Settings({ modalArr, photoObj }) {
     const { isSettings, setIsSettings } = modalArr
     const [username, setUsername] = useState('')
-    const [userPhoto, setUserPhoto] = useState(defaultImg)
-    const [userAvatar, setUserAvatar] = useState(defaultImg)
-
-    const dispatch = useDispatch()
-    const auth = getAuth()
-    const userFb = auth.currentUser
+    const { userPhoto, setUserPhoto } = photoObj
 
     const user = useSelector(state => state.user)
-    const photo = useSelector(state => state.userPhoto.photo);
-
-    useEffect(() =>{
-      if(photo && photo !== undefined){
-        setUserPhoto(photo)
-      } else {
-        setUserPhoto(defaultImg)
-      }
-    }, [photo])
-
-     async function handleAvatarChange(e) {
-        if (e.target.files[0]) {
-            useAvatar(e.target.files[0], userFb)
-            const avatar = getCurrentAvatar(userFb.uid)
-        }
-        getCurrentAvatar(userFb.uid)
-        .then((avatar) => {
-            setUserPhoto(avatar)
-            return avatar
-        })
-        .then((avatar) => {
-            dispatch(setPhoto({photo: avatar}))
-        })
-    }
-
 
     return (
         <div className='setting__page'>
+
             <div className="header">
                 <div className="header-components">
                     <button className='go_back__btn' onClick={() => setIsSettings(false)}> <img src={ChevronLeft} alt="" /></button>
@@ -70,14 +44,12 @@ export default function Settings({ modalArr }) {
                     </div>
                     <img className='user-chevronRight' src={ChevronRight} alt="" />
                 </div>
-                <div className="createAvatar">
-                    <input type="file" onChange={(e) => handleAvatarChange(e)} />
-                </div>
+             
                 <div className="settings">
-                    <div className="settings-user">
+                    <Link to='/editprofile' className="settings-user">
                         <p>Account</p>
                         <img src={ChevronRight} alt="" />
-                    </div>
+                    </Link>
                     <div className="settings-user">
                         <p>Data Saver</p>
                         <img src={ChevronRight} alt="" />

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import openBtn from '../../img/Add.png'
 import Recently_Played from '../../Components/Recently_Played/Recently_Played'
-import exampleAvatar from '../../img/exampleProfileAvatar.png'
 import twoArrows from '../../img/twoArrows.svg'
 import fourSquares from '../../img/fourSquares.svg'
-import Settings from '../UserSettings/Settings'
 import Navigation from "../../Components/Navigation/Navigation";
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
 import { useSelector } from 'react-redux'
+
+import Settings from '../../Components/Settings/Settings'
 
 import defaultImg from '../../img/default.png'
 import './profile.scss'
@@ -20,6 +20,7 @@ export default function Profile() {
 	const [status, setStatus] = useState(undefined)
 	const [isSettings, setIsSettings] = useState(false)
 	const [userPhoto, setUserPhoto] = useState(defaultImg)
+    const photoObj = {userPhoto, setUserPhoto}
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
@@ -28,7 +29,7 @@ export default function Profile() {
 	const favArtists = useSelector(
 		(state) => state.userArtists.userAppArtists
 	);
-	const favTracks = useSelector((state)=> state.likes.likedTracks)
+	const favTracks = useSelector((state) => state.likes.likedTracks)
 
 	useEffect(() => {
 		if (data) {
@@ -37,13 +38,13 @@ export default function Profile() {
 		}
 	}, [data])
 
-	useEffect(() =>{
-		if(photo && photo !== undefined){
-		  setUserPhoto(photo)
+	useEffect(() => {
+		if (photo && photo !== undefined) {
+			setUserPhoto(photo)
 		} else {
-		  setUserPhoto(defaultImg)
+			setUserPhoto(defaultImg)
 		}
-	  }, [photo])
+	}, [photo])
 
 	function handleButtonClick(status) {
 		setStatus(status)
@@ -51,12 +52,12 @@ export default function Profile() {
 	}
 
 	const statusArr = { status, setStatus }
-	const modalArr = {isSettings, setIsSettings}
+	const modalArr = { isSettings, setIsSettings }
 
 	return (
 		<div className='profile'>
 			{isSettings ? (
-				<Settings modalArr={modalArr} className='settings'/>
+				<Settings modalArr={modalArr} photoObj={photoObj}  className='settings' />
 			) : (
 				<div className={`profile_container ${isSettings ? 'hidden' : 'fade-in'}`}>
 					<div className='your_library'>
