@@ -11,7 +11,9 @@ import Settings from '../../Components/Settings/Settings'
 import defaultImg from '../../img/default.png'
 import { useNavigate } from 'react-router-dom'
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import Album from '../../Components/Album/Album'
 import './profile.scss'
+
 
 
 
@@ -22,16 +24,16 @@ export default function Profile() {
 	const [isSettings, setIsSettings] = useState(false)
 	const [userPhoto, setUserPhoto] = useState(defaultImg)
 	const [isPageLoading, setIsPageLoading] = useState(false)
+
 	const photoObj = { userPhoto, setUserPhoto }
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
 	const user = useSelector(state => state.user)
-	console.log(user);
-	const navigate = useNavigate()
 
+
+	const navigate = useNavigate()
 	const auth = getAuth()
-	const userFb = auth.currentUser
 
 	const playlists = useSelector((state) => state.playlists.tracks);
 	const favArtists = useSelector(

@@ -121,19 +121,7 @@ export default function ArtistPage() {
       <div className="artistPage-content">
         <img className="artistPage-image" src={artistData.image} alt="image" />
         <div className="artistPage-info">
-          <div className="artistPage-buttons">
-            {isFollowed ? (
-              <button
-                onClick={handleUserFollowing}
-                className="followArtistBtn--active"
-              >
-                Following
-              </button>
-            ) : (
-              <button onClick={handleUserFollowing} className="followArtistBtn">
-                Follow
-              </button>
-            )}
+          <div className="artistPage-buttons">      
             <img className="playBtn" src={PlayButton} alt="Play" />
           </div>
           <div className="artistPage-topTracks">

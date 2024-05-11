@@ -11,17 +11,24 @@ import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favo
 import './AlbumPage.scss'
 
 export default function AlbumPage() {
+
     const dispatch = useDispatch()
+    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
+    const data = useSelector((state) => state.album.album);
+    const [likedTracks, setLikedTracks] = useState([]);
+    const [tracks, setTracks] = useState([]);
+
     const goBack = () => {
         dispatch(clearAlbum())
     }
-    const data = useSelector((state) => state.album.album);
+    
     console.log(data);
-    const [tracks, setTracks] = useState([]);
+
     console.log(tracks);
     useEffect(() => {
         getAlbumTracks(data);
     }, [data]);
+
     async function getAlbumTracks(data) {
         const response = await fetch(
             `https://api.jamendo.com/v3.0/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&artist_name=${data.artist_name}&album_name=${data.name}`
@@ -30,8 +37,6 @@ export default function AlbumPage() {
         setTracks(tracksData.results);
     }
 
-    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
-    const [likedTracks, setLikedTracks] = useState([]);
     console.log(likedTracks);
 
     useEffect(() => {

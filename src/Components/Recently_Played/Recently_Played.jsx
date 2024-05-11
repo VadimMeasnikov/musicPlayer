@@ -4,20 +4,20 @@ import favAlbum from '../../img/fav_album.png'
 import likedAlbum from '../../img/liked_album.jpg'
 import point from '../../img/point.png'
 import ProfileCard from '../ProfileCard/ProfileCard'
-import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
+import { useSelector } from 'react-redux'
+import Album from '../Album/Album'
 import './recently_played.scss'
 
 export default function Recently_Played({ data, favArtists, playlists, statusArr }) {
     const [isLoading, setIsLoading] = useState(true)
-
+    const [songsCountText, setSongsCountText] = useState('song')
     const [filteredData, setFilteredData] = useState([])
     const [onLoading, setOnLoading] = useState(true)
+    const {status, setStatus} = statusArr
+    const [isLikedSongs, setIsLikedSogns] = useState(true)
 
-
-    const {
-        status, setStatus
-    } = statusArr
-
+    const liked = useSelector(state => state.likes.likedTracks)
+	console.log(liked);
 
     useEffect(() => {
         if (statusArr.status === undefined) {
@@ -33,6 +33,12 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
             setIsLoading(false)
         }
     }, [])
+
+    useEffect(() =>  {
+      if(liked.length !== 0  && liked.length !== 1 ){ 
+         setSongsCountText('songs')
+      }
+    }, [liked])
 
     const exampleArr = [{
         name: null,
@@ -96,7 +102,10 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                     <div className="liked_songs">
                         <div className="liked_songs_container">
                             <div className="liked_songs_logo">
-                                <img className='liked_img' src={likedAlbum} alt="" />
+                                {
+                                    isLikedSongs ? 
+                                    (<Album/>) : (<img className='liked_img' src={likedAlbum} alt="" />)
+                                }                          
                             </div>
                             <div className="liked_songs_info">
                                 <p className='album_title'>Liked Songs</p>
@@ -104,7 +113,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                                     <img src={favAlbum} alt="" />
                                     <p className='status_info'>Playlist</p>
                                     <img src={point} alt="" />
-                                    <p className='volume_album'>58 songs</p>
+                                    <p className='volume_album'>{liked.length} {songsCountText}</p>
                                 </div>
                             </div>
                         </div>
