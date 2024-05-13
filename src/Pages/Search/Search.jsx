@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../../Components/Navigation/Navigation";
-import SearchCard from "../../Components/SearchCard/SearchCard";
+import MiniPlayerCard from "../../Components/MiniPlayerCard/MiniPlayerCard";
 import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { useSelector } from 'react-redux';
 import "./search.scss";
+
 
 
 export default function Search() {
@@ -100,7 +101,7 @@ export default function Search() {
               {error && <p>Error: {error.message}</p>}
               {searchTracks && searchTracks.length > 0 ? (
                 searchTracks.filter(item => item.image !== "").slice(0, itemsToShow).map((item, index) => (
-                  <SearchCard
+                  <MiniPlayerCard
                     key={index}
                     info={item}
                     onClick={console}

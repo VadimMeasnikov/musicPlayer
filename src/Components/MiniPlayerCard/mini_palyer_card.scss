@@ -1,13 +1,13 @@
 a{
   text-decoration: none;
 }
-.searchCard {
+.mini_player_card {
   border-radius: 4px;
   display: flex;
   align-items: center;
   column-gap: 10px;
   padding:  16px 0;
-  .searchCard__title, .searchCard__artist {
+  .mini_player_card__title, .mini_player_card__artist {
     color: rgb(255, 255, 255);
     font-size: 16px;
     font-weight: 700;

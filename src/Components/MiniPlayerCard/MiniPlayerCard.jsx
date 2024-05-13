@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import defaultImg from "../../img/default.png";
-import "./searchcard.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addArtistData } from "../../reduxToolkit/slices/artistSlice";
 import { addAlbum } from "../../reduxToolkit/slices/albumSlice";
 
-export default function SearchCard({ info }) {
+import "./mini_palyer_card.scss";
+
+export default function MiniPlayerCard({ info }) {
+  // console.log(info);
   const [src, setSrc] = useState(info.image);
+  const albumData = useSelector(state => state.album.albumData)
   useEffect(() => {
     if (info && !info.image) {
       setSrc(defaultImg);
@@ -20,8 +23,8 @@ export default function SearchCard({ info }) {
     if (info) {
       if (info.image && info.image.includes("artist")) {
         setLinkTo("/artist");
-      } else if (info.zip) {
-        setLinkTo("/album");
+      } else if (info.zip && albumData == null){
+        setLinkTo(`/album/${info.id}`);
       } else {
         setLinkTo(`/player/${info.id}`);
       }
@@ -32,17 +35,20 @@ export default function SearchCard({ info }) {
     if (info && info.image && info.image.includes("artist")) {
       dispatch(addArtistData(info));
     } else if (info && info.zip) {
-      dispatch(addAlbum(info));
+      console.log(info, info.zip);
+      dispatch(addAlbum({
+        albumData: info
+      }));
     }
   };
 
   return (
     <Link to={linkTo} onClick={handleClick}>
-      <div className="searchCard">
+      <div className="mini_player_card">
         <img src={src} alt="album" />
-        <div className="searchCard-text">
-          <div className="searchCard__title">{info.name}</div>
-          <div className="searchCard__artist">{info.artist_name}</div>
+        <div className="mini_player_card__text">
+          <div className="mini_player_card__title">{info.name}</div>
+          <div className="mini_player_card__artist">{info.artist_name}</div>
         </div>
       </div>
     </Link>

@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const albumSlice = createSlice({
     name: "album",
     initialState: {
-        albumData: []
+        albumData: null
     },
     reducers: {
         addAlbum: (state, action) => {
-            state.album = action.payload;
+            state.albumData = action.payload.albumData;
         },
         clearAlbum: (state) => {
-            state.album = null;
+            state.albumData = null;
         }
     }
 });
-export const {addAlbum, clearAlbum} = albumSlice.actions;
+export const { addAlbum, clearAlbum } = albumSlice.actions;
 export default albumSlice.reducer;

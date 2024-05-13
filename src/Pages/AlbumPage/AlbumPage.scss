@@ -1,117 +1,117 @@
-.album {
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px 20px 20px;
-    position: absolute;
-    top: 72px;
+// .album {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 0 20px 20px 20px;
+//     position: absolute;
+//     top: 72px;
 
-    .album-info {
-        gap: 10px;
-        display: flex;
-        align-items: start;
-        color: white;
+//     .album-info {
+//         gap: 10px;
+//         display: flex;
+//         align-items: start;
+//         color: white;
 
-        & img {
-            height: 150px;
-            width: 150px;
-        }
+//         & img {
+//             height: 150px;
+//             width: 150px;
+//         }
 
-        .album-textInfo {
-            display: flex;
-            align-items: start;
-            flex-direction: column;
-            height: 150px;
-            justify-content: space-between;
+//         .album-textInfo {
+//             display: flex;
+//             align-items: start;
+//             flex-direction: column;
+//             height: 150px;
+//             justify-content: space-between;
 
-            .name {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                gap: 10px;
+//             .name {
+//                 display: flex;
+//                 flex-direction: column;
+//                 align-items: start;
+//                 gap: 10px;
 
-                & h1 {
-                    font-size: 24px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                }
-            }
+//                 & h1 {
+//                     font-size: 24px;
+//                     font-weight: 700;
+//                     text-transform: uppercase;
+//                 }
+//             }
 
-            .buttons {
-                display: flex;
-                align-items: center;
-                gap: 10px;
+//             .buttons {
+//                 display: flex;
+//                 align-items: center;
+//                 gap: 10px;
 
-                & .funcBtn {
-                    height: 30px;
-                    width: 30px;
-                }
-            }
-        }
-    }
+//                 & .funcBtn {
+//                     height: 30px;
+//                     width: 30px;
+//                 }
+//             }
+//         }
+//     }
 
-    .albumTrackPositionPanel {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        margin: 20px 0 10px 0;
-        padding-bottom: 5px;
-        color: #c5c5c5;
-        border-bottom: 1px solid #c5c5c5;
+//     .albumTrackPositionPanel {
+//         width: 100%;
+//         display: flex;
+//         align-items: center;
+//         margin: 20px 0 10px 0;
+//         padding-bottom: 5px;
+//         color: #c5c5c5;
+//         border-bottom: 1px solid #c5c5c5;
 
-        .trackIndex {
-            width: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 30px 0 10px;
-        }
-    }
+//         .trackIndex {
+//             width: 20px;
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             padding: 0 30px 0 10px;
+//         }
+//     }
 
-    .album-tracks {
-        list-style: decimal;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: 5px 0;
+//     .album-tracks {
+//         list-style: decimal;
+//         display: flex;
+//         flex-direction: column;
+//         gap: 10px;
+//         margin: 5px 0;
 
-        & li {
-            display: flex;
-            align-items: center;
-            position: relative;
+//         & li {
+//             display: flex;
+//             align-items: center;
+//             position: relative;
 
-            .trackPosition {
-                width: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0 30px 0 10px;
-            }
+//             .trackPosition {
+//                 width: 20px;
+//                 display: flex;
+//                 align-items: center;
+//                 justify-content: center;
+//                 padding: 0 30px 0 10px;
+//             }
 
-            & div {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                gap: 5px;
-            }
+//             & div {
+//                 display: flex;
+//                 flex-direction: column;
+//                 align-items: start;
+//                 gap: 5px;
+//             }
 
-            & span {
-                color: white;
-            }
+//             & span {
+//                 color: white;
+//             }
 
-            .likeBtn {
-                color: white;
-                background: transparent;
-                border: none;
-                margin: 0;
-                position: absolute;
-                z-index: 10;
-                top: 0;
-                right: 0;
+//             .likeBtn {
+//                 color: white;
+//                 background: transparent;
+//                 border: none;
+//                 margin: 0;
+//                 position: absolute;
+//                 z-index: 10;
+//                 top: 0;
+//                 right: 0;
 
-                .likeBtnSVG {
-                    margin: 22px;
-                }
-            }
-        }
-    }
-}
+//                 .likeBtnSVG {
+//                     margin: 22px;
+//                 }
+//             }
+//         }
+//     }
+// }

@@ -12,52 +12,7 @@ import './AlbumPage.scss'
 
 export default function AlbumPage() {
 
-    const dispatch = useDispatch()
-    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
-    const data = useSelector((state) => state.album.album);
-    const [likedTracks, setLikedTracks] = useState([]);
-    const [tracks, setTracks] = useState([]);
-
-    const goBack = () => {
-        dispatch(clearAlbum())
-    }
     
-    console.log(data);
-
-    console.log(tracks);
-    useEffect(() => {
-        getAlbumTracks(data);
-    }, [data]);
-
-    async function getAlbumTracks(data) {
-        const response = await fetch(
-            `https://api.jamendo.com/v3.0/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&artist_name=${data.artist_name}&album_name=${data.name}`
-        );
-        const tracksData = await response.json();
-        setTracks(tracksData.results);
-    }
-
-    console.log(likedTracks);
-
-    useEffect(() => {
-        setLikedTracks(likedTracksStore);
-    }, [likedTracksStore]);
-
-    const handleTrackLike = (track) => {
-        const isTrackLiked = likedTracksStore.some(
-            (likedTrack) => likedTrack.id === track.id
-        );
-        if (!isTrackLiked) {
-            setLikedTracks(track);
-            dispatch(addLikedTrack(track));
-        } else {
-            const updatedLikedTracks = likedTracks.filter(
-                (likedTrack) => likedTrack.id !== track.id
-            );
-            setLikedTracks(updatedLikedTracks);
-            dispatch(removeLikedTracks(track.id));
-        }
-    };
 
     return (
         <>
@@ -84,30 +39,7 @@ export default function AlbumPage() {
                     <div className="trackIndex">#</div>
                     <div className="trackTitle">Title</div>
                 </div>
-                <ol className="album-tracks">
-                    {tracks.sort((a, b) => a.position - b.position).map((item, index) => (
-                        <li key={item.id}>
-                            <span className="trackPosition">{item.position}</span>
-                            <div>
-                                <span>{item.name}</span>
-                                <span>{data.artist_name}</span>
-                            </div>
-                            <button className="likeBtn"
-                                onClick={() => {
-                                    handleTrackLike(item);
-                                }}
-                            >
-                                {likedTracksStore.some(
-                                    (likedTrack) => likedTrack.id === item.id
-                                ) ? (
-                                    <FaHeart className="likeBtnSVG" />
-                                ) : (
-                                    <FaRegHeart className="likeBtnSVG" />
-                                )}
-                            </button>
-                        </li>
-                    ))}
-                </ol>
+              
             </div>
         </>
     )
