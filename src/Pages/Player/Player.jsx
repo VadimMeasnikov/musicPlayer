@@ -220,6 +220,7 @@ export default function Player() {
                             </div>
                         </div>
 
+                        <audio src={trackAudio}></audio>
 
                         <input
                             type="range"
