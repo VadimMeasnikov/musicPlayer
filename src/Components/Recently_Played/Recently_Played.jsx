@@ -5,7 +5,6 @@ import likedAlbum from '../../img/liked_album.jpg'
 import point from '../../img/point.png'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import { useSelector } from 'react-redux'
-import Album from '../Album/Album'
 import './recently_played.scss'
 
 export default function Recently_Played({ data, favArtists, playlists, statusArr }) {
@@ -102,10 +101,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                     <div className="liked_songs">
                         <div className="liked_songs_container">
                             <div className="liked_songs_logo">
-                                {
-                                    isLikedSongs ? 
-                                    (<Album/>) : (<img className='liked_img' src={likedAlbum} alt="" />)
-                                }                          
+                                   <img className='liked_img' src={likedAlbum} alt="" />
                             </div>
                             <div className="liked_songs_info">
                                 <p className='album_title'>Liked Songs</p>

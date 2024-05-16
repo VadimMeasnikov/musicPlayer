@@ -51,7 +51,8 @@ export default function Player() {
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
-    const [play, { pause, duration, sound }] = useSound(music_track);
+    console.log(trackAudio);
+    const [play, { pause, duration, sound }] = useSound(trackAudio);
     const [currTime, setCurrTime] = useState({
         min: "",
         sec: "",
