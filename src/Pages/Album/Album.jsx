@@ -190,6 +190,11 @@ export default function Album() {
             <div className='album'>
                 <div className="album_container" >
                     <GetCurrentColor imageUrl={albumImage} onColorGenerated={handleColorGeneration} />
+
+
+
+               
+
                     <div className="album_color__top" style={{ background: bg }}>
                         <div className="album_title_box">
                             <button onClick={() => { navigate(-1), goBack() }} className="go_back__button__album">

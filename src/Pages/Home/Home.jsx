@@ -194,6 +194,8 @@ export default function Home() {
       console.error("Error creating playlists:", error);
     }
   }
+
+  const url = 'https://prod-1.storage.jamendo.com/?trackid=174&format=mp31&from=1dRl3MJ26HAnlw%2BHOZzo0A%3D%3D%7CIqeW6CFxyx9BAW33JkkX2g%3D%3D'
   return (
     <div className="wrapper">
       {isPageLoading ? (
@@ -329,6 +331,9 @@ export default function Home() {
             </div>
           </div>
           <div className="suggestedArtists">
+            <div className="box">
+              <audio src={url}></audio>
+            </div>
             <div className="suggestedArtists-title">Artists you like</div>
             <div className="suggestedArtists-results">
               {userArtists.map((item, index) => (
