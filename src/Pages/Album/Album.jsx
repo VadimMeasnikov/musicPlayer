@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import find from '../../img/find.png'
-import defaultImg from '../../img/default.png'
 import like from '../../img/like_album.png'
 import vector from '../../img/album_vector.png'
 import { IoPlaySharp } from "react-icons/io5";
 import { IoPauseOutline } from "react-icons/io5";
-import { PiHeartThin } from "react-icons/pi";
 import { FcLike } from "react-icons/fc";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchQuery } from '../../reduxToolkit/queryApi/searchJamendo'
 import { addLikedTrack, removeLikedTracks } from '../../reduxToolkit/slices/favouriteTracks'
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
-import sad from '../../img/sad.png'
 import { clearAlbum } from '../../reduxToolkit/slices/albumSlice'
-import defaultAlbum from '../../img/defaultAlbum.jpg'
 import MiniPlayerCard from '../../Components/MiniPlayerCard/MiniPlayerCard'
 import GetCurrentColor from '../../GetCurrentColor'
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import useSound from 'use-sound'
+import sad from '../../img/sad.png'
+import defaultAlbum from '../../img/defaultAlbum.jpg'
+import AlbumCard from '../../Components/AlbumCard/AlbumCard';
 import './album.scss'
+
 
 export default function Album() {
 
@@ -32,21 +29,20 @@ export default function Album() {
     const [averageColor, setAverageColor] = useState('')
     const [dataResult, setDataResult] = useState([])
 
-    const [URL, setURL] = useState(false)
+    const [URL, setURL] = useState(null)
 
     const [search, setSearch] = useState('')
     const [isEmpty, setIsEmpty] = useState(false)
 
-    const [audioData, setAudioData] = useState('')
+    const [activeTrack, setActiveTrack] = useState(null)
     const [trackIndex, setTrackIndex] = useState(0)
-
-    const url = 'https://prod-1.storage.jamendo.com/?trackid=174&format=mp31&from=1dRl3MJ26HAnlw%2BHOZzo0A%3D%3D%7CIqeW6CFxyx9BAW33JkkX2g%3D%3D'
-    const [play, { stop }] = useSound(url)
+    const [isAuto, setIsAuto] = useState(false)
 
     const likedTracksStore = useSelector((state) => state.likes.likedTracks);
     const data = useSelector((state) => state.album.albumData);
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const audioRef = useRef()
 
     function handleLikeAlbum() {
         setIsLiked(false)
@@ -55,42 +51,19 @@ export default function Album() {
         setIsLiked(true)
     }
 
-    function handleStartAlbum() {
-        const url = tracks[trackIndex]?.audio
-        const correctUrl = url.replace("format=mp31", "format=mp3")
-        setURL(correctUrl)
-        play();
-        setIsPlay(true)
-    }
-
-    function handlePauseAlbum() {
-        stop()
-        setIsPlay(false)
-    }
-
-    function playNext() {
-        play()
-        setTrackIndex(pr => pr + 1)
-    }
-
-    useEffect(() => {
-        if (URL) {
-            console.log(URL);
-            function handleTrackEnd() {
-                if (trackIndex < tracks.length - 1) {
-                    playNextTrack()
-                }
-            }
-
-            play({ onend: handleTrackEnd })
-
-            return () => {
-                stop()
-            }
+    function audioToggle() {
+        const audio = audioRef.current
+        if (audio.paused) {
+            audio.play()
+            setIsPlay(true)
         }
+        else {
+            audio.pause()
+            setIsPlay(false)
+        }
+    }
 
 
-    }, [play, stop, trackIndex, tracks, URL])
 
     const goBack = () => {
         setTimeout(() => {
@@ -107,29 +80,54 @@ export default function Album() {
         }
     }, [data]);
 
-
-
-
-
     async function getAlbumTracks(data) {
-        console.log(data);
         const response = await fetch(
             `https://api.jamendo.com/v3.0/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&artist_name=${data.artist_name}&album_name=${data.name}`
         );
         const tracksData = await response.json();
-        console.log(tracksData.results);
+
         setDataResult(tracksData.results)
         setTracks(tracksData.results)
+        setURL(tracksData.results[0].audio)
         setIsLoading(false)
         return tracksData.results
     }
 
     useEffect(() => {
-        const hasUndefinedValues = tracks.some(track => {
-            return track.name === undefined || track.audio === undefined;
-        });
-    }, [tracks, dataResult, audioData])
+        if (isPlay) {
+            setIsAuto(true)
+            if (tracks.length !== 0) {
+                console.log(tracks);
+                const currentTrack = tracks[trackIndex]
+                console.log(currentTrack);
 
+                const timeout = setTimeout(() => {
+                    const nextIndex = (trackIndex + 1) % tracks.length
+                    console.log(nextIndex)
+                    setTrackIndex(nextIndex)
+                }, currentTrack.duration * 1000)
+                 
+                return () => clearTimeout(timeout)
+            }
+        }
+    }, [trackIndex, tracks, isPlay])
+
+    useEffect(() => {
+        if(activeTrack){
+           setURL(activeTrack.audio)
+           setIsAuto(true)
+        }
+    }, [activeTrack])
+
+
+    useEffect(() => {
+        if (tracks.length !== 0 && isPlay) {
+            const currentTrack = tracks[trackIndex]
+            setActiveTrack(currentTrack)
+            setURL(currentTrack.audio)
+            console.log(1);
+        }
+    }, [trackIndex, tracks, isPlay])
 
 
     useEffect(() => {
@@ -160,14 +158,10 @@ export default function Album() {
     const brighterColor = `brightness(120%)`;
     const bgInp = `linear-gradient(to bottom, ${brighterColor}, ${averageColor}, rgb(0, 0, 0))`;
 
-    const isLastTrack = trackIndex === tracks.length - 1;
-
-
-    // console.log(tracks[trackIndex].audio);
-
     function getDataInAlbum(e, array) {
         e.preventDefault();
         if (search) {
+            setActiveTrack(false)
             setIsEmpty(false)
             const filtered = array.filter(item => {
                 return item.name.toLowerCase().includes(search.toLowerCase());
@@ -177,8 +171,19 @@ export default function Album() {
                 setIsEmpty(true)
             }
         } else if (search.length === 0) {
+            console.log(array);
             setTracks(array)
         }
+    }
+
+    function handleClickActive(info) {
+        if (info === activeTrack) {
+            setActiveTrack(false)
+            audioRef.current.pause()
+          } else {
+            setActiveTrack(info)
+            audioRef.current.play()
+          }
     }
 
     return (
@@ -191,9 +196,7 @@ export default function Album() {
                 <div className="album_container" >
                     <GetCurrentColor imageUrl={albumImage} onColorGenerated={handleColorGeneration} />
 
-
-
-               
+                    <audio className='audio_element' ref={audioRef} src={URL} autoPlay={isAuto} controls></audio>
 
                     <div className="album_color__top" style={{ background: bg }}>
                         <div className="album_title_box">
@@ -269,17 +272,18 @@ export default function Album() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="content_2__buttons">
 
-                                            {
-                                                isPlay ?
-                                                    (<IoPauseOutline onClick={() => handlePauseAlbum()} className='album__btn' />)
-                                                    :
-                                                    (<IoPlaySharp onClick={() => handleStartAlbum()} className='album__btn' />)
-                                            }
+                                    </div>
+                                    <div className="content_2__buttons">
+
+                                        {
+                                            isPlay ?
+                                                (<IoPauseOutline onClick={() => audioToggle()} className='album__btn' />)
+                                                :
+                                                (<IoPlaySharp onClick={() => audioToggle()} className='album__btn' />)
+                                        }
 
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +306,7 @@ export default function Album() {
                                         tracks
                                             .sort((a, b) => a.position - b.position)
                                             .map((item, index) => (
-                                                <MiniPlayerCard key={item.id} info={item} />
+                                                <AlbumCard key={item.id} info={item} isActive={item === activeTrack} handleClickActive={handleClickActive} />
                                             ))
                                     }
                                 </ol>

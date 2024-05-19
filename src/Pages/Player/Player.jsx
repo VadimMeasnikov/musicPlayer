@@ -18,7 +18,6 @@ import music_track from "../../tracks/The Beatles - From Me To You.mp3"
 import repeat_active from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
 import GetCurrentColor from '../../GetCurrentColor'
-
 // likes
 import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,31 +39,39 @@ export default function Player() {
     const [trackAudio, setTrackAudio] = useState('')
     const [trackImage, setTrackImage] = useState('')
     const [trackAlbum, setTrackAlbum] = useState('')
+    const [trackId, setTrackId] = useState('')
 
     const [averageColor, setAverageColor] = useState('')
 
     const [seconds, setSeconds] = useState(0);
-    const navigate = useNavigate()
+
     const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
     const [tabs, setTabs] = useState(tabsData);
     const [activeTab, setActiveTab] = useState(tabs[0].path);
     const [isOpen, setIsOpen] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [repeatState, setRepeatState] = useState(false)
-    console.log(trackAudio);
     const [play, { pause, duration, sound }] = useSound(trackAudio);
     const [currTime, setCurrTime] = useState({
         min: "",
         sec: "",
     });
 
-    const { trackId } = useParams()
+    const { trackIdParams } = useParams()
+
     const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
+    const dataRd = useSelector(state => state.search.search)
+    const navigate = useNavigate()
+
+    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
+    console.log(likedTracksStore);
+    const [likedTracks, setLikedTracks] = useState([]);
+    const [currentTrack, setCurrentTrack] = useState();
 
 
     useEffect(() => {
         if (trackId !== undefined && data !== undefined && data.results !== undefined) {
-            getCurrentTrack(data.results, trackId)
+            getCurrentTrack(data.results, trackIdParams)
         }
     }, [trackId, data])
 
@@ -72,14 +79,31 @@ export default function Player() {
         navigate(-1)
     }
 
-    function getCurrentTrack(array, id) {
-        const currentTrack = array.find((track) => track.id === id)
-        setTrackName(currentTrack.name)
-        setTrackArtist(currentTrack.artist_name)
-        setTrackAlbum(currentTrack.album_name)
-        setTrackImage(currentTrack.image)
-        setTrackAudio(currentTrack.audio)
-        return currentTrack
+    async function getCurrentTrack(array, id) {
+        const currentTrack = await array.find((track) => track.id === id);
+        if (currentTrack) {
+
+            setTrackName(currentTrack.name);
+            setTrackArtist(currentTrack.artist_name);
+            setTrackAlbum(currentTrack.album_name);
+            setTrackImage(currentTrack.image);
+            setTrackAudio(currentTrack.audio);
+            setTrackId(currentTrack.id)
+            setCurrentTrack(currentTrack)
+            return currentTrack
+        } else {
+            const currentTrack = dataRd[dataRd.length - 1]
+
+            setTrackName(currentTrack.name);
+            setTrackArtist(currentTrack.artist_name);
+            setTrackAlbum(currentTrack.album_name);
+            setTrackImage(currentTrack.image);
+            setTrackAudio(currentTrack.audio);
+            setTrackId(currentTrack.id)
+            setCurrentTrack(currentTrack)
+            return currentTrack
+        }
+
     }
 
     const playingButton = () => {
@@ -115,14 +139,12 @@ export default function Player() {
 
 
     // likes
-    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
-    const [likedTracks, setLikedTracks] = useState([]);
-    const [currentTrack, setCurrentTrack] = useState();
 
     useEffect(() => {
         setLikedTracks(likedTracksStore);
     }, [likedTracksStore]);
     const handleTrackLike = (track) => {
+        console.log(likedTracksStore);
         const isTrackLiked = likedTracksStore.some(
             (likedTrack) => likedTrack.id === track.id
         );
@@ -137,7 +159,6 @@ export default function Player() {
             dispatch(removeLikedTracks(track.id));
         }
     };
-
 
     return (
 
@@ -159,7 +180,7 @@ export default function Player() {
                                     }}
                                 >
                                     {likedTracksStore.some(
-                                        (likedTrack) => likedTrack.id === currentTrack.id
+                                        (likedTrack) => likedTrack.id === trackId
                                     ) ? (
                                         <div className="">
                                             <FaHeart className='likeBtnSVG' />
@@ -211,7 +232,7 @@ export default function Player() {
                                     }}
                                 >
                                     {likedTracksStore.some(
-                                        (likedTrack) => likedTrack.id === currentTrack.id
+                                        (likedTrack) => likedTrack.id === trackId
                                     ) ? (
                                         <FaHeart className='likeBtnSVG' />
                                     ) : (

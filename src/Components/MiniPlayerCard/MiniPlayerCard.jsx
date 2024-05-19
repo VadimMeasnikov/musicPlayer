@@ -8,14 +8,16 @@ import { addAlbum } from "../../reduxToolkit/slices/albumSlice";
 import "./mini_palyer_card.scss";
 
 export default function MiniPlayerCard({ info }) {
-  // console.log(info);
   const [src, setSrc] = useState(info.image);
+
   const albumData = useSelector(state => state.album.albumData)
+
   useEffect(() => {
     if (info && !info.image) {
       setSrc(defaultImg);
     }
   }, [info]);
+
 
   const dispatch = useDispatch();
   const [linkTo, setLinkTo] = useState("");
@@ -23,7 +25,7 @@ export default function MiniPlayerCard({ info }) {
     if (info) {
       if (info.image && info.image.includes("artist")) {
         setLinkTo("/artist");
-      } else if (info.zip && albumData == null){
+      } else if (info.zip && albumData == null) {
         setLinkTo(`/album/${info.id}`);
       } else {
         setLinkTo(`/player/${info.id}`);
@@ -45,12 +47,12 @@ export default function MiniPlayerCard({ info }) {
   return (
     <Link to={linkTo} onClick={handleClick}>
       <div className="mini_player_card">
-        <img src={src} alt="album" />
+        <img src={src} className="mini_player_card__image" alt="album" />
         <div className="mini_player_card__text">
           <div className="mini_player_card__title">{info.name}</div>
           <div className="mini_player_card__artist">{info.artist_name}</div>
         </div>
       </div>
-    </Link>
+     </Link>
   );
 }

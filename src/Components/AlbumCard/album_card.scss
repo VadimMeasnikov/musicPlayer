@@ -1,0 +1,223 @@
+.album_card {
+    height: 95px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .album_card__image {
+        margin-left: 19px;
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+    }
+
+    .album_card__content {
+        padding-left: 10px;
+
+        width: 80%;
+        color: rgb(255, 255, 255);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .funct_content {
+            margin-right: 10px;
+            height: 50px;
+            width: 50px;
+
+            #more_info_button {
+                width: 100%;
+                height: 100%;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                background: none;
+                outline: none;
+                border: none;
+
+                .button_content {
+                    width: 50%;
+                    height: 50%;
+                    color: grey;
+                }
+            }
+        }
+    }
+}
+
+.more_info_box {
+    position: relative;
+    bottom: 150px;
+    right: 150px;
+
+    width: 150px;
+    height: 155px;
+    border-radius: 15px;
+    background: rgb(66, 66, 66);
+
+    .more_info_box__container {
+        height: 100%;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+
+        .more_info_content {
+            width: 100%;
+            height: 24%;
+            background: none;
+            outline: none;
+            border: none;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+
+            .btn_image_content {
+                height: 100%;
+                width: 10%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+
+            .btn_text_content {
+                height: 100%;
+                width: 85%;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                padding-left: 5px;
+
+                font-family: Avenir;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 28px;
+                color: white;
+            }
+        }
+    }
+}
+
+#first_btn,
+#second_btn,
+#third_btn {
+    border-bottom: 1px solid whitesmoke;
+}
+
+.like_img {
+    width: 30px;
+    height: 30px;
+}
+
+.open {
+    animation: fadeIn 0.35s ease-in;
+}
+
+.modal_container {
+    animation: fadeIn 0.2s ease-in;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: #0a0a0a;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .modal_content {
+        padding-top: 25px;
+        width: 95%;
+        margin: 0 auto;
+
+        .source_container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .source_box {
+                background: none;
+                border: none;
+                outline: none;
+
+                width: 23%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .source_logo {
+                    width: 47px;
+                    height: 47px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .link {
+                    background-color: white;
+                }
+
+                .whatsup {
+                    background: rgba(101, 208, 114, 1);
+                }
+
+                .twitter {
+                    background: rgba(76, 158, 234, 1);
+                }
+
+                .message {
+                    background: rgba(88, 187, 73, 1);
+                }
+
+                p {
+                    font-size: 13px;
+                    font-weight: 600;
+                    line-height: 17.76px;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .close_modal__btn {
+        margin-top: 50px;
+
+        width: 30px;
+        height: 30px;
+        background: none;
+        outline: none;
+        border: none;
+
+        .close_modal__btn_content {
+            color: grey;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
