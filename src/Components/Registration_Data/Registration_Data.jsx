@@ -90,7 +90,8 @@ export default function Registration_Data({ regState, userObj }) {
       share: userShare,
       search: false,
       artists: false,
-      key: false
+      key: false,
+      liked: false,
     };
 
     const userKey = await addData.mutateAsync(userObj);

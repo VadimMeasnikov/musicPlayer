@@ -10,7 +10,7 @@ import share from '../../img/Share.png'
 import addToAlbum from '../../img/add_to_album.png'
 import { TfiClose } from "react-icons/tfi";
 import goToPlayer from '../../img/goToPlayer.png'
-
+import { useCorrectData } from '../../services';
 import twitter from '../../img/twitter.png'
 import link from '../../img/Link.png'
 import whatsup from '../../img/whatsup.png'
@@ -27,8 +27,12 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     const [likedTracks, setLikedTracks] = useState([]);
     const [isLike, setIsLike] = useState(false)
     const [isModal, setIsModal] = useState(false)
-    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
+    const likedTracksStore = useSelector(state=> state.likes.likedTracks)
+    const {key} = useSelector(state => state.userKey)
+    const field = 'liked'
     const dispatch = useDispatch()
+    const correctData = useCorrectData()
+
     useEffect(() => {
         if (info && !info.image) {
             setSrc(defaultImg);
@@ -57,6 +61,11 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
             setLikedTracks(track);
             setIsLike(true)
             dispatch(addLikedTrack(track));
+            correctData.mutate({
+                id: key,
+                field: field,
+                updateData: JSON.stringify(track),
+              });
         } else {
             const updatedLikedTracks = likedTracks.filter(
                 (likedTrack) => likedTrack.id !== track.id

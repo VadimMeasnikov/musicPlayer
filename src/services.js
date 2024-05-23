@@ -2,6 +2,7 @@ import firebase from 'firebase/compat/app'
 import config from "../config.js";
 import 'firebase/compat/database'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { update } from 'firebase/database';
 
 
 const app = firebase.initializeApp(config)
@@ -33,6 +34,30 @@ export function useEditData() {
 
     return useMutation(async ({ id, field, updateData }) => {
         await db.ref(`users/${id}/${field}`).set(updateData)
+    },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('users')
+            }
+        }
+    )
+}
+
+
+export function useCorrectData() {
+    const queryClient = useQueryClient()
+
+    return useMutation(async ({ id, field, updateData }) => {
+        const snapshot = await db.ref(`users/${id}/${field}`).get();
+        
+        const existingData = JSON.parse(snapshot.val())
+        console.log(updateData);
+        const track = JSON.parse(updateData)
+        const updatedData = [existingData, track];
+
+        console.log(JSON.stringify(updatedData));
+        await db.ref(`users/${id}/${field}`).set(JSON.stringify(updatedData))
+        console.log('succesfull');
     },
         {
             onSuccess: () => {
