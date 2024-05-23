@@ -18,18 +18,13 @@ import music_track from "../../tracks/The Beatles - From Me To You.mp3"
 import repeat_active from '../../img/trackFunction/Repeat.png'
 import repeat from '../../img/media-playlist-repeat.png'
 import GetCurrentColor from '../../GetCurrentColor'
-// likes
+import { useEditData } from '../../services'
 import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
 import './player.scss'
-
-
-
-
-
 
 export default function Player() {
     const dispatch = useDispatch();
@@ -57,21 +52,21 @@ export default function Player() {
         sec: "",
     });
 
-    const { trackIdParams } = useParams()
+    const trackIdParams = useParams()
 
     const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
     const dataRd = useSelector(state => state.search.search)
     const navigate = useNavigate()
 
     const likedTracksStore = useSelector((state) => state.likes.likedTracks);
-    console.log(likedTracksStore);
+
     const [likedTracks, setLikedTracks] = useState([]);
     const [currentTrack, setCurrentTrack] = useState();
 
 
     useEffect(() => {
-        if (trackId !== undefined && data !== undefined && data.results !== undefined) {
-            getCurrentTrack(data.results, trackIdParams)
+        if (trackId !== undefined && data !== undefined && data.results !== undefined && trackIdParams.trackId) {
+            getCurrentTrack(data.results, trackIdParams.trackId)
         }
     }, [trackId, data])
 
@@ -136,9 +131,6 @@ export default function Player() {
     };
 
     const bg = `linear-gradient(to bottom, ${averageColor}, rgb(0, 0, 0))`
-
-
-    // likes
 
     useEffect(() => {
         setLikedTracks(likedTracksStore);

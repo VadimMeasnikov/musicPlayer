@@ -72,11 +72,12 @@ export default function Album() {
     };
 
     useEffect(() => {
-        if (data.image) {
-            setAlbumImage(data.image)
-        }
         if (data) {
             getAlbumTracks(data);
+            setAlbumImage(data.image)
+        }
+        else{
+            navigate('/')
         }
     }, [data]);
 
@@ -97,25 +98,22 @@ export default function Album() {
         if (isPlay) {
             setIsAuto(true)
             if (tracks.length !== 0) {
-                console.log(tracks);
                 const currentTrack = tracks[trackIndex]
-                console.log(currentTrack);
 
                 const timeout = setTimeout(() => {
                     const nextIndex = (trackIndex + 1) % tracks.length
-                    console.log(nextIndex)
                     setTrackIndex(nextIndex)
                 }, currentTrack.duration * 1000)
-                 
+
                 return () => clearTimeout(timeout)
             }
         }
     }, [trackIndex, tracks, isPlay])
 
     useEffect(() => {
-        if(activeTrack){
-           setURL(activeTrack.audio)
-           setIsAuto(true)
+        if (activeTrack) {
+            setURL(activeTrack.audio)
+            setIsAuto(true)
         }
     }, [activeTrack])
 
@@ -125,7 +123,6 @@ export default function Album() {
             const currentTrack = tracks[trackIndex]
             setActiveTrack(currentTrack)
             setURL(currentTrack.audio)
-            console.log(1);
         }
     }, [trackIndex, tracks, isPlay])
 
@@ -171,7 +168,6 @@ export default function Album() {
                 setIsEmpty(true)
             }
         } else if (search.length === 0) {
-            console.log(array);
             setTracks(array)
         }
     }
@@ -180,10 +176,10 @@ export default function Album() {
         if (info === activeTrack) {
             setActiveTrack(false)
             audioRef.current.pause()
-          } else {
+        } else {
             setActiveTrack(info)
             audioRef.current.play()
-          }
+        }
     }
 
     return (
