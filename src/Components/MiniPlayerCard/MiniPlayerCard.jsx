@@ -9,7 +9,6 @@ import "./mini_palyer_card.scss";
 
 export default function MiniPlayerCard({ info }) {
   const [src, setSrc] = useState(info.image);
-
   const albumData = useSelector(state => state.album.albumData)
 
   useEffect(() => {
