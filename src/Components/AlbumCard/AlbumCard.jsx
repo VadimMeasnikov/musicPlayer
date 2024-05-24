@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikedTrack, removeLikedTracks } from '../../reduxToolkit/slices/favouriteTracks';
+import { IoPlay } from "react-icons/io5";
 import share from '../../img/Share.png'
 import addToAlbum from '../../img/add_to_album.png'
 import { TfiClose } from "react-icons/tfi";
@@ -21,20 +22,22 @@ import { addSearch } from '../../reduxToolkit/slices/userSearch';
 
 
 
-export default function AlbumCard({ info, isActive, handleClickActive }) {
-    const [src, setSrc] = useState(info.image);
+export default function AlbumCard({ info, img, isActive, handleClickActive }) {
+    const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
     const [isLike, setIsLike] = useState(false)
     const [isModal, setIsModal] = useState(false)
-    const likedTracksStore = useSelector(state=> state.likes.likedTracks)
-    const {key} = useSelector(state => state.userKey)
+    const likedTracksStore = useSelector(state => state.likes.likedTracks)
+    const { key } = useSelector(state => state.userKey)
     const field = 'liked'
     const dispatch = useDispatch()
     const correctData = useCorrectData()
 
+    console.log(info);
+
     useEffect(() => {
-        if (info && !info.image) {
+        if (info && !info.image && !img) {
             setSrc(defaultImg);
         }
     }, [info]);
@@ -65,7 +68,7 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
                 id: key,
                 field: field,
                 updateData: JSON.stringify(track),
-              });
+            });
         } else {
             const updatedLikedTracks = likedTracks.filter(
                 (likedTrack) => likedTrack.id !== track.id
@@ -77,7 +80,7 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
         return isTrackLiked
     };
 
-    function addDataTrack(track){
+    function addDataTrack(track) {
         console.log(track);
         dispatch(addSearch(track))
     }
@@ -117,13 +120,13 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
                                     <div className='btn_text_content '><p>Like</p></div>
                                 </button>
 
-                                
 
-                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => {addDataTrack(info)}}>
+
+                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info) }}>
                                     <div className="btn_image_content">
-                                        <img src={goToPlayer} alt="" />
+                                        <IoPlay/>
                                     </div>
-                                    <div className='btn_text_content'>  <p className='btn_text_content'>Player</p></div>
+                                    <div className='btn_text_content'>  <p className='btn_text_content'>Play</p></div>
 
                                 </Link>
 
@@ -170,9 +173,9 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
 
                                 </button>
                             </div>
-                           
+
                         </div>
-                        <button className='close_modal__btn' onClick={() => setIsModal(false)}><TfiClose className='close_modal__btn_content'/></button>
+                        <button className='close_modal__btn' onClick={() => setIsModal(false)}><TfiClose className='close_modal__btn_content' /></button>
                     </div>
                 )
             }

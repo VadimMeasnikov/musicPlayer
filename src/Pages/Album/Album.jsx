@@ -3,15 +3,14 @@ import { useParams } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import like from '../../img/like_album.png';
 import vector from '../../img/album_vector.png';
-import { IoPlaySharp } from "react-icons/io5";
+import { IoPlay } from "react-icons/io5";
 import GoBackButton from '../../Components/GoBackButton/GoBackButton';
-import { IoPauseOutline } from "react-icons/io5";
+import { IoPause } from "react-icons/io5";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikedTrack, removeLikedTracks } from '../../reduxToolkit/slices/favouriteTracks';
 import { clearAlbum } from '../../reduxToolkit/slices/albumSlice';
-import MiniPlayerCard from '../../Components/MiniPlayerCard/MiniPlayerCard';
 import GetCurrentColor from '../../GetCurrentColor';
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import sad from '../../img/sad.png';
@@ -229,9 +228,9 @@ export default function Album() {
                                     </div>
                                     <div className="content_2__buttons">
                                         {isPlay ?
-                                            (<IoPauseOutline onClick={() => audioToggle()} className='album__btn' />)
+                                            (<IoPause onClick={() => audioToggle()} className='album__btn-pause' />)
                                             :
-                                            (<IoPlaySharp onClick={() => audioToggle()} className='album__btn' />)
+                                            (<IoPlay onClick={() => audioToggle()} className='album__btn-play' />)
                                         }
                                     </div>
                                 </div>

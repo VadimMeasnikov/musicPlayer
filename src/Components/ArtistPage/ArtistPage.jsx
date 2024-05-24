@@ -1,19 +1,29 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
 import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
 import { removeArtists } from "../../reduxToolkit/slices/userArtistsSlice";
-import GoBackButton from "../GoBackButton/GoBackButton";
+import { IoPlay } from "react-icons/io5";
+import GoBackButton from '../../Components/GoBackButton/GoBackButton';
+import { IoPause} from "react-icons/io5";
 import { clearArtistData } from "../../reduxToolkit/slices/artistSlice";
 import "./ArtistPage.scss";
 import PlayButton from "../../img/PlayButton.png";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
+import goToPlayer from '../../img/goToPlayer.png'
 import Discography from "../Discography/Discography";
-import { FaRegHeart } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
-import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
+import { IoIosMore } from "react-icons/io";
+import AlbumCard from '../../Components/AlbumCard/AlbumCard';
 
 export default function ArtistPage() {
   const [showAlbums, setShowAlbums] = useState(false);
+  const [activeTrack, setActiveTrack] = useState(null);
+  const [isPlay, setIsPlay] = useState(false);
+  const [URL, setURL] = useState(null);
+  const [isAuto, setIsAuto] = useState(false);
+  const audioRef = useRef();
   const closeDiscography = () => {
     setShowAlbums(false);
   };
@@ -32,6 +42,11 @@ export default function ArtistPage() {
   }, [data]);
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
+  useEffect(() => {
+    if (tracks) {
+      setURL(tracks[0]?.audio);
+    }
+  }, [])
   const [itemsToShow, setItemsToShow] = useState(5);
   const showMore = () => {
     setItemsToShow(10);
@@ -47,6 +62,15 @@ export default function ArtistPage() {
     const intervalId = setInterval(updateFormattedDate, 24 * 60 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    if (activeTrack) {
+      setURL(activeTrack.audio);
+      setIsAuto(true);
+    }
+  }, [activeTrack]);
+
+  
 
   useEffect(() => {
     getCurrentArtistTracks(formattedDate, artistData);
@@ -112,8 +136,31 @@ export default function ArtistPage() {
       dispatch(removeLikedTracks(track.id));
     }
   };
+
+  function audioToggle() {
+    const audio = audioRef.current;
+    if (audio.paused) {
+      audio.play();
+      setIsPlay(true);
+    } else {
+      audio.pause();
+      setIsPlay(false);
+    }
+  }
+
+  function handleClickActive(info) {
+    if (info === activeTrack) {
+      setActiveTrack(false);
+      audioRef.current.pause();
+    } else {
+      setActiveTrack(info);
+      audioRef.current.play();
+    }
+  }
+
   return (
     <div className="artistPage">
+      <audio className='audio_element' ref={audioRef} src={URL} autoPlay={isAuto} controls></audio>
       <div className="artistPage-topPanel">
         <GoBackButton className="GoBackBtn" onClick={goBack} />
         <h3>{artistData.name}</h3>
@@ -121,32 +168,35 @@ export default function ArtistPage() {
       <div className="artistPage-content">
         <img className="artistPage-image" src={artistData.image} alt="image" />
         <div className="artistPage-info">
-          <div className="artistPage-buttons">      
-            <img className="playBtn" src={PlayButton} alt="Play" />
+          <div className="artistPage-buttons">
+            {isFollowed ? (
+              <button
+                onClick={handleUserFollowing}
+                className="followArtistBtn--active"
+              >
+                Following
+              </button>
+            ) : (
+              <button onClick={handleUserFollowing} className="followArtistBtn">
+                Follow
+              </button>
+            )}
+            {isPlay ?
+              (<IoPause onClick={() => audioToggle()} className='album__btn-pause' />)
+              :
+              (<IoPlay onClick={() => audioToggle()} className='album__btn-play' />)
+            }
           </div>
           <div className="artistPage-topTracks">
             <h1>Popular tracks</h1>
             {tracks && (
-              <ol className="tracks">
-                {tracks.slice(0, itemsToShow).map((item) => (
-                  <li key={item.id}>
-                    <img src={item.image} alt="Img" />
-                    <span>{item.name}</span>
-                    <button className="likeBtn"
-                      onClick={() => {
-                        handleTrackLike(item);
-                      }}
-                    >
-                      {likedTracksStore.some(
-                        (likedTrack) => likedTrack.id === item.id
-                      ) ? (
-                        <FaHeart className="likeBtnSVG"/>
-                      ) : (
-                        <FaRegHeart className="likeBtnSVG"/>
-                      )}
-                    </button>
-                  </li>
-                ))}
+              <ol className="album-tracks">
+                {tracks
+                  .slice(0, itemsToShow)
+                  .sort((a, b) => a.position - b.position)
+                  .map((item, index) => (
+                    <AlbumCard key={item.id} info={item} isActive={item === activeTrack} handleClickActive={handleClickActive} />
+                  ))}
               </ol>
             )}
             {itemsToShow < 10 ? (
