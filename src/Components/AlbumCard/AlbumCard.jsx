@@ -33,7 +33,7 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     const field = 'liked'
     const dispatch = useDispatch()
     const correctData = useCorrectData()
-    const lastTrack = useLastTrack()
+    // const lastTrack = useLastTrack()
 
     useEffect(() => {
         if (info && !info.image) {
