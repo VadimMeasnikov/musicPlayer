@@ -15,9 +15,9 @@ import twitter from '../../img/twitter.png'
 import link from '../../img/Link.png'
 import whatsup from '../../img/whatsup.png'
 import message from '../../img/message.png'
-
-import './album_card.scss'
 import { addSearch } from '../../reduxToolkit/slices/userSearch';
+import { useLastTrack } from '../../hooks/useLastTrack';
+import './album_card.scss'
 
 
 
@@ -27,11 +27,13 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     const [likedTracks, setLikedTracks] = useState([]);
     const [isLike, setIsLike] = useState(false)
     const [isModal, setIsModal] = useState(false)
+
     const likedTracksStore = useSelector(state=> state.likes.likedTracks)
     const {key} = useSelector(state => state.userKey)
     const field = 'liked'
     const dispatch = useDispatch()
     const correctData = useCorrectData()
+    const lastTrack = useLastTrack()
 
     useEffect(() => {
         if (info && !info.image) {
@@ -52,6 +54,8 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     function handleClick() {
         handleClickActive(info)
     }
+
+
 
     const handleTrackLike = (track) => {
         const isTrackLiked = likedTracksStore.some(
