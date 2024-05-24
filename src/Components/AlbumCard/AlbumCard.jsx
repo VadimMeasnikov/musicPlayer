@@ -121,13 +121,7 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
                                     <div className='btn_text_content '><p>Like</p></div>
                                 </button>
 
-                                <button className='more_info_content ' id='second_btn'>
-                                    <div className="btn_image_content">
-                                        <img src={addToAlbum} alt="" />
-                                    </div>
-                                    <div className='btn_text_content'>  <p className='btn_text_content'>Add To Album</p></div>
-
-                                </button>
+                                
 
                                 <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => {addDataTrack(info)}}>
                                     <div className="btn_image_content">
@@ -137,13 +131,6 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
 
                                 </Link>
 
-                                <button onClick={() => setIsModal(pr => !pr)} className='more_info_content '>
-                                    <div className="btn_image_content">
-                                        <img src={share} alt="" />
-                                    </div>
-                                    <div className='btn_text_content'><p className='btn_text_content'>Share</p></div>
-
-                                </button>
                             </div>
 
                         </div>)}

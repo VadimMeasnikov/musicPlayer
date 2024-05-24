@@ -112,9 +112,9 @@ export default function Artists() {
 
 	return (
 		<div className='artists'>
-			<GoBackButton/>
 			<div className='artists_container'>
 				<div className='top_block'>
+					<GoBackButton />
 					<div className='text_block'>
 						<p className='choose_artists'>Choose 3 or more artists you like.</p>
 					</div>
