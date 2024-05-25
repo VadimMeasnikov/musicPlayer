@@ -12,20 +12,8 @@ import facebookLogo from "../../img/facebookLogo.png"
 
 import "./registration.scss";
 
-export default function Registration({ userObj }) {
-  const {
-    userEmail,
-    setUserEmail,
-    userPassword,
-    setUserPassword,
-    userName,
-    setUserName,
-    userNews,
-    setUserNews,
-    userShare,
-    setUserShare,
-  } = userObj;
-
+export default function Registration() {
+  
   const [isRegistration, setIsRegistration] = useState(false);
   const regState = { isRegistration, setIsRegistration };
 

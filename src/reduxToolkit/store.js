@@ -26,7 +26,7 @@ export const store = configureStore({
     search: userSearch,
     likes: favouriteTracks,
     artist: artistSlice,
-    album: albumSlice
+    album: albumSlice,
   },
   middleware: (getDefault) =>
     getDefault().concat(

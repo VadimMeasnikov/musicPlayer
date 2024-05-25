@@ -28,8 +28,8 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     const [isLike, setIsLike] = useState(false)
     const [isModal, setIsModal] = useState(false)
 
-    const likedTracksStore = useSelector(state=> state.likes.likedTracks)
-    const {key} = useSelector(state => state.userKey)
+    const likedTracksStore = useSelector(state => state.likes.likedTracks)
+    const { key } = useSelector(state => state.userKey)
     const field = 'liked'
     const dispatch = useDispatch()
     const correctData = useCorrectData()
@@ -51,11 +51,14 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
         }
     }, [isModal])
 
-    function handleClick() {
+    function handleClick(info) {
         handleClickActive(info)
+        correctLastTrack(info)
     }
 
-
+    function correctLastTrack(track) {
+        localStorage.setItem('track', JSON.stringify(track));
+    }
 
     const handleTrackLike = (track) => {
         const isTrackLiked = likedTracksStore.some(
@@ -69,7 +72,7 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
                 id: key,
                 field: field,
                 updateData: JSON.stringify(track),
-              });
+            });
         } else {
             const updatedLikedTracks = likedTracks.filter(
                 (likedTrack) => likedTrack.id !== track.id
@@ -81,18 +84,17 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
         return isTrackLiked
     };
 
-    function addDataTrack(track){
+    function addDataTrack(track) {
         console.log(track);
         dispatch(addSearch(track))
     }
-
 
     const bg = {
         background: isActive ? 'rgba(50, 50, 50, 0.5)' : 'black',
     };
 
     return (
-        <div onClick={() => { handleClick(); setIsMore(false) }} className="album_card" style={bg}>
+        <div onClick={() => { handleClick(info); setIsMore(false) }} className="album_card" style={bg}>
             <img src={src} className="album_card__image" alt="album" />
             <div className="album_card__content">
                 <div className="text_content">
@@ -121,9 +123,9 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
                                     <div className='btn_text_content '><p>Like</p></div>
                                 </button>
 
-                                
 
-                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => {addDataTrack(info)}}>
+
+                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info) }}>
                                     <div className="btn_image_content">
                                         <img src={goToPlayer} alt="" />
                                     </div>
@@ -174,9 +176,9 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
 
                                 </button>
                             </div>
-                           
+
                         </div>
-                        <button className='close_modal__btn' onClick={() => setIsModal(false)}><TfiClose className='close_modal__btn_content'/></button>
+                        <button className='close_modal__btn' onClick={() => setIsModal(false)}><TfiClose className='close_modal__btn_content' /></button>
                     </div>
                 )
             }

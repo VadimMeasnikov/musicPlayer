@@ -14,7 +14,7 @@ const albumSlice = createSlice({
             state.albumId = uuidv4();
             state.isCustomPlaylist = action.payload.isCustomPlaylist || false;
         },
-        clearAlbum: (state) => {
+        clearAlbum: (state, action) => {
             state.albumData = null;
             state.albumId = null;
             state.isCustomPlaylist = false;

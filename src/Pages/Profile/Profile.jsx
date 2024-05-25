@@ -11,6 +11,7 @@ import Settings from '../../Components/Settings/Settings'
 import defaultImg from '../../img/default.png'
 import { useNavigate } from 'react-router-dom'
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+
 import './profile.scss'
 
 

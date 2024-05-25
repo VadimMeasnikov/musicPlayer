@@ -5,6 +5,7 @@ import MiniCard from "../../Components/MiniCard/MiniCard";
 import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard";
 import MixMiniCard from "../../Components/MixMiniCard/MixMiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
+import LastTrack from '../../Components/LastTrack/LastTrack.jsx'
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -16,7 +17,7 @@ import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
 import { getCurrentAvatar } from "./getCurrentAvatar";
 import { setPhoto } from "../../reduxToolkit/slices/userPhoto";
-// import CurrentArtist from "../CurrentArtist/CurrentArtist";
+
 import "./home.scss";
 
 
@@ -40,6 +41,8 @@ export default function Home() {
   const [playlistDataLoaded, setPlaylistDataLoaded] = useState(false);
   const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
   const [artistModalData, setArtistModalData] = useState({});
+
+  const [isTrack, setIsTrack] = useState(true)
 
   const currentHour = new Date().getHours();
 
@@ -341,6 +344,11 @@ export default function Home() {
               ))}
             </div>
           </div>
+          {
+            isTrack && (
+              <LastTrack />
+            )
+          }
           <Navigation />
         </div>
       )}

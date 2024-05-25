@@ -56,86 +56,84 @@ export default function Album() {
     }
 
     function audioToggle() {
-        const audio = audioRef.current;
+        const audio = audioRef.current
         if (audio.paused) {
-            audio.play();
-            setIsPlay(true);
+            audio.play()
+            setIsPlay(true)
         } else {
-            audio.pause();
-            setIsPlay(false);
+            audio.pause()
+            setIsPlay(false)
         }
     }
 
     const goBack = () => {
         setTimeout(() => {
-            dispatch(clearAlbum());
+            dispatch(clearAlbum())
         }, 500);
     };
 
     useEffect(() => {
         if (isCustomPlaylist && data) {
-            setAlbumImage(data.tracks[0]?.image || defaultAlbum);
-            setTracks(data.tracks);
-            setDataResult(data.tracks);
-            setURL(data.tracks[0]?.audio);
-            setAlbumLength(data.tracks.length);
-            setIsLoading(false);
+            setAlbumImage(data.tracks[0]?.image || defaultAlbum)
+            setTracks(data.tracks)
+            setDataResult(data.tracks)
+            setURL(data.tracks[0]?.audio)
+            setAlbumLength(data.tracks.length)
+            setIsLoading(false)
         } else if (data) {
-            fetchAlbumTracks(data);
-            setAlbumImage(data.image || defaultAlbum);
-            setAlbumRelease(data.releasedate.slice(0, 4));
-            setAlbumLength(tracks.length);
-            setArtist(data.artist_name);
+            fetchAlbumTracks(data)
+            setAlbumImage(data.image || defaultAlbum)
+            setAlbumRelease(data.releasedate.slice(0, 4))
+            setAlbumLength(tracks.length)
+            setArtist(data.artist_name)
         }
         setAlbumName(data.name);
-    }, [data, isCustomPlaylist]);
-
-    console.log(data);
+    }, [data, isCustomPlaylist])
 
     async function fetchAlbumTracks(data) {
         const response = await fetch(
             `https://api.jamendo.com/v3.0/tracks/?client_id=354e8ba5&format=jsonpretty&limit=all&artist_name=${data.artist_name}&album_name=${data.name}`
         );
-        const tracksData = await response.json();
-        setDataResult(tracksData.results);
-        setTracks(tracksData.results);
-        setURL(tracksData.results[0].audio);
-        setIsLoading(false);
-        return tracksData.results;
+        const tracksData = await response.json()
+        setDataResult(tracksData.results)
+        setTracks(tracksData.results)
+        setURL(tracksData.results[0].audio)
+        setIsLoading(false)
+        return tracksData.results
     }
 
     useEffect(() => {
         if (isPlay) {
             setIsAuto(true);
             if (tracks.length !== 0) {
-                const currentTrack = tracks[trackIndex];
+                const currentTrack = tracks[trackIndex]
                 const timeout = setTimeout(() => {
-                    const nextIndex = (trackIndex + 1) % tracks.length;
+                    const nextIndex = (trackIndex + 1) % tracks.length
                     setTrackIndex(nextIndex);
-                }, currentTrack.duration * 1000);
+                }, currentTrack.duration * 1000)
 
-                return () => clearTimeout(timeout);
+                return () => clearTimeout(timeout)
             }
         }
     }, [trackIndex, tracks, isPlay]);
 
     useEffect(() => {
         if (activeTrack) {
-            setURL(activeTrack.audio);
+            setURL(activeTrack.audio)
             setIsAuto(true);
         }
     }, [activeTrack]);
 
     useEffect(() => {
         if (tracks.length !== 0 && isPlay) {
-            const currentTrack = tracks[trackIndex];
-            setActiveTrack(currentTrack);
-            setURL(currentTrack.audio);
+            const currentTrack = tracks[trackIndex]
+            setActiveTrack(currentTrack)
+            setURL(currentTrack.audio)
         }
-    }, [trackIndex, tracks, isPlay]);
+    }, [trackIndex, tracks, isPlay])
 
     useEffect(() => {
-        setLikedTracks(likedTracksStore);
+        setLikedTracks(likedTracksStore)
     }, [likedTracksStore]);
 
     const handleTrackLike = (track) => {
