@@ -14,7 +14,7 @@ export default function MiniCard({ track }) {
         </div>
         <div className="card-title">
           <p>{track.name}</p>
-        </div>
+        </div> 
       </div>
     </NavLink>
   );

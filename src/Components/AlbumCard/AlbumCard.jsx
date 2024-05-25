@@ -86,7 +86,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     };
 
     function addDataTrack(track) {
-        console.log(track);
         dispatch(addSearch(track))
     }
 

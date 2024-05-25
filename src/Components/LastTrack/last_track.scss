@@ -68,7 +68,17 @@
     }
 }
 
-.rotationLastTrack{
+.track_funcrion_box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 29px;
+    width: 29px;
+    top: 12px;
+    right: 12px;
+}
+
+.rotationLastTrack {
     white-space: nowrap;
     animation: marquee 15s linear infinite;
 }
