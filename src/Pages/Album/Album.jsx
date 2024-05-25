@@ -198,7 +198,7 @@ export default function Album() {
                     <audio className='audio_element' ref={audioRef} src={URL} autoPlay={isAuto} controls></audio>
                     <div className="album_color__top" style={{ background: bg }}>
                         <div className="album_arrow">
-                             <Link className='link' to='/search'>X</Link>
+                            <GoBackButton />
                             <h1 className='album_title'>{albumName}</h1>
                         </div>
                         <div className="album_search_content">
