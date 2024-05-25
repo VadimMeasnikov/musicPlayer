@@ -3,10 +3,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: transparent !important;
     width: 100%;
 
     .album_card__image {
+        margin-left: 15px;
         width: 60px;
         height: 60px;
         border-radius: 4px;
@@ -30,6 +30,7 @@
         align-items: center;
 
         .funct_content {
+            margin-right: 25px;
             position: absolute;
             top: 0;
             right: 0;
