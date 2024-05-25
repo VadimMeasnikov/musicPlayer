@@ -37,6 +37,7 @@ export default function LastTrack() {
 
     useEffect(() => {
         const track = JSON.parse(localStorage.getItem('track'));
+        console.log(track);
         if (track) {
             setTrackImage(track.image)
             setTrackName(track.name)

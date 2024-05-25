@@ -8,7 +8,7 @@ export default function GoBackButton({onClick}) {
     if (onClick) {
       onClick();
     }
-    navigate("/");
+    navigate(-1);
   };
 
   return (
