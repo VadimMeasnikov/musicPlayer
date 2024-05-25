@@ -24,7 +24,6 @@ export default function MiniPlayerCard({ info }) {
 
   useEffect(() => {
     if (info) {
-      console.log(albumData);
       if (info.image && info.image.includes("artist")) {
         setLinkTo("/artist");
       } else if (info.zip && albumData !== null) {
@@ -44,7 +43,6 @@ export default function MiniPlayerCard({ info }) {
     if (info && info.image && info.image.includes("artist")) {
       dispatch(addArtistData(info));
     } else if (info && info.zip) {
-      console.log(info, info.zip);
       dispatch(addAlbum({
         albumData: info
       }));

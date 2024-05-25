@@ -23,7 +23,6 @@ import './album_card.scss'
 
 
 export default function AlbumCard({ info, img, isActive, handleClickActive }) {
-    console.log(info);
     const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
@@ -37,7 +36,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     const correctData = useCorrectData()
     // const lastTrack = useLastTrack()
 
-    console.log(info);
 
     useEffect(() => {
         if (info && !info.image && !img) {
@@ -89,7 +87,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     };
 
     function addDataTrack(track) {
-        console.log(track);
         dispatch(addSearch(track))
     }
 

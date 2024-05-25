@@ -5,7 +5,6 @@ import "./MiniCard.scss";
 
 export default function MiniCard({ track }) {
   const dispatch = useDispatch();
-  console.log(track);
   return (
     <NavLink to={`/player/${track.id}`} onClick={() => { dispatch(addSearch(track)) }}>
       <div className="card">
@@ -14,7 +13,7 @@ export default function MiniCard({ track }) {
         </div>
         <div className="card-title">
           <p>{track.name}</p>
-        </div>
+        </div> 
       </div>
     </NavLink>
   );
