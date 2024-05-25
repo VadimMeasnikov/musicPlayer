@@ -10,6 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: start;
+
   .discography-topPanel {
     top: 0;
     left: 0;
@@ -20,24 +21,30 @@
     position: fixed;
     display: flex;
     align-items: center;
+
     .GoBackBtn {
       background-color: rgba(0, 0, 0, 0.5);
     }
+
     h3 {
       color: white;
       margin-left: 72px;
       margin-top: 5px;
     }
   }
+
   .discography-info {
     position: absolute;
     top: 72px;
     padding: 20px;
+
     & h1 {
       color: white;
     }
+
     .discography-results {
       margin: 20px 0;
+
       .discography-item {
         display: flex;
         flex-direction: column;
@@ -45,71 +52,89 @@
         color: white;
         margin-bottom: 20px;
         gap: 50px;
+
         .discography-itemContent {
           display: flex;
           flex-direction: column;
           align-items: start;
           width: 100%;
+
           .discography-itemInfo {
             gap: 10px;
             display: flex;
             align-items: start;
+            width: 100%;
+
             & img {
               height: 150px;
               width: 150px;
             }
+
             .discography-itemTextInfo {
               display: flex;
               align-items: start;
               flex-direction: column;
               height: 150px;
+              width: 100%;
               justify-content: space-between;
+
               .name {
                 display: flex;
                 flex-direction: column;
                 align-items: start;
                 gap: 10px;
+
                 & h1 {
                   font-size: 24px;
                 }
               }
+
               .buttons {
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                & .funcBtn {
-                  height: 30px;
-                  width: 30px;
+                justify-content: end;
+                width: 100%;
+
+                .album__btn-play {
+                  background: #1ED760;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  padding: 12px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding-left: 15px;
+                  color: black;
+                }
+
+                .album__btn-pause {
+                  background: #1ED760;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  padding: 12px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: black;
                 }
               }
             }
           }
-          .discographyTrackPositionPanel {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            margin: 20px 0 10px 0;
-            padding-bottom: 5px;
-            color: #c5c5c5;
-            border-bottom: 1px solid #c5c5c5;
-            .trackIndex {
-              width: 20px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 0 30px 0 10px;
-            }
-          }
+
           .discography-tracks {
-            list-style: decimal;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin: 5px 0;
+            width: 100%;
+            padding: 30px 0;
+
             & li {
               display: flex;
               align-items: center;
               position: relative;
+
               .trackPosition {
                 width: 20px;
                 display: flex;
@@ -117,12 +142,14 @@
                 justify-content: center;
                 padding: 0 30px 0 10px;
               }
+
               & div {
                 display: flex;
                 flex-direction: column;
                 align-items: start;
                 gap: 5px;
               }
+
               & span {
                 color: white;
               }

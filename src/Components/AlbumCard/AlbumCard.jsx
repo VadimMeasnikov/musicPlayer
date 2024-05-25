@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikedTrack, removeLikedTracks } from '../../reduxToolkit/slices/favouriteTracks';
+import { IoPlay } from "react-icons/io5";
 import share from '../../img/Share.png'
 import addToAlbum from '../../img/add_to_album.png'
 import { TfiClose } from "react-icons/tfi";
@@ -21,8 +22,9 @@ import './album_card.scss'
 
 
 
-export default function AlbumCard({ info, isActive, handleClickActive }) {
-    const [src, setSrc] = useState(info.image);
+export default function AlbumCard({ info, img, isActive, handleClickActive }) {
+    console.log(info);
+    const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
     const [isLike, setIsLike] = useState(false)
@@ -35,8 +37,10 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
     const correctData = useCorrectData()
     // const lastTrack = useLastTrack()
 
+    console.log(info);
+
     useEffect(() => {
-        if (info && !info.image) {
+        if (info && !info.image && !img) {
             setSrc(defaultImg);
         }
     }, [info]);
@@ -127,9 +131,9 @@ export default function AlbumCard({ info, isActive, handleClickActive }) {
 
                                 <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info) }}>
                                     <div className="btn_image_content">
-                                        <img src={goToPlayer} alt="" />
+                                        <IoPlay/>
                                     </div>
-                                    <div className='btn_text_content'>  <p className='btn_text_content'>Player</p></div>
+                                    <div className='btn_text_content'>  <p className='btn_text_content'>Play</p></div>
 
                                 </Link>
 
