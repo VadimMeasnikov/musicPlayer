@@ -23,6 +23,7 @@ import { addSearch } from '../../reduxToolkit/slices/userSearch';
 
 
 export default function AlbumCard({ info, img, isActive, handleClickActive }) {
+    console.log(info);
     const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
