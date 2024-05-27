@@ -11,7 +11,6 @@ import share from '../../img/Share.png'
 import addToAlbum from '../../img/add_to_album.png'
 import { TfiClose } from "react-icons/tfi";
 import goToPlayer from '../../img/goToPlayer.png'
-import { useCorrectData } from '../../services';
 import twitter from '../../img/twitter.png'
 import link from '../../img/Link.png'
 import whatsup from '../../img/whatsup.png'
