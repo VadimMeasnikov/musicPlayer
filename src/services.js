@@ -44,27 +44,27 @@ export function useEditData() {
 }
 
 
-export function useCorrectData() {
-    const queryClient = useQueryClient()
+// export function useCorrectData() {
+//     const queryClient = useQueryClient()
 
-    return useMutation(async ({ id, field, updateData }) => {
-        const snapshot = await db.ref(`users/${id}/${field}`).get();
+//     return useMutation(async ({ id, field, updateData }) => {
+//         const snapshot = await db.ref(`users/${id}/${field}`).get();
         
-        const existingData = JSON.parse(snapshot.val())
-        console.log(updateData);
-        const track = JSON.parse(updateData)
-        const updatedData = [existingData, track];
-        
-        await db.ref(`users/${id}/${field}`).set(JSON.stringify(updatedData))
-        console.log('succesfull');
-    },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('users')
-            }
-        }
-    )
-}
+//         const existingData = JSON.parse(snapshot.val())
+//         console.log(updateData);
+//         const track = JSON.parse(updateData)
+//         const updatedData = [existingData, track];
+
+//         await db.ref(`users/${id}/${field}`).set(JSON.stringify(updatedData))
+//         console.log('succesfull');
+//     },
+//         {
+//             onSuccess: () => {
+//                 queryClient.invalidateQueries('users')
+//             }
+//         }
+//     )
+// }
 
 
 export async function getAllUsersData() {

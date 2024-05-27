@@ -34,7 +34,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     const { key } = useSelector(state => state.userKey)
     const field = 'liked'
     const dispatch = useDispatch()
-    const correctData = useCorrectData()
 
     useEffect(() => {
         if (info && !info.image && !img) {
@@ -69,11 +68,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
             setLikedTracks(track);
             setIsLike(true)
             dispatch(addLikedTrack(track));
-            correctData.mutate({
-                id: key,
-                field: field,
-                updateData: JSON.stringify(track),
-            });
         } else {
             const updatedLikedTracks = likedTracks.filter(
                 (likedTrack) => likedTrack.id !== track.id
