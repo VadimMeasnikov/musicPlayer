@@ -8,7 +8,8 @@ import { removeArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import Artist from '../../Components/Artist/Artist'
 import { FcCheckmark } from "react-icons/fc";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import { Link } from 'react-router-dom';
+import arrow from '../../img/ChevronLeft.png'
 
 import './artists.scss'
 
@@ -50,6 +51,12 @@ export default function Artists() {
 		}
 	}, [data])
 
+	useEffect(() => {
+		if (localStorage.getItem('track')) {
+			localStorage.removeItem('track');
+		}
+	}, [])
+
 	const handleSearch = event => {
 		setSearchQuery(event.target.value)
 	}
@@ -78,11 +85,6 @@ export default function Artists() {
 			dispatch(setArtists(artist));
 		}
 
-		// if (selectedArtists.length >= 3) {
-		// 	console.log('start edit data');
-		// 	editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
-		// 	navigate('/');
-		// }
 	}
 	useEffect(() => {
 		// Если количество выбранных артистов больше или равно 3, показываем кнопку
@@ -114,7 +116,6 @@ export default function Artists() {
 		<div className='artists'>
 			<div className='artists_container'>
 				<div className='top_block'>
-					<GoBackButton />
 					<div className='text_block'>
 						<p className='choose_artists'>Choose 3 or more artists you like.</p>
 					</div>

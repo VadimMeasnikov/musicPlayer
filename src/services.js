@@ -54,8 +54,7 @@ export function useCorrectData() {
         console.log(updateData);
         const track = JSON.parse(updateData)
         const updatedData = [existingData, track];
-
-        console.log(JSON.stringify(updatedData));
+        
         await db.ref(`users/${id}/${field}`).set(JSON.stringify(updatedData))
         console.log('succesfull');
     },

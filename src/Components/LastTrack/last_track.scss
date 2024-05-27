@@ -1,4 +1,4 @@
-.last_track {
+.visible_track {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
@@ -91,4 +91,7 @@
     100% {
         transform: translateX(-100%);
     }
+}
+.last_track{
+    display: none;
 }

@@ -13,6 +13,8 @@ export default function LastTrack() {
     const [trackArtist, setTrackArtist] = useState('')
     const [URL, setURL] = useState('')
 
+    const [isData, setIsData] = useState(false)
+
     const [isRotation, setIsRotation] = useState(false)
 
     const [isPlay, setIsPlay] = useState(false)
@@ -38,7 +40,8 @@ export default function LastTrack() {
     useEffect(() => {
         const track = JSON.parse(localStorage.getItem('track'));
         console.log(track);
-        if (track) {
+        if (track !== null) {
+            setIsData(true)
             setTrackImage(track.image)
             setTrackName(track.name)
             setTrackArtist(track.artist_name)
@@ -62,7 +65,7 @@ export default function LastTrack() {
     const bg = `${color}`
 
     return (
-        <div className='last_track' style={{ background: bg }}>
+        <div className={`${isData ? ('visible_track') : ('last_track')}`} style={{ background: bg }}>
             <audio className='audio_element' ref={audioRef} src={URL} controls></audio>
             <GetCurrentColor imageUrl={trackImage} onColorGenerated={handleColorGeneration} />
             <div className="last_track_container">
