@@ -12,12 +12,14 @@ import userSearch from "./slices/userSearch";
 import favouriteTracks from "./slices/favouriteTracks";
 import albumSlice from "./slices/albumSlice";
 import userPhotoSlice from "./slices/userPhoto";
+import appAudio from "./slices/appAudio";
 
 export const store = configureStore({
   reducer: {
     [tracksApi.reducerPath]: tracksApi.reducer,
     [artistsApi.reducerPath]: artistsApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
+    
     user: userReducer,
     userPhoto: userPhotoSlice,
     userKey: userKeySlice,
@@ -27,6 +29,7 @@ export const store = configureStore({
     likes: favouriteTracks,
     artist: artistSlice,
     album: albumSlice,
+    audio: appAudio
   },
   middleware: (getDefault) =>
     getDefault().concat(

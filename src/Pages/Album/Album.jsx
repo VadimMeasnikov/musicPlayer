@@ -16,30 +16,31 @@ import { CgSpinnerTwoAlt } from "react-icons/cg";
 import sad from '../../img/sad.png';
 import defaultAlbum from '../../img/defaultAlbum.jpg';
 import AlbumCard from '../../Components/AlbumCard/AlbumCard';
+import { setAudio } from '../../reduxToolkit/slices/appAudio';
+
 import './album.scss';
 
 export default function Album() {
-    const { albumId } = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-    const [isPlay, setIsPlay] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
-    const [albumImage, setAlbumImage] = useState(defaultAlbum);
-    const [likedTracks, setLikedTracks] = useState([]);
-    const [tracks, setTracks] = useState([]);
-    const [averageColor, setAverageColor] = useState('');
-    const [dataResult, setDataResult] = useState([]);
-    const [URL, setURL] = useState(null);
-    const [search, setSearch] = useState('');
-    const [isEmpty, setIsEmpty] = useState(false);
-    const [activeTrack, setActiveTrack] = useState(null);
-    const [trackIndex, setTrackIndex] = useState(0);
-    const [isAuto, setIsAuto] = useState(false);
-    const likedTracksStore = useSelector((state) => state.likes.likedTracks);
-    const data = useSelector((state) => state.album.albumData);
-    const isCustomPlaylist = useSelector((state) => state.album.isCustomPlaylist);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const audioRef = useRef();
+    const { albumId } = useParams()
+    const [isLoading, setIsLoading] = useState(true)
+    const [isPlay, setIsPlay] = useState(false)
+    const [isLiked, setIsLiked] = useState(false)
+    const [albumImage, setAlbumImage] = useState(defaultAlbum)
+    const [likedTracks, setLikedTracks] = useState([])
+    const [tracks, setTracks] = useState([])
+    const [averageColor, setAverageColor] = useState('')
+    const [dataResult, setDataResult] = useState([])
+    const [URL, setURL] = useState(null)
+    const [search, setSearch] = useState('')
+    const [isEmpty, setIsEmpty] = useState(false)
+    const [activeTrack, setActiveTrack] = useState(null)
+    const [trackIndex, setTrackIndex] = useState(0)
+    const [isAuto, setIsAuto] = useState(false)
+    const likedTracksStore = useSelector((state) => state.likes.likedTracks)
+    const data = useSelector((state) => state.album.albumData)
+    const isCustomPlaylist = useSelector((state) => state.album.isCustomPlaylist)
+    const dispatch = useDispatch()
+    const audioRef = useRef()
 
     const [albumName, setAlbumName] = useState('');
     const [artist, setArtist] = useState('');

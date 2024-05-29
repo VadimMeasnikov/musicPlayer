@@ -11,7 +11,7 @@ import EditProfile from './Pages/EditProfile/EditProfile.jsx'
 import Album from './Pages/Album/Album.jsx'
 import Liked from './Pages/Liked/Liked.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
-
+import UserLikes from './Pages/UserLikes/UserLikes.jsx'
 
 import Navigation from './Components/Navigation/Navigation.jsx'
 // import Player from './Pages/Player/Player.jsx'
@@ -38,6 +38,7 @@ export default function App() {
           <Route path='/editprofile' element={<EditProfile />} />
           <Route path='/album/:albumId' element={<Album />} />
           <Route path="/liked" element={<Liked />} />
+          <Route path="/userlikes" element={<UserLikes />} />
         </Routes>
       </Router>
     </div>
