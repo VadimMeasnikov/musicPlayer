@@ -175,7 +175,7 @@ export default function Registration_Data({ regState, userObj }) {
 
           <div className="user_terms">
             <p className="user_terms__text">
-              By creating an account, you agree to Spotify's
+              By creating an account, you agree to Music Player's
               <Link to="*" className="terms_link">
                 Terms and Conditions of Use
               </Link>
@@ -184,7 +184,7 @@ export default function Registration_Data({ regState, userObj }) {
             <p className="user_terms__text">
               {" "}
               To learn more about how Spotify collect, uses, shares and protects
-              your personal data, please read Spotify's
+              your personal data, please read Music Player's
               <Link to="*" className="terms_link">
                 Privacy Policy
               </Link>
@@ -193,7 +193,7 @@ export default function Registration_Data({ regState, userObj }) {
             <div className="extra_box">
               <div className="user_extra">
                 <p className="user_extra__text">
-                  Please send me news and offers from Spotify.
+                  Please send me news and offers from Music Player.
                 </p>
                 <input
                   className="user_extra__inp"
@@ -207,7 +207,7 @@ export default function Registration_Data({ regState, userObj }) {
               </div>
               <div className="user_extra">
                 <p className="user_extra__text">
-                  Share my registration data with Spotify’s content providers
+                  Share my registration data with Music Player's content providers
                   for marketing purposes.
                 </p>
                 <input

@@ -9,17 +9,16 @@ import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
-import {
-  addLikedTrack,
-  removeLikedTracks,
-} from "../../reduxToolkit/slices/favouriteTracks";
+import {addLikedTrack,removeLikedTracks} from "../../reduxToolkit/slices/favouriteTracks";
 import { clearAlbum } from "../../reduxToolkit/slices/albumSlice";
 import GetCurrentColor from "../../GetCurrentColor";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import sad from "../../img/sad.png";
 import defaultAlbum from "../../img/defaultAlbum.jpg";
 import AlbumCard from "../../Components/AlbumCard/AlbumCard";
+
 import "./album.scss";
+import { setAudio } from "../../reduxToolkit/slices/appAudio";
 
 export default function Album() {
   const { albumId } = useParams();
@@ -40,14 +39,16 @@ export default function Album() {
   const likedTracksStore = useSelector((state) => state.likes.likedTracks);
   const data = useSelector((state) => state.album.albumData);
   const isCustomPlaylist = useSelector((state) => state.album.isCustomPlaylist);
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const audioRef = useRef();
 
   const [albumName, setAlbumName] = useState("");
   const [artist, setArtist] = useState("");
   const [albumLength, setAlbumLength] = useState("");
   const [albumRelease, setAlbumRelease] = useState("");
+
+  const audioSettings = useSelector(state => state.audio)
 
   function handleLikeAlbum() {
     setIsLiked(false);
@@ -187,10 +188,19 @@ export default function Album() {
   }
 
   function handleClickActive(info) {
+    console.log(info);
     if (info === activeTrack) {
+        dispatch(setAudio({
+            audio: info.audio,
+            isPlay: false
+          }))
       setActiveTrack(false);
       if (audioRef.current) audioRef.current.pause();
     } else {
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: true
+      }))
       setActiveTrack(info);
       if (audioRef.current) audioRef.current.play();
     }
@@ -212,6 +222,7 @@ export default function Album() {
           ref={audioRef}
           src={URL}
           autoPlay={isAuto}
+          muted='true'
           controls
         ></audio>
         <div className="album_color__top" style={{ background: bg }}>

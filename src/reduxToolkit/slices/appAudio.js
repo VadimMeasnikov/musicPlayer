@@ -9,7 +9,7 @@ const appAudio = createSlice({
     reducers: {
         setAudio(state, action){
             state.audio = action.payload.audio;
-            state.audio = action.payload.isPlay
+            state.isPlay = action.payload.isPlay
         },
         removeAudio(state){
             state.audio = null

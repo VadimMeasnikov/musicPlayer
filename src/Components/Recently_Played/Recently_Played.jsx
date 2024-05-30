@@ -68,7 +68,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
             }
             availableTracks.splice(randomIndex, 1)
         }
-        return randomElements;
+        return randomElements
     }
 
    

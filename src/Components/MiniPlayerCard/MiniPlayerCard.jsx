@@ -25,7 +25,8 @@ export default function MiniPlayerCard({ info }) {
         setLinkTo("/artist");
       } else if (info.zip) {
         setLinkTo(`/album/${info.id}`);
-      } else {
+      }
+       else {
         setLinkTo(`/player/${info.id}`);
       }
     }
