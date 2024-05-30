@@ -5,7 +5,9 @@ import likedAlbum from '../../img/liked_album.jpg'
 import point from '../../img/point.png'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import './recently_played.scss'
+
 
 export default function Recently_Played({ data, favArtists, playlists, statusArr }) {
     const [isLoading, setIsLoading] = useState(true)
@@ -16,7 +18,6 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
     const [isLikedSongs, setIsLikedSogns] = useState(true)
 
     const liked = useSelector(state => state.likes.likedTracks)
-	console.log(liked);
 
     useEffect(() => {
         if (statusArr.status === undefined) {
@@ -67,25 +68,20 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
             }
             availableTracks.splice(randomIndex, 1)
         }
-        return randomElements;
+        return randomElements
     }
 
-    // console.log(data);
+   
     const currentPlaylistsArr = getRandomElementsFromArray(playlists, 4)
-    // console.log(currentPlaylistsArr);
-
-    // console.log(onLoading);
 
     function getFilterArr(type) {
         setStatus(type);
         switch (type) {
             case 'Artist':
-                console.log(favArtists);
                 setFilteredData(favArtists);
                 break;
             case 'Playlist':
                 const randomPlaylists = getRandomElementsFromArray(playlists, 4);
-                console.log(randomPlaylists);
                 setFilteredData(randomPlaylists);
                 break;
         }
@@ -98,7 +94,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
         ) : (
             <div className='recently_played'>
                 <div className="recently_played_container">
-                    <div className="liked_songs">
+                    <Link to='/userlikes' className="liked_songs">
                         <div className="liked_songs_container">
                             <div className="liked_songs_logo">
                                    <img className='liked_img' src={likedAlbum} alt="" />
@@ -113,7 +109,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
 
 
                     {

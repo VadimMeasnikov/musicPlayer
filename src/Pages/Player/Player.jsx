@@ -148,7 +148,6 @@ export default function Player() {
         setLikedTracks(likedTracksStore);
     }, [likedTracksStore]);
     const handleTrackLike = (track) => {
-        console.log(likedTracksStore);
         const isTrackLiked = likedTracksStore.some(
             (likedTrack) => likedTrack.id === track.id
         );
