@@ -55,10 +55,10 @@ export default function UserLikes() {
 
         if (info === activeTrack) {
             setActiveTrack(false);
+            setURL(activeTrack.audio)
             audioRef.current.pause();
         } else {
             setActiveTrack(info);
-            setURL(activeTrack.audio)
             audioRef.current.play();
         }
     }

@@ -10,6 +10,7 @@ const db = app.database()
 
 
 export function useAddData() {
+    console.log('useAddData');
     const queryClient = useQueryClient();
 
     return useMutation(
@@ -30,6 +31,7 @@ export function useAddData() {
 
 
 export function useEditData() {
+    console.log('useEditData');
     const queryClient = useQueryClient()
 
     return useMutation(async ({ id, field, updateData }) => {
@@ -68,6 +70,7 @@ export function useEditData() {
 
 
 export async function getAllUsersData() {
+    console.log('getAllUsersData');
     const snapshot = await db.ref('users').once('value');
     const data = snapshot.val();
     return data;

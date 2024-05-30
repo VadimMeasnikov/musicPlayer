@@ -12,7 +12,7 @@ import Settings from '../../Components/Settings/Settings'
 import defaultImg from '../../img/default.png'
 import { useNavigate } from 'react-router-dom'
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-
+import LastTrack from '../../Components/LastTrack/LastTrack'
 import './profile.scss'
 
 
@@ -26,12 +26,13 @@ export default function Profile() {
 	const [userPhoto, setUserPhoto] = useState(defaultImg)
 	const [isPageLoading, setIsPageLoading] = useState(false)
 
+	const [isLastTrack, setIsLastTrack] = useState(true)
+
 	const photoObj = { userPhoto, setUserPhoto }
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
 	const user = useSelector(state => state.user)
-
 
 	const navigate = useNavigate()
 	const auth = getAuth()
@@ -50,6 +51,7 @@ export default function Profile() {
 				navigate('/')
 			}
 		}))
+
 	}, [])
 
 	useEffect(() => {
@@ -95,6 +97,7 @@ export default function Profile() {
 						</div>
 						<div className='recently_played'>
 							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
+							{isLastTrack && <LastTrack/>}
 							<Navigation />
 						</div>
 					</div>

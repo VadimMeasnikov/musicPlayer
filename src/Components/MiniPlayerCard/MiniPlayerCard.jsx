@@ -26,9 +26,11 @@ export default function MiniPlayerCard({ info }) {
     if (info) {
       if (info.image && info.image.includes("artist")) {
         setLinkTo("/artist");
-      } else if (info.zip && albumData !== null || albumData == null) {
+      }
+       else if (info.zip && albumData !== null || albumData == null) {
         setLinkTo(`/album/${info.id}`);
-      } else {
+      }
+       else {
         setLinkTo(`/player/${info.id}`);
       }
     }
