@@ -5,7 +5,9 @@ import likedAlbum from '../../img/liked_album.jpg'
 import point from '../../img/point.png'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import './recently_played.scss'
+
 
 export default function Recently_Played({ data, favArtists, playlists, statusArr }) {
     const [isLoading, setIsLoading] = useState(true)
@@ -98,7 +100,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
         ) : (
             <div className='recently_played'>
                 <div className="recently_played_container">
-                    <div className="liked_songs">
+                    <Link to='/userlikes' className="liked_songs">
                         <div className="liked_songs_container">
                             <div className="liked_songs_logo">
                                    <img className='liked_img' src={likedAlbum} alt="" />
@@ -113,7 +115,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
 
 
                     {

@@ -17,12 +17,12 @@ import whatsup from '../../img/whatsup.png'
 import message from '../../img/message.png'
 import { addSearch } from '../../reduxToolkit/slices/userSearch';
 import { useLastTrack } from '../../hooks/useLastTrack';
+
 import './album_card.scss'
 
 
 
 export default function AlbumCard({ info, img, isActive, handleClickActive }) {
-    console.log(isActive);
     const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
@@ -74,7 +74,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
             setLikedTracks(updatedLikedTracks);
             dispatch(removeLikedTracks(track.id));
         }
-        console.log(isTrackLiked);
         return isTrackLiked
     };
 
@@ -83,10 +82,9 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     }
 
     const bg = {
-        background: isActive ? 'rgba(50, 50, 50, 0.5)' : 'black',
+        background: isActive ? 'rgba(50, 50, 50, 0.5)' : 'inherit',
     };
 
-    console.log(bg);
 
     return (
         <div onClick={() => { handleClick(info); setIsMore(false) }} className="album_card" style={bg}>
