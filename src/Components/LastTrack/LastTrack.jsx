@@ -18,7 +18,6 @@ export default function LastTrack() {
     const [isRotation, setIsRotation] = useState(false)
 
     const [isPlay, setIsPlay] = useState(false)
-    const [device, setDevice] = useState()
 
     const audioRef = useRef()
 
@@ -75,14 +74,11 @@ export default function LastTrack() {
                 <div className="track_main_content">
                     <div className={`title_box ${isRotation && ('rotationLastTrack')}`}>
                         <p className='track_name_text'>
-                            {trackName} •
+                            {trackName} {trackArtist && "•"}
                         </p>
                         <p className='track_name_artist'>
                             {trackArtist}
                         </p>
-                    </div>
-                    <div className="device_content">
-                        <p>{device}</p>
                     </div>
                 </div>
 

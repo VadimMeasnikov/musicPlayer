@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { clearHistory } from '../../reduxToolkit/slices/historySlice'
 import openBtn from '../../img/Add.png'
 import Recently_Played from '../../Components/Recently_Played/Recently_Played'
 import twoArrows from '../../img/twoArrows.svg'

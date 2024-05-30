@@ -1,21 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
-import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
-import { removeArtists } from "../../reduxToolkit/slices/userArtistsSlice";
-import { IoPlay } from "react-icons/io5";
-import GoBackButton from '../../Components/GoBackButton/GoBackButton';
-import { IoPause} from "react-icons/io5";
+import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
+import {
+  addLikedTrack,
+  removeLikedTracks,
+} from "../../reduxToolkit/slices/favouriteTracks";
+import { setArtists, removeArtists } from "../../reduxToolkit/slices/userArtistsSlice";
+import { IoPlay, IoPause } from "react-icons/io5";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import { clearArtistData } from "../../reduxToolkit/slices/artistSlice";
 import "./ArtistPage.scss";
 import PlayButton from "../../img/PlayButton.png";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
-import goToPlayer from '../../img/goToPlayer.png'
+import goToPlayer from "../../img/goToPlayer.png";
 import Discography from "../Discography/Discography";
 import { IoIosMore } from "react-icons/io";
-import AlbumCard from '../../Components/AlbumCard/AlbumCard';
+import AlbumCard from "../../Components/AlbumCard/AlbumCard";
 
 export default function ArtistPage() {
   const [showAlbums, setShowAlbums] = useState(false);
@@ -24,29 +26,35 @@ export default function ArtistPage() {
   const [URL, setURL] = useState(null);
   const [isAuto, setIsAuto] = useState(false);
   const audioRef = useRef();
+  const dispatch = useDispatch();
+
   const closeDiscography = () => {
     setShowAlbums(false);
   };
+
   const artistData = useSelector((state) => state.artist.artistData);
   const { data, error } = useSearchQuery({
     path: "artists/albums/",
-    name: artistData.name,
+    name: artistData?.name,
   });
+
   const [artistAlbums, setArtistAlbums] = useState([]);
   useEffect(() => {
     if (data && data.results) {
-      setArtistAlbums(data.results[0].albums);
+      setArtistAlbums(data.results[0]?.albums || []);
     } else {
       setArtistAlbums([]);
     }
   }, [data]);
+
   const [formattedDate, setFormattedDate] = useState();
   const [tracks, setTracks] = useState();
   useEffect(() => {
     if (tracks) {
       setURL(tracks[0]?.audio);
     }
-  }, [])
+  }, [tracks]);
+
   const [itemsToShow, setItemsToShow] = useState(5);
   const showMore = () => {
     setItemsToShow(10);
@@ -54,6 +62,7 @@ export default function ArtistPage() {
   const showLess = () => {
     setItemsToShow(5);
   };
+
   useEffect(() => {
     const updateFormattedDate = () => {
       setFormattedDate(new Date().toISOString().slice(0, 10));
@@ -64,42 +73,36 @@ export default function ArtistPage() {
   }, []);
 
   useEffect(() => {
-    if (activeTrack) {
-      setURL(activeTrack.audio);
-      setIsAuto(true);
+    if (artistData && formattedDate) {
+      getCurrentArtistTracks(formattedDate, artistData);
     }
-  }, [activeTrack]);
-
-  
-
-  useEffect(() => {
-    getCurrentArtistTracks(formattedDate, artistData);
   }, [formattedDate, artistData]);
+
   async function getCurrentArtistTracks(formattedDate, artistData) {
-    const responce = await fetch(
+    const response = await fetch(
       `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=popularity_total&name=${artistData.name}&album_datebetween=1980-01-01_${formattedDate}`
     );
-    const currentArtistTracks = await responce.json();
-    const formattedCurrentArtistTracks = currentArtistTracks.results[0].tracks;
+    const currentArtistTracks = await response.json();
+    const formattedCurrentArtistTracks = currentArtistTracks.results[0]?.tracks || [];
     formattedCurrentArtistTracks.splice(10);
     setTracks(formattedCurrentArtistTracks);
   }
-  const dispatch = useDispatch();
+
   const goBack = () => {
     dispatch(clearArtistData());
   };
-  const selectedArtists = useSelector(
-    (state) => state.userArtists.userAppArtists
-  );
+
+  const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
   const [isFollowed, setIsFollowed] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
 
   useEffect(() => {
     const isArtistFollowed = selectedArtists.some(
-      (selectedArtist) => selectedArtist.id === artistData.id
+      (selectedArtist) => selectedArtist.id === artistData?.id
     );
     setIsFollowed(isArtistFollowed);
-  }, [artistData, selectedArr]);
+  }, [artistData, selectedArtists]);
+
   function handleUserFollowing() {
     if (isFollowed) {
       const updatedSelectedArr = selectedArtists.filter(
@@ -115,7 +118,6 @@ export default function ArtistPage() {
 
   const likedTracksStore = useSelector((state) => state.likes.likedTracks);
   const [likedTracks, setLikedTracks] = useState([]);
-  console.log(likedTracks);
 
   useEffect(() => {
     setLikedTracks(likedTracksStore);
@@ -140,6 +142,7 @@ export default function ArtistPage() {
   function audioToggle() {
     const audio = audioRef.current;
     if (audio.paused) {
+      dispatch(addTrackToHistory(activeTrack));
       audio.play();
       setIsPlay(true);
     } else {
@@ -150,7 +153,7 @@ export default function ArtistPage() {
 
   function handleClickActive(info) {
     if (info === activeTrack) {
-      setActiveTrack(false);
+      setActiveTrack(null);
       audioRef.current.pause();
     } else {
       setActiveTrack(info);
@@ -158,9 +161,19 @@ export default function ArtistPage() {
     }
   }
 
+  if (!artistData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="artistPage">
-      <audio className='audio_element' ref={audioRef} src={URL} autoPlay={isAuto} controls></audio>
+      <audio
+        className="audio_element"
+        ref={audioRef}
+        src={URL}
+        autoPlay={isAuto}
+        controls
+      ></audio>
       <div className="artistPage-topPanel">
         <GoBackButton className="GoBackBtn" onClick={goBack} />
         <h3>{artistData.name}</h3>
@@ -181,11 +194,17 @@ export default function ArtistPage() {
                 Follow
               </button>
             )}
-            {isPlay ?
-              (<IoPause onClick={() => audioToggle()} className='album__btn-pause' />)
-              :
-              (<IoPlay onClick={() => audioToggle()} className='album__btn-play' />)
-            }
+            {isPlay ? (
+              <IoPause
+                onClick={() => audioToggle()}
+                className="album__btn-pause"
+              />
+            ) : (
+              <IoPlay
+                onClick={() => audioToggle()}
+                className="album__btn-play"
+              />
+            )}
           </div>
           <div className="artistPage-topTracks">
             <h1>Popular tracks</h1>
@@ -194,8 +213,13 @@ export default function ArtistPage() {
                 {tracks
                   .slice(0, itemsToShow)
                   .sort((a, b) => a.position - b.position)
-                  .map((item, index) => (
-                    <AlbumCard key={item.id} info={item} isActive={item === activeTrack} handleClickActive={handleClickActive} />
+                  .map((item) => (
+                    <AlbumCard
+                      key={item.id}
+                      info={item}
+                      isActive={item === activeTrack}
+                      handleClickActive={handleClickActive}
+                    />
                   ))}
               </ol>
             )}
@@ -229,12 +253,7 @@ export default function ArtistPage() {
           </div>
         </div>
       </div>
-      {showAlbums && (
-        <Discography
-          data={artistData}
-          close={closeDiscography}
-        />
-      )}
+      {showAlbums && <Discography data={artistData} close={closeDiscography} />}
     </div>
   );
 }

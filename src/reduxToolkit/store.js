@@ -12,6 +12,7 @@ import userSearch from "./slices/userSearch";
 import favouriteTracks from "./slices/favouriteTracks";
 import albumSlice from "./slices/albumSlice";
 import userPhotoSlice from "./slices/userPhoto";
+import historySlice from './slices/historySlice'
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     likes: favouriteTracks,
     artist: artistSlice,
     album: albumSlice,
+    history: historySlice
   },
   middleware: (getDefault) =>
     getDefault().concat(
