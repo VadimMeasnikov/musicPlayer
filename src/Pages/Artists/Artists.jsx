@@ -24,14 +24,10 @@ export default function Artists() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	// const userStr = JSON.stringify(useSelector((state) => state.user))
-	// console.log(userStr);
 	// const user = JSON.parse(userStr)
 	const keyObj = useSelector((state) => state.userKey)
-	console.log('key is ' + keyObj.key);
 	const idKey = keyObj.key
 	const field = 'artists'
-	console.log(field);
-	console.log(idKey);
 
 	const editData = useEditData()
 
@@ -42,7 +38,6 @@ export default function Artists() {
 		{ artist: 'artist_3' }
 	]);
 	// const artistArr = JSON.parse(artistArrStr)
-	// console.log(artistArr);
 	const [buttonShow, setButtonShow] = useState(false)
 
 	useEffect(() => {
@@ -65,7 +60,6 @@ export default function Artists() {
 	const selectedArtists = useSelector(
 		state => userArtists.userAppArtists
 	)
-	console.log(selectedArtists);
 
 
 
@@ -99,10 +93,8 @@ export default function Artists() {
 		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
 
-	console.log(selectedArtists);
 	const handleRedirect = () => {
 		if (selectedArtists.length >= 3) {
-			console.log('start edit data');
 			editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
 			navigate('/');
 		} else {

@@ -38,7 +38,6 @@ export default function LogIn() {
         getAllUsersData()
           .then((data) => {
             const usersArray = createUsersArray(data);
-            console.log(usersArray);
             return usersArray
           })
           .then((array) => {
@@ -48,7 +47,6 @@ export default function LogIn() {
           })
           .then((userDb) => {
             if (userDb) {
-              console.log(userDb);
               dispatch(
                 setUser({
                   email: userDb.email,
@@ -65,9 +63,7 @@ export default function LogIn() {
               )
 
               const artistsArr = JSON.parse(userDb.artists)
-              console.log(typeof artistsArr);
               artistsArr.map((artist, key) => {
-                console.log(artist);
                 dispatch(setArtists(artist));
                 return artist;
               })
@@ -84,13 +80,10 @@ export default function LogIn() {
 
   function getCurrentUser(usersArray, email) {
     const authorizedUser = usersArray.find((user) => user.email === email);
-    console.log(authorizedUser);
-    console.log("auth succesfull");
     return authorizedUser || null;
   }
 
   function createUsersArray(usersObj) {
-    console.log(usersObj);
     const usersArray = Object.entries(usersObj).map(([key, value]) => {
       return { id: key, ...value };
     });

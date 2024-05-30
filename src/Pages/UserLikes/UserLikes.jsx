@@ -20,12 +20,9 @@ export default function UserLikes() {
     const [isEmpty, setIsEmpty] = useState(true)
     const audioRef = useRef();
     const tracks = useSelector(state => state.likes.likedTracks)
-    console.log(tracks);
 
     useEffect(() => {
         if (tracks) {
-            console.log(1);
-            console.log(tracks);
             if (tracks.length !== 0) {
                 setIsEmpty(false)
                 setAlbumLength(tracks.length)
@@ -42,7 +39,6 @@ export default function UserLikes() {
     }, [tracks])
 
     function createCurrentDuration(duration) {
-        console.log(duration);
         let min = Math.floor(duration / 60)
         let sec = duration % 60
         const time = { min, sec }
@@ -51,7 +47,6 @@ export default function UserLikes() {
     }
 
     function handleClickActive(info) {
-        console.log(info);
 
         if (info === activeTrack) {
             setActiveTrack(false);

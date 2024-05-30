@@ -9,6 +9,7 @@ import MixMiniCard from "../../Components/MixMiniCard/MixMiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
 import LastTrack from "../../Components/LastTrack/LastTrack.jsx";
 import { useDispatch } from "react-redux";
+import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { setUser } from "../../reduxToolkit/slices/userSlice";
@@ -230,6 +231,7 @@ export default function Home() {
                     to={`/player/${item.id}`}
                     onClick={() => {
                       dispatch(addSearch(item));
+                      dispatch(addTrackToHistory(item))
                     }}
                     key={index}
                   >
@@ -243,7 +245,7 @@ export default function Home() {
             <div className="featuredTracks-title">Today's biggest hits!</div>
             <div className="featuredTracks-results">
               {featured.map((item, index) => (
-                <MiniCard key={index} track={item} />
+                <MiniCard key={index} track={item}/>
               ))}
             </div>
           </div>

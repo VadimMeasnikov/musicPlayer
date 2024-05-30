@@ -51,12 +51,10 @@ export function useEditData() {
 //         const snapshot = await db.ref(`users/${id}/${field}`).get();
         
 //         const existingData = JSON.parse(snapshot.val())
-//         console.log(updateData);
 //         const track = JSON.parse(updateData)
 //         const updatedData = [existingData, track];
 
 //         await db.ref(`users/${id}/${field}`).set(JSON.stringify(updatedData))
-//         console.log('succesfull');
 //     },
 //         {
 //             onSuccess: () => {

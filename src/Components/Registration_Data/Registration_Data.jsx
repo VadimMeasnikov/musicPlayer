@@ -43,12 +43,11 @@ export default function Registration_Data({ regState, userObj }) {
       return;
     }
 
-    // console.log('create user');
+    
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
         setUserState(user);
-        console.log(user.user.uid);
         dispatch(
           setUser({
             email: userEmail,
@@ -79,7 +78,6 @@ export default function Registration_Data({ regState, userObj }) {
       });
   }
   async function addDataUser() {
-    console.log("start add data");
 
     const user = auth.currentUser;
     const userObj = {
@@ -106,10 +104,7 @@ export default function Registration_Data({ regState, userObj }) {
       .catch((e) => console.error(e))
 
     const field = 'key'
-    console.log(userKey);
     editData.mutate({ id: userKey, field, updateData: userKey })
-    console.log('end edit data');
-    console.log(user);
   }
 
 

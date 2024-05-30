@@ -38,7 +38,6 @@ export default function LastTrack() {
 
     useEffect(() => {
         const track = JSON.parse(localStorage.getItem('track'));
-        console.log(track);
         if (track !== null) {
             setIsData(true)
             setTrackImage(track.image)
@@ -51,10 +50,8 @@ export default function LastTrack() {
     useEffect(() => {
         if (trackArtist) {
             if (trackName.length + trackArtist.length >= 35) {
-                console.log(trackName.length + trackArtist.length);
                 setIsRotation(true)
             } else {
-                console.log(trackName.length + trackArtist.length);
             }
         } else {
             setIsRotation(false)
