@@ -30,7 +30,7 @@ export const store = configureStore({
     likes: favouriteTracks,
     artist: artistSlice,
     album: albumSlice,
-    audio: appAudio
+    audio: appAudio,
     history: historySlice
   },
   middleware: (getDefault) =>
