@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import chewronDown from '../../img/Chevron down.png'
 import more from '../../img/more.png'
 import track from '../../img/track.png'
 import time from '../../img/Frame 372.png'
 import { useGetTrackQuery } from '../../reduxToolkit/queryApi/tracksJamendo'
-import { Back, Shuffle, Vector } from '../../img/trackFunction/index'
+import { Back, Shuffle, Vector, Play } from '../../img/trackFunction/index'
 import { Like, Share, Radio, MoonFill, Hide, Add, Credits, Queue, View, Artist } from '../../img/modalPlayerImgs/modalIndex'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LiaPauseSolid } from "react-icons/lia";
@@ -23,12 +23,11 @@ import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favo
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-
 import './player.scss'
 
 export default function Player() {
+    const audioRef = useRef();
     const dispatch = useDispatch();
-
     const [trackName, setTrackName] = useState('')
     const [trackArtist, setTrackArtist] = useState('')
     const [trackAudio, setTrackAudio] = useState('')
@@ -101,15 +100,28 @@ export default function Player() {
 
     }
 
-    const playingButton = () => {
-        if (isPlaying) {
-            pause();
-            setIsPlaying(false);
-        } else {
-            play();
+
+    function audioToggle() {
+        const audio = audioRef.current;
+        if (!audio) return;
+        if (audio.paused) {
+            audio.play();
             setIsPlaying(true);
+        } else {
+            audio.pause();
+            setIsPlaying(false);
         }
-    };
+    }
+
+    // const playingButton = () => {
+    //     if (isPlaying) {
+    //         pause();
+    //         setIsPlaying(false);
+    //     } else {
+    //         play();
+    //         setIsPlaying(true);
+    //     }
+    // };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -234,9 +246,9 @@ export default function Player() {
                             </div>
                         </div>
 
-                        <audio src={trackAudio}></audio>
+                        <audio className='audioElement' src={trackAudio} controls ref={audioRef}></audio>
 
-                        <input
+                        {/* <input
                             type="range"
                             min="0"
                             max={duration / 1000}
@@ -246,7 +258,7 @@ export default function Player() {
                             onChange={(e) => {
                                 sound.seek([e.target.value]);
                             }}
-                        />
+                        /> */}
                         <div className="track_time">
                             <p>
                                 {currTime.min}:{currTime.sec}
@@ -258,19 +270,19 @@ export default function Player() {
                     <div className='track_function'>
                         <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
                         <button className='track_function__btn prev_track'> <img src={Back} alt="" width={36} height={37} /></button>
-                        {isPlaying ?
+                         {isPlaying ?
                             (
-                                <button onClick={playingButton} className='track_function__btn play'>
+                                <button onClick={audioToggle} className='track_functionbtn play'>
                                     <LiaPauseSolid id='stop' />
                                 </button>
                             )
                             :
                             (
-                                <button onClick={playingButton} className='track_function__btn play'>
+                                <button onClick={audioToggle} className='track_functionbtn play'>
                                     < RxPlay id='start' />
                                 </button>
-                            )}
-                        {/* <button className='track_function__btn play'> <img src={Play} alt="" width={67} height={67} /></button> */}
+                            )} 
+                         
                         <button className='track_function__btn next_track'> <img src={Back} alt="" width={36} height={37} className='vector' /></button>
                         <button onClick={() => handleRepeatControl()} className='track_function__btn repeat'>
                             {repeatState ?
