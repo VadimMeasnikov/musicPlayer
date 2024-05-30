@@ -7,7 +7,10 @@ import {
   addLikedTrack,
   removeLikedTracks,
 } from "../../reduxToolkit/slices/favouriteTracks";
-import { setArtists, removeArtists } from "../../reduxToolkit/slices/userArtistsSlice";
+import {
+  setArtists,
+  removeArtists,
+} from "../../reduxToolkit/slices/userArtistsSlice";
 import { IoPlay, IoPause } from "react-icons/io5";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import { clearArtistData } from "../../reduxToolkit/slices/artistSlice";
@@ -83,7 +86,8 @@ export default function ArtistPage() {
       `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=popularity_total&name=${artistData.name}&album_datebetween=1980-01-01_${formattedDate}`
     );
     const currentArtistTracks = await response.json();
-    const formattedCurrentArtistTracks = currentArtistTracks.results[0]?.tracks || [];
+    const formattedCurrentArtistTracks =
+      currentArtistTracks.results[0]?.tracks || [];
     formattedCurrentArtistTracks.splice(10);
     setTracks(formattedCurrentArtistTracks);
   }
@@ -92,7 +96,9 @@ export default function ArtistPage() {
     dispatch(clearArtistData());
   };
 
-  const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
+  const selectedArtists = useSelector(
+    (state) => state.userArtists.userAppArtists
+  );
   const [isFollowed, setIsFollowed] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
 
@@ -150,6 +156,18 @@ export default function ArtistPage() {
       setIsPlay(false);
     }
   }
+  useEffect(() => {
+    if (activeTrack !== null) {
+      dispatch(addTrackToHistory(activeTrack));
+    }
+  }, [activeTrack]);
+
+  useEffect(() => {
+    if (activeTrack) {
+      setURL(activeTrack.audio);
+      setIsAuto(true);
+    }
+  }, [activeTrack]);
 
   function handleClickActive(info) {
     if (info === activeTrack) {

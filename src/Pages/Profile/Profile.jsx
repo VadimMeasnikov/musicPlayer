@@ -93,20 +93,7 @@ export default function Profile() {
 								<img src={openBtn} alt='' />
 							</button>
 						</div>
-						<div className='four_buttons'>
-							<button onClick={() => handleButtonClick('Playlist')} className='profile_button'>Playlists</button>
-							<button onClick={() => handleButtonClick('Artist')} className='profile_button'>Artists</button>
-							<button onClick={() => handleButtonClick('Album')} className='profile_button'>Albums</button>
-							<button onClick={() => handleButtonClick('Podcast & Show')} className='profile_button'>Podcasts & Shows</button>
-						</div>
 						<div className='recently_played'>
-							<div className='row'>
-								<div className='mini_title'>
-									<img src={twoArrows} alt='' />
-									<p className='near_text'>Recently Played</p>
-								</div>
-								<img src={fourSquares} alt='' />
-							</div>
 							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
 							<Navigation />
 						</div>

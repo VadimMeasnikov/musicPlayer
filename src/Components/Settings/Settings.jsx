@@ -51,7 +51,7 @@ export default function Settings({ modalArr, photoObj }) {
                         <img src={ChevronRight} alt="" />
                     </Link>
                     <Link to='/history' className="settings-user">
-                        <p>History</p>
+                        <p>Recently Played</p>
                         <img src={ChevronRight} alt="" />
                     </Link>
                     <div className="settings-user">

@@ -9,7 +9,10 @@ import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
-import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
+import {
+  addLikedTrack,
+  removeLikedTracks,
+} from "../../reduxToolkit/slices/favouriteTracks";
 import { clearAlbum } from "../../reduxToolkit/slices/albumSlice";
 import GetCurrentColor from "../../GetCurrentColor";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
@@ -55,16 +58,15 @@ export default function Album() {
   }
 
   useEffect(() => {
-    if (isPlay) {
-      audioToggle();
+    if (activeTrack !== null) {
+      dispatch(addTrackToHistory(activeTrack));
     }
-  }, [isPlay]);
+  }, [activeTrack]);
 
   function audioToggle() {
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
-      dispatch(addTrackToHistory(activeTrack));
       audio.play();
       setIsPlay(true);
     } else {
@@ -230,7 +232,9 @@ export default function Album() {
                   onChange={(e) => setSearch(e.target.value)}
                   className="search_content"
                   type="text"
-                  placeholder={`Find in ${isCustomPlaylist ? "playlist" : "album"}`}
+                  placeholder={`Find in ${
+                    isCustomPlaylist ? "playlist" : "album"
+                  }`}
                 />
               </div>
             </form>

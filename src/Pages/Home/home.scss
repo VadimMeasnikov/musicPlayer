@@ -22,11 +22,15 @@
         justify-content: space-between;
       }
     }
-    .featuredTracks, .suggestedArtists, .playlistsMix {
+    .featuredTracks,
+    .suggestedArtists,
+    .playlistsMix {
       display: flex;
       flex-direction: column;
       margin: 20px 0;
-      .featuredTracks-title, .suggestedArtists-title, .playlistsMix-title  {
+      .featuredTracks-title,
+      .suggestedArtists-title,
+      .playlistsMix-title {
         color: rgb(255, 255, 255);
         font-family: Avenir;
         font-size: 19px;
@@ -35,12 +39,14 @@
         letter-spacing: 0%;
         text-align: left;
       }
-      .featuredTracks-results, .suggestedArtists-results, .playlistsMix-results {
+      .featuredTracks-results,
+      .suggestedArtists-results,
+      .playlistsMix-results {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        margin: 10px 0;
+        margin: 5px 0;
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
@@ -48,7 +54,34 @@
     }
   }
 }
-.spinnerBox{
+.recentlyPlayed {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  & a {
+    width: 48%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 60px;
+    background: rgba($color: #000000, $alpha: 0.2);
+    border-radius: 3px;
+    padding-right: 10px;
+    & img {
+      height: 100%;
+      width: 60px;
+      border-radius: 3px 0 0 3px;
+    }
+    & span {
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      // text-overflow: ellipsis;
+    }
+  }
+}
+.spinnerBox {
   margin: 60px auto;
   .spinner {
     position: absolute;
@@ -68,7 +101,7 @@
   }
 }
 
-.artist_modal{
+.artist_modal {
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;

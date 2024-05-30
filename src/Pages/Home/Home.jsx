@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { addSearch } from "../../reduxToolkit/slices/userSearch";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import MiniCard from "../../Components/MiniCard/MiniCard";
 import ArtistMiniCard from "../../Components/ArtistMiniCard/ArtistMiniCard";
 import MixMiniCard from "../../Components/MixMiniCard/MixMiniCard";
 import Navigation from "../../Components/Navigation/Navigation";
-import LastTrack from '../../Components/LastTrack/LastTrack.jsx'
+import LastTrack from "../../Components/LastTrack/LastTrack.jsx";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -20,13 +22,7 @@ import { setPhoto } from "../../reduxToolkit/slices/userPhoto";
 
 import "./home.scss";
 
-
-
-
-
-
 export default function Home() {
-
   const { dataUsers, isLoading } = getAllUsersData();
 
   const { data } = useGetTrackQuery();
@@ -34,7 +30,7 @@ export default function Home() {
   const [featured, setFeatured] = useState([]);
   // Стейт для приветствия
   const [greeting, setGreeting] = useState("");
-  const [userArtists, setUserArtists] = useState([])
+  const [userArtists, setUserArtists] = useState([]);
   // Отображение имени на главной странице
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [formattedDate, setFormattedDate] = useState("");
@@ -42,19 +38,21 @@ export default function Home() {
   const [isOpenCurrentArtist, setIsOpenCurrentArtist] = useState(false);
   const [artistModalData, setArtistModalData] = useState({});
 
-  const [isTrack, setIsTrack] = useState(true)
+  const [isTrack, setIsTrack] = useState(true);
 
   const currentHour = new Date().getHours();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const auth = getAuth()
+  const auth = getAuth();
   const userFb = auth.currentUser;
 
-  const userRd = useSelector(state => state.user)
+  const userRd = useSelector((state) => state.user);
   const { username } = useSelector((state) => state.user);
-  const selectedArtists = useSelector((state) => state.userArtists.userAppArtists);
+  const selectedArtists = useSelector(
+    (state) => state.userArtists.userAppArtists
+  );
   const playlistInfo = useSelector((state) => state.playlists.tracks);
 
   const userAgent = navigator.userAgent;
@@ -67,11 +65,11 @@ export default function Home() {
     }
   }, [data]);
 
+  const recentlyPlayed = useSelector((state) => state.history.historyArray);
+
   // Логика времени
 
-
   useEffect(() => {
-
     if (currentHour >= 4 && currentHour < 12) {
       setGreeting("Good morning, ");
     } else if (currentHour >= 12 && currentHour < 17) {
@@ -86,53 +84,55 @@ export default function Home() {
       if (user && !userRd.email) {
         getAllUsersData()
           .then((data) => {
-            const newArr = createUsersArray(data)
-            return newArr
+            const newArr = createUsersArray(data);
+            return newArr;
           })
           .then((array) => {
-            const key = auth.currentUser.displayName
-            const user = getCurrentUser(array, key)
+            const key = auth.currentUser.displayName;
+            const user = getCurrentUser(array, key);
 
             getCurrentAvatar(user.id)
               .then((avatar) => {
-                dispatch(setPhoto({
-                  photo: avatar
-                }
-                ))
+                dispatch(
+                  setPhoto({
+                    photo: avatar,
+                  })
+                );
               })
-              .catch(e => {
-                console.error(e)
-              })
+              .catch((e) => {
+                console.error(e);
+              });
 
-            dispatch(setUser({
-              email: user.email,
-              id: user.id,
-              share: user.share,
-              news: user.news,
-              username: user.username,
-            }))
+            dispatch(
+              setUser({
+                email: user.email,
+                id: user.id,
+                share: user.share,
+                news: user.news,
+                username: user.username,
+              })
+            );
 
             dispatch(
               setKey({
-                key: user.key
+                key: user.key,
               })
-            )
+            );
 
-            const artists = JSON.parse(user.artists)
-            artists.map((artist) => (
-              dispatch(setArtists(artist))
-            ))
-            setUserArtists(artists)
-            setIsPageLoading(false)
-            return user
+            const artists = JSON.parse(user.artists);
+            artists.map((artist) => dispatch(setArtists(artist)));
+            setUserArtists(artists);
+            setIsPageLoading(false);
+            return user;
           })
-          .catch((e) => { console.error(e) })
+          .catch((e) => {
+            console.error(e);
+          });
       } else if (!user || userRd.email == null) {
-        navigate('/registration')
+        navigate("/registration");
       }
     });
   }, []);
-
 
   function createUsersArray(usersObj) {
     return Object.entries(usersObj).map(([key, value]) => {
@@ -145,13 +145,11 @@ export default function Home() {
     return currentUser;
   }
 
-
   useEffect(() => {
     if (selectedArtists) {
-      setUserArtists(selectedArtists)
+      setUserArtists(selectedArtists);
     }
-  }, [selectedArtists])
-
+  }, [selectedArtists]);
 
   useEffect(() => {
     const updateFormattedDate = () => {
@@ -174,7 +172,6 @@ export default function Home() {
     }
   }, [playlistInfo, playlistDataLoaded]);
 
-
   useEffect(() => {
     if (playlistInfo !== undefined) {
       setLoading(false);
@@ -192,14 +189,13 @@ export default function Home() {
         const formattedTracks = playlistTracks.results[0].tracks;
         dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
       });
-      setIsPageLoading(false)
+      setIsPageLoading(false);
     } catch (error) {
       console.error("Error creating playlists:", error);
     }
   }
 
   return (
-
     <div className="wrapper">
       {isPageLoading ? (
         <div className="spinnerBox">
@@ -207,13 +203,42 @@ export default function Home() {
         </div>
       ) : (
         <div className="homePage">
-
           <div className="homePage-titleBox">
             <h1 className="homePage-title">
               {greeting}
               {username}
             </h1>
           </div>
+          {recentlyPlayed.length > 0 && (
+            <div className="recentlyPlayed">
+              {recentlyPlayed
+                .filter((track) => track !== null)
+                .reduce((uniqueTracks, track) => {
+                  if (
+                    !uniqueTracks.some(
+                      (uniqueTrack) => uniqueTrack.id === track.id
+                    )
+                  ) {
+                    uniqueTracks.push(track);
+                  }
+                  return uniqueTracks;
+                }, [])
+                .reverse()
+                .slice(0, 6)
+                .map((item, index) => (
+                  <Link
+                    to={`/player/${item.id}`}
+                    onClick={() => {
+                      dispatch(addSearch(item));
+                    }}
+                    key={index}
+                  >
+                    <img src={item.image} alt="img" />
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+            </div>
+          )}
           <div className="featuredTracks">
             <div className="featuredTracks-title">Today's biggest hits!</div>
             <div className="featuredTracks-results">
@@ -222,45 +247,54 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="playlistsMix">
-            <div className="playlistsMix-title">Recommended for today</div>
-            <div className="playlistsMix-results">
-              {loading ? (
-                <div className="spinnerBox">
-                  <CgSpinnerTwoAlt
-                    color="white"
-                    className="spinner"
-                    display="block"
-                  />
-                </div>
-              ) : (
-                <div className="playlistsMix-results">
-                  {playlistInfo.map((item, index) => (
-                    <MixMiniCard key={index} playlist={item} />
-                  ))}
-                </div>
-              )}
+          {playlistInfo.length > 0 && (
+            <div className="playlistsMix">
+              <div className="playlistsMix-title">Made for You</div>
+              <div className="playlistsMix-results">
+                {loading ? (
+                  <div className="spinnerBox">
+                    <CgSpinnerTwoAlt
+                      color="white"
+                      className="spinner"
+                      display="block"
+                    />
+                  </div>
+                ) : (
+                  <div className="playlistsMix-results">
+                    {playlistInfo
+                      .reduce((uniquePlaylists, playlist) => {
+                        if (
+                          !uniquePlaylists.some(
+                            (uniquePlaylist) =>
+                              uniquePlaylist.id === playlist.id
+                          )
+                        ) {
+                          uniquePlaylists.push(playlist);
+                        }
+                        return uniquePlaylists;
+                      }, [])
+                      .map((item) => (
+                        <MixMiniCard key={item.id} playlist={item} />
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="suggestedArtists">
-            <div className="suggestedArtists-title">Artists you like</div>
-            <div className="suggestedArtists-results">
-              {userArtists.map((item, index) => (
-                <ArtistMiniCard
-                  key={index}
-                  artist={item}
-                />
-              ))}
+          )}
+          {userArtists.length > 0 && (
+            <div className="suggestedArtists">
+              <div className="suggestedArtists-title">Artists you like</div>
+              <div className="suggestedArtists-results">
+                {userArtists.map((item, index) => (
+                  <ArtistMiniCard key={index} artist={item} />
+                ))}
+              </div>
             </div>
-          </div>
-          {
-            isTrack && (
-              <LastTrack />
-            )
-          }
+          )}
+          {isTrack && <LastTrack />}
           <Navigation />
         </div>
       )}
     </div>
-  )
+  );
 }
