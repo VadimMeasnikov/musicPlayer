@@ -40,10 +40,11 @@ export default function Registration_Data({ regState, userObj }) {
     event.preventDefault();
 
     if (!userName || !userEmail || !userPassword) {
+      setIsError(true)
       return;
     }
 
-    
+
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
@@ -108,6 +109,7 @@ export default function Registration_Data({ regState, userObj }) {
   }
 
 
+
   return (
     <div className="registration_data">
 
@@ -130,6 +132,7 @@ export default function Registration_Data({ regState, userObj }) {
             <input
               className={isError ? ("error_input") : ("user_data_input")}
               value={userEmail}
+              name='email'
               onChange={(e) => {
                 setUserEmail(e.target.value);
                 setIsError(false);
@@ -145,6 +148,7 @@ export default function Registration_Data({ regState, userObj }) {
               Create a password
             </label>
             <input
+              name='password'
               className={isError ? ("error_input") : ("user_data_input")}
               value={userPassword}
               onChange={(e) => {
@@ -160,6 +164,7 @@ export default function Registration_Data({ regState, userObj }) {
               What's your name?
             </label>
             <input
+              name='username'
               className={isError ? ("error_input") : ("user_data_input")}
               value={userName}
               onChange={(e) => {
