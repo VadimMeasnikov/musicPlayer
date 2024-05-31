@@ -188,7 +188,6 @@ export default function Album() {
   }
 
   function handleClickActive(info) {
-    console.log(info);
     if (info === activeTrack) {
         dispatch(setAudio({
             audio: info.audio,

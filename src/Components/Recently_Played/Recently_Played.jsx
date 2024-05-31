@@ -6,6 +6,7 @@ import point from '../../img/point.png'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { RiPushpin2Fill } from "react-icons/ri";
 import './recently_played.scss'
 
 
@@ -102,9 +103,9 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                             <div className="liked_songs_info">
                                 <p className='album_title'>Liked Songs</p>
                                 <div className="liked_songs_info_content">
-                                    <img src={favAlbum} alt="" />
+                                    <RiPushpin2Fill/>
                                     <p className='status_info'>Playlist</p>
-                                    <img src={point} alt="" />
+                                    <p>•</p>
                                     <p className='volume_album'>{liked.length} {songsCountText}</p>
                                 </div>
                             </div>
