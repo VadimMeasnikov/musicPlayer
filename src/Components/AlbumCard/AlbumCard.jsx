@@ -102,7 +102,7 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
                             <div className="more_info_box__container">
                                 <button className='more_info_content' id='first_btn' onClick={() => {
                                     handleTrackLike(info);
-
+                                    setIsMore(false)
                                 }}>
                                     <div className="btn_image_content">
                                         {likedTracksStore.some(
@@ -119,7 +119,7 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
 
 
 
-                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info) }}>
+                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info); setIsMore(false)}}>
                                     <div className="btn_image_content">
                                         <IoPlay/>
                                     </div>

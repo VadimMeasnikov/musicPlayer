@@ -14,13 +14,16 @@ export default function ProfileCard({ data, dataAlbum }) {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	useEffect(() => {
-		if (dataAlbum.name == null) {
-			setStatus('Artist')
-			console.log(data.id + ' data id');
+		if (data.duration) {
 			setTitle(data.name)
-		} else {
+			setStatus(data.artist_name)
+		}
+		else if (dataAlbum.name == null) {
+			setStatus('Artist')
+			setTitle(data.name)
+		}
+		else {
 			setStatus('Album')
-			console.log(dataAlbum);
 			setTitle(dataAlbum.name)
 		}
 		if (dataAlbum.name == null) {
@@ -30,18 +33,18 @@ export default function ProfileCard({ data, dataAlbum }) {
 		}
 	}, [])
 
-	const handleClick = () => {
-		dispatch(addArtistData(artist));
-	};
 
 	const correctNavigate = () => {
 		if (status == 'Album') {
 			dispatch(addAlbum({ albumData: dataAlbum, isCustomPlaylist: true }));
 			navigate(`/album/${uuidv4()}`);
 		}
-		else if(status == 'Artist'){
+		else if (status == 'Artist') {
 			dispatch(addArtistData(data));
 			navigate("/artist")
+		}
+		else{
+			navigate(`/player/${data.id}`)
 		}
 	};
 

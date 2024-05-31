@@ -17,7 +17,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
     const [onLoading, setOnLoading] = useState(true)
     const {status, setStatus} = statusArr
     const [isLikedSongs, setIsLikedSogns] = useState(true)
-
+    const history = useSelector(state=> state.history.historyArray);
     const liked = useSelector(state => state.likes.likedTracks)
 
     useEffect(() => {
@@ -116,6 +116,11 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                     {
                         onLoading ? (
                             <div>
+                                {
+                                    history.map((item, key) => (
+                                        <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()}/>
+                                    ))
+                                }
                                 {favArtists.map((item, key) => (
                                     <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()} />
                                 ))}

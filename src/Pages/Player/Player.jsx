@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
+import { CgSpinnerTwoAlt } from "react-icons/cg";
 import './player.scss'
 
 export default function Player() {
@@ -35,6 +36,8 @@ export default function Player() {
     const [trackImage, setTrackImage] = useState('')
     const [trackAlbum, setTrackAlbum] = useState('')
     const [trackId, setTrackId] = useState('')
+
+    const [isPageLoading, setIsPageLoading] = useState(true)
 
     const [averageColor, setAverageColor] = useState('')
 
@@ -85,6 +88,8 @@ export default function Player() {
             setTrackAudio(currentTrack.audio);
             setTrackId(currentTrack.id)
             setCurrentTrack(currentTrack)
+
+            setIsPageLoading(false)
             return currentTrack
         } else {
             const currentTrack = dataRd[dataRd.length - 1]
@@ -96,6 +101,8 @@ export default function Player() {
             setTrackAudio(currentTrack.audio);
             setTrackId(currentTrack.id)
             setCurrentTrack(currentTrack)
+
+            setIsPageLoading(false)
             return currentTrack
         }
 
@@ -166,89 +173,92 @@ export default function Player() {
 
     return (
 
-        <div className='player' style={{ background: bg }}>
+        < div className='player' style={{ background: bg }}>
             <GetCurrentColor imageUrl={trackImage} onColorGenerated={handleColorGeneration} />
-            <div className='player_container'>
-                <div className={isOpen ? 'track_modal open' : 'track_modal'}>
-                    <div className='track_box_modal'>
+            {isPageLoading ?
+                (<CgSpinnerTwoAlt />)
+                :
+                (<div className='player_container'>
+                    <div className={isOpen ? 'track_modal open' : 'track_modal'}>
+                        <div className='track_box_modal'>
 
-                        <img src={trackImage} width={164} height={169} alt="" />
+                            <img src={trackImage} width={164} height={169} alt="" />
 
-                        <h1>{trackName}</h1>
-                        <h2>{trackArtist}</h2>
-                        <div className='modal_function'>
-                            <div>
-                                <button className="likeBtn"
-                                    onClick={() => {
-                                        handleTrackLike(currentTrack);
-                                    }}
-                                >
-                                    {likedTracksStore.some(
-                                        (likedTrack) => likedTrack.id === trackId
-                                    ) ? (
-                                        <div className="">
+                            <h1>{trackName}</h1>
+                            <h2>{trackArtist}</h2>
+                            <div className='modal_function'>
+                                <div>
+                                    <button className="likeBtn"
+                                        onClick={() => {
+                                            handleTrackLike(currentTrack);
+                                        }}
+                                    >
+                                        {likedTracksStore.some(
+                                            (likedTrack) => likedTrack.id === trackId
+                                        ) ? (
+                                            <div className="">
+                                                <FaHeart className='likeBtnSVG' />
+                                                <p>Unlike</p>
+                                            </div>
+                                        ) : (
+                                            <div className="">
+                                                <FaRegHeart className='likeBtnSVG' />
+                                                <p>Like</p>
+                                            </div>
+                                        )}
+                                    </button>
+                                </div>
+                                <div>
+                                    <button><img src={Add} alt="" width={21} height={20} />Add to playlist</button>
+                                </div>
+                                <div>
+                                    <button><img src={Queue} alt="" width={21} height={20} />Add to queue</button>
+                                </div>
+                                <div>
+                                    <button><img src={View} alt="" width={21} height={20} />View album</button>
+                                </div>
+                                <div>
+                                    <button><img src={Artist} alt="" width={21} height={20} />View artist</button>
+                                </div>
+                            </div>
+                            <button onClick={() => { setIsOpen(pr => !pr) }}>Close</button>
+                        </div>
+
+
+                    </div >
+                    <div className='player_content'>
+                        <div className='upper_info'>
+                            <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><IoIosArrowDown /></button>
+                            <h1 className='page_player_title'>{trackAlbum}</h1>
+                            <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
+                        </div>
+                        <img src={trackImage} alt="" width={380} height={380} className='track_img' />
+                        <div className='track_info'>
+                            <div className="track_content_1">
+                                <div className='track_info_content'>
+                                    <div className="marquee-container"><h2 className='track_name'>{trackName}</h2></div>
+                                    <h3 className='track_artist'>{trackArtist}</h3>
+                                </div>
+                                <div className="track_content_2">
+                                    <button className="likeBtn"
+                                        onClick={() => {
+                                            handleTrackLike(currentTrack);
+                                        }}
+                                    >
+                                        {likedTracksStore.some(
+                                            (likedTrack) => likedTrack.id === trackId
+                                        ) ? (
                                             <FaHeart className='likeBtnSVG' />
-                                            <p>Unlike</p>
-                                        </div>
-                                    ) : (
-                                        <div className="">
+                                        ) : (
                                             <FaRegHeart className='likeBtnSVG' />
-                                            <p>Like</p>
-                                        </div>
-                                    )}
-                                </button>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button><img src={Add} alt="" width={21} height={20} />Add to playlist</button>
-                            </div>
-                            <div>
-                                <button><img src={Queue} alt="" width={21} height={20} />Add to queue</button>
-                            </div>
-                            <div>
-                                <button><img src={View} alt="" width={21} height={20} />View album</button>
-                            </div>
-                            <div>
-                                <button><img src={Artist} alt="" width={21} height={20} />View artist</button>
-                            </div>
-                        </div>
-                        <button onClick={() => { setIsOpen(pr => !pr) }}>Close</button>
-                    </div>
 
+                            <audio className='audioElement' src={trackAudio} controls ref={audioRef}></audio>
 
-                </div>
-                <div className='player_content'>
-                    <div className='upper_info'>
-                        <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><IoIosArrowDown/></button>
-                        <h1 className='page_player_title'>{trackAlbum}</h1>
-                        <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
-                    </div>
-                    <img src={trackImage} alt="" width={380} height={380} className='track_img' />
-                    <div className='track_info'>
-                        <div className="track_content_1">
-                            <div className='track_info_content'>
-                                <div className="marquee-container"><h2 className='track_name'>{trackName}</h2></div>
-                                <h3 className='track_artist'>{trackArtist}</h3>
-                            </div>
-                            <div className="track_content_2">
-                                <button className="likeBtn"
-                                    onClick={() => {
-                                        handleTrackLike(currentTrack);
-                                    }}
-                                >
-                                    {likedTracksStore.some(
-                                        (likedTrack) => likedTrack.id === trackId
-                                    ) ? (
-                                        <FaHeart className='likeBtnSVG' />
-                                    ) : (
-                                        <FaRegHeart className='likeBtnSVG' />
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-
-                        <audio className='audioElement' src={trackAudio} controls ref={audioRef}></audio>
-
-                        {/* <input
+                            {/* <input
                             type="range"
                             min="0"
                             max={duration / 1000}
@@ -259,46 +269,43 @@ export default function Player() {
                                 sound.seek([e.target.value]);
                             }}
                         /> */}
-                        <div className="track_time">
-                            <p>
-                                {currTime.min}:{currTime.sec}
-                            </p>
+                            <div className="track_time">
+                                <p>
+                                    {currTime.min}:{currTime.sec}
+                                </p>
+
+                            </div>
 
                         </div>
-
-                    </div>
-                    <div className='track_function'>
-                        <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
-                        <button className='track_function__btn prev_track'> <img src={Back} alt="" width={36} height={37} /></button>
-                         {isPlaying ?
-                            (
-                                <button onClick={audioToggle} className='track_functionbtn play'>
-                                    <LiaPauseSolid id='stop' />
-                                </button>
-                            )
-                            :
-                            (
-                                <button onClick={audioToggle} className='track_functionbtn play'>
-                                    < RxPlay id='start' />
-                                </button>
-                            )} 
-                         
-                        <button className='track_function__btn next_track'> <img src={Back} alt="" width={36} height={37} className='vector' /></button>
-                        <button onClick={() => handleRepeatControl()} className='track_function__btn repeat'>
-                            {repeatState ?
-                                (<img className='repeat_img' src={repeat_active} alt="" />)
+                        <div className='track_function'>
+                            <button className='track_function__btn shuffle'> <img src={Shuffle} alt="" width={22} height={22} /></button>
+                            <button className='track_function__btn prev_track'> <img src={Back} alt="" width={36} height={37} /></button>
+                            {isPlaying ?
+                                (
+                                    <button onClick={audioToggle} className='track_functionbtn play'>
+                                        <LiaPauseSolid id='stop' />
+                                    </button>
+                                )
                                 :
-                                (<img className='repeat_img' src={repeat} alt="" />)
-                            }
-                        </button>
+                                (
+                                    <button onClick={audioToggle} className='track_functionbtn play'>
+                                        < RxPlay id='start' />
+                                    </button>
+                                )}
+
+                            <button className='track_function__btn next_track'> <img src={Back} alt="" width={36} height={37} className='vector' /></button>
+                            <button onClick={() => handleRepeatControl()} className='track_function__btn repeat'>
+                                {repeatState ?
+                                    (<img className='repeat_img' src={repeat_active} alt="" />)
+                                    :
+                                    (<img className='repeat_img' src={repeat} alt="" />)
+                                }
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-
-
-        </div>
-
-
+                </div >)
+            }
+        </ div >
     )
 }

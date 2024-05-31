@@ -1,6 +1,6 @@
 .user_likes {
   p {
-    font-family: Avenir;
+    font-family:Roboto;
     font-size: 15px;
     font-weight: 400;
     line-height: 28px;
@@ -12,196 +12,82 @@
     font-size: 15px;
   }
 
-  .user_likes_container {
-    .album_arrow {
-      width: 100%;
-      display: flex;
-      padding-top: 20px;
-      align-items: center;
-      text-align: center;
-      position: relative;
+  .user_likes_content {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-      h1 {
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        left: 72px;
-        color: #fff;
-        font-family: Avenir;
-        font-weight: normal;
-        font-size: 24px;
-      }
-    }
 
-    .user_likes__title_box {
+
+    .album_content {
+      padding: 15px;
       width: 90%;
-      margin: 0 auto;
-      text-align: center;
+      height: 150px;
+      background: #272727;
+      border-radius: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .title_text {
-        width: 90%;
-        text-align: center;
+
+      .likes_img {
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
       }
-    }
 
-    .album_content {
-      width: 90%;
-      margin: 0 auto;
-      margin-top: 30px;
-      height: auto;
+      .album_data {
+        // padding: 10px;
+        width: 65%;
+        height: 85%;
+        background: #3b3b3b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-      .album_logo {
-        width: 288px;
-        height: 288px;
-        margin: 0 auto;
+        border-radius: 15px;
 
-        img {
+        .album_likes_duration,
+        .album_likes_length {
           width: 100%;
-          height: 100%;
+          padding-left: 10px;
+          font-size: 13px;
         }
-      }
 
-      .text_box_content {
-        margin-top: 25px;
-
-        .main_buttons_info {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .content__1__info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .main_album__info {
-              text-align: start;
-
-              .info_1,
-              .album__info {
-                font-size: 13px;
-                font-weight: 500;
-                line-height: 17.76px;
-                color: rgba(179, 179, 179, 1);
-              }
-
-              .album_buttons {
-                width: 25%;
-                height: 40px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .album_like__btn,
-                .album__btn__2 {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  border: none;
-                  background: none;
-                  outline: none;
-                }
-
-                .like_content,
-                .button_content {
-                  width: 22px;
-                  height: 22px;
-                }
-              }
-            }
-          }
-
-          .content_2__buttons {
-            margin-left: 20px;
-            background: #1ed760;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .album__btn-pause {
-              width: 100%;
-              height: 100%;
-              padding: 10px;
-            }
-
-            .album__btn-play {
-              margin-left: 3px;
-              width: 100%;
-              height: 100%;
-              padding: 10px;
-            }
-          }
+        .album_likes_length {
+          border-bottom: 1px solid white;
         }
       }
     }
 
-    // .user_likes_content {
-    //     margin-top: 25px;
-    //     display: flex;
-    //     flex-direction: column;
-    //     align-items: center;
-    //     justify-content: space-between;
+    .user_likes_songs {
+      padding-top: 50px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    //     .album_content {
-    //         padding: 15px;
-    //         width: 90%;
-    //         height: 150px;
-    //         background: #272727;
-    //         border-radius: 20px;
-    //         display: flex;
-    //         justify-content: space-between;
-    //         align-items: center;
+      .card {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}
 
-    //         .likes_img {
-    //             width: 70px;
-    //             height: 70px;
-    //             border-radius: 10px;
-    //         }
+.user_likes_title_box {
+  padding-top: 15px;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
 
-    //         .album_data {
-    //             // padding: 10px;
-    //             width: 65%;
-    //             height: 85%;
-    //             background: #3b3b3b;
-    //             display: flex;
-    //             flex-direction: column;
-    //             justify-content: center;
-
-    //             border-radius: 15px;
-
-    //             .album_likes_duration,
-    //             .album_likes_length {
-    //                 width: 100%;
-    //                 padding-left: 10px;
-    //                 font-size: 13px;
-    //             }
-
-    //             .album_likes_length {
-    //                 border-bottom: 1px solid white;
-    //             }
-    //         }
-    //     }
-
-    //     .user_likes_songs {
-    //         padding-top: 50px;
-    //         width: 100%;
-    //         display: flex;
-    //         flex-direction: column;
-    //         align-items: center;
-    //         .card{
-    //             padding-top: 5px;
-    //             padding-bottom: 5px;
-    //         }
-    //     }
-    // }
+  .title_text_user_likes {
+    width: 95%;
+    text-align: center;
+    font-size: 26px;
   }
 }
 
@@ -227,10 +113,4 @@
       height: 50px;
     }
   }
-}
-
-.user_likes_songs{
-    background: #000;
-    flex: 1 1 auto;
-    height: 100%;
 }

@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import AlbumCard from "../../Components/AlbumCard/AlbumCard";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import sad from "../../img/sad.png";
-import GetCurrentColor from "../../GetCurrentColor";
+import { useDispatch } from "react-redux";
+import { setAudio } from '../../reduxToolkit/slices/appAudio';
 import "./user_likes.scss";
 
 export default function UserLikes() {
@@ -18,6 +19,7 @@ export default function UserLikes() {
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const audioRef = useRef();
+  const dispatch = useDispatch()
   const tracks = useSelector((state) => state.likes.likedTracks);
 
   useEffect(() => {
@@ -49,8 +51,16 @@ export default function UserLikes() {
     if (info === activeTrack) {
       setActiveTrack(false);
       setURL(activeTrack.audio);
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: false
+      }))
       audioRef.current.pause();
     } else {
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: true
+      }))
       setActiveTrack(info);
       audioRef.current.play();
     }
@@ -71,14 +81,19 @@ export default function UserLikes() {
         ref={audioRef}
         src={URL}
         autoPlay={isAuto}
+        muted='true'
         controls
       ></audio>
       {isPageLoading ? (
         <CgSpinnerTwoAlt />
       ) : (
         <div className="user_likes_container">
+          <div className="user_likes_title_box">
+            <GoBackButton />
+            <h1 className="title_text_user_likes">Your Liked Songs</h1>
+          </div>
           <div className="user_likes_content">
-            {/* <div className="album_content">
+            <div className="album_content">
               <img className="likes_img" src={likedAlbum} alt="" />
               <div className="album_data">
                 <p className="album_likes_length">Треков: {albumLength}</p>
@@ -86,11 +101,7 @@ export default function UserLikes() {
                   Продолжительность: {albumDuration.min}м {albumDuration.sec}c
                 </p>
               </div>
-            </div> */}
-            <GetCurrentColor
-              imageUrl={likedAlbum}
-              onColorGenerated={handleColorGeneration}
-            />
+            </div>
             <audio
               className="audio_element"
               ref={audioRef}
@@ -99,31 +110,6 @@ export default function UserLikes() {
               muted="true"
               controls
             ></audio>
-            <div className="album_color__top" style={{ background: bg }}>
-              <div className="album_arrow">
-                <GoBackButton />
-                <h1 className="album_title">Your Liked Songs</h1>
-              </div>
-              <div className="album_content">
-                <div className="album_logo">
-                  <img src={likedAlbum} alt="" />
-                </div>
-                <div className="text_box_content">
-                  <div className="main_buttons_info">
-                    <div className="content__1__info">
-                      <div className="main_album__info">
-                        <div className="content_text">
-                          <p className="album__info">
-                            {albumDuration.min}m {albumDuration.sec}s •{" "}
-                            {albumLength} tracks
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="user_likes_songs">
               {isEmpty ? (
                 <div className="empty_box">
