@@ -7,6 +7,7 @@ import { BsRepeat1, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs";
 import { BsRepeat } from "react-icons/bs";
 import { IoMdPlay } from "react-icons/io";
 import { MdOutlinePause } from "react-icons/md";
+import { BsThreeDots } from "react-icons/bs";
 import { useGetTrackQuery } from "../../reduxToolkit/queryApi/tracksJamendo";
 import { Back, Shuffle, Vector, Play } from "../../img/trackFunction/index";
 import {
@@ -297,7 +298,7 @@ export default function Player() {
               }}
             >
               {" "}
-              <img src={more} alt="" />
+              <BsThreeDots className="more"/>
             </button>
           </div>
           <img
