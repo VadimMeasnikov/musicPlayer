@@ -218,15 +218,15 @@ export default function Player() {
                 <div className='player_content'>
                     <div className='upper_info'>
                         <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
-                        <h1 className='page_player_title'>{trackAlbum}</h1>
+                        <h1 className='page_player_title rotation'>{trackAlbum}</h1>
                         <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
                     </div>
                     <img src={trackImage} alt="" width={380} height={380} className='track_img' />
                     <div className='track_info'>
                         <div className="track_content_1">
                             <div className='track_info_content'>
-                                <div className="marquee-container"><h2 className='track_name'>{trackName}</h2></div>
-                                <h3 className='track_artist'>{trackArtist}</h3>
+                                <div className="marquee-container rotation"><h2 className='track_name'>{trackName}</h2></div>
+                                <h3 className='track_artist rotation'>{trackArtist}</h3>
                             </div>
                             <div className="track_content_2">
                                 <button className="likeBtn"
