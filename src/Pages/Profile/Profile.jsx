@@ -45,6 +45,7 @@ export default function Profile() {
 
 
 	useEffect(() => {
+		console.log(1);
 		onAuthStateChanged(auth, (userSt => {
 			if (user.email == null) {
 				setIsPageLoading(true)
@@ -68,11 +69,6 @@ export default function Profile() {
 			setUserPhoto(defaultImg)
 		}
 	}, [photo])
-
-	function handleButtonClick(status) {
-		setStatus(status)
-		return status
-	}
 
 	const statusArr = { status, setStatus }
 	const modalArr = { isSettings, setIsSettings }

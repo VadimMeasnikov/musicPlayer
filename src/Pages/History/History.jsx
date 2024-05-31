@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { clearHistory } from "../../reduxToolkit/slices/historySlice";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import AlbumCard from "../../Components/AlbumCard/AlbumCard";
+import ProfileCard from "../../Components/ProfileCard/ProfileCard";
 import "./History.scss";
+
 
 export default function History() {
   const data = useSelector((state) => state.history.historyArray);
@@ -51,6 +53,22 @@ export default function History() {
     }
   }, [trackIndex, tracks, isPlay]);
 
+  function handleClickActive(info) {
+    if (info === activeTrack) {
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: false
+      }))
+      setActiveTrack(false);
+    } else {
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: true
+      }))
+      setActiveTrack(info);
+    }
+  }
+
   useEffect(() => {
     if (activeTrack) {
       setURL(activeTrack.audio);
@@ -66,15 +84,6 @@ export default function History() {
     }
   }, [trackIndex, tracks, isPlay]);
 
-  function handleClickActive(info) {
-    if (info === activeTrack) {
-      setActiveTrack(false);
-      if (audioRef.current) audioRef.current.pause();
-    } else {
-      setActiveTrack(info);
-      if (audioRef.current) audioRef.current.play();
-    }
-  }
   return (
     <div className="history">
       <div className="history__topPanel">
@@ -96,10 +105,11 @@ export default function History() {
           }, [])
           .reverse()
           .map((item, index) => (
-            <AlbumCard
+            <ProfileCard
               key={item.id}
-              info={item}
-              isActive={item === activeTrack}
+              data={item}
+              dataAlbum='null'
+              isActive={item===activeTrack}
               handleClickActive={handleClickActive}
             />
           ))}

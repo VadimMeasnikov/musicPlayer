@@ -24,6 +24,15 @@ export default function LastTrack() {
     const audioSettings = useSelector(state => state.audio)
 
     useEffect(() => {
+       const track = JSON.parse(localStorage.getItem('track'));
+       setIsData(true)
+       setTrackImage(track.image)
+       setTrackName(track.name)
+       setTrackArtist(track.artist_name)
+       setURL(track.audio)
+    }, [audioSettings])
+
+    useEffect(() => {
        if(audioSettings.isPlay){
         setIsPlay(true)
        } else{

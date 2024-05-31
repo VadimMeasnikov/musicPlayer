@@ -15,9 +15,10 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
     const [songsCountText, setSongsCountText] = useState('song')
     const [filteredData, setFilteredData] = useState([])
     const [onLoading, setOnLoading] = useState(true)
-    const {status, setStatus} = statusArr
+    const { status, setStatus } = statusArr
     const [isLikedSongs, setIsLikedSogns] = useState(true)
-    const history = useSelector(state=> state.history.historyArray);
+    const [activeTrack, setActiveTrack] = useState()
+    const history = useSelector(state => state.history.historyArray);
     const liked = useSelector(state => state.likes.likedTracks)
 
     useEffect(() => {
@@ -35,10 +36,10 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
         }
     }, [])
 
-    useEffect(() =>  {
-      if(liked.length !== 0  && liked.length !== 1 ){ 
-         setSongsCountText('songs')
-      }
+    useEffect(() => {
+        if (liked.length !== 0 && liked.length !== 1) {
+            setSongsCountText('songs')
+        }
     }, [liked])
 
     const exampleArr = [{
@@ -72,7 +73,7 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
         return randomElements
     }
 
-   
+
     const currentPlaylistsArr = getRandomElementsFromArray(playlists, 4)
 
     function getFilterArr(type) {
@@ -98,12 +99,12 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                     <Link to='/userlikes' className="liked_songs">
                         <div className="liked_songs_container">
                             <div className="liked_songs_logo">
-                                   <img className='liked_img' src={likedAlbum} alt="" />
+                                <img className='liked_img' src={likedAlbum} alt="" />
                             </div>
                             <div className="liked_songs_info">
                                 <p className='album_title'>Liked Songs</p>
                                 <div className="liked_songs_info_content">
-                                    <RiPushpin2Fill/>
+                                    <RiPushpin2Fill />
                                     <p className='status_info'>Playlist</p>
                                     <p>•</p>
                                     <p className='volume_album'>{liked.length} {songsCountText}</p>
@@ -118,14 +119,14 @@ export default function Recently_Played({ data, favArtists, playlists, statusArr
                             <div>
                                 {
                                     history.map((item, key) => (
-                                        <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()}/>
+                                        <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()} />
                                     ))
                                 }
                                 {favArtists.map((item, key) => (
                                     <ProfileCard data={item} dataAlbum={exampleArr} key={uuidv4()} />
                                 ))}
                                 {currentPlaylistsArr.map((item, key) => (
-                                    <ProfileCard data={exampleArr} dataAlbum={item} key={uuidv4()} />
+                                    <ProfileCard data={exampleArr} dataAlbum={item} key={uuidv4() } />
                                 ))}
                             </div>
                         ) : (

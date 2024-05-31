@@ -17,7 +17,7 @@ import whatsup from '../../img/whatsup.png'
 import message from '../../img/message.png'
 import { addSearch } from '../../reduxToolkit/slices/userSearch';
 import { useLastTrack } from '../../hooks/useLastTrack';
-
+import { setAudio } from '../../reduxToolkit/slices/appAudio';
 import './album_card.scss'
 
 
