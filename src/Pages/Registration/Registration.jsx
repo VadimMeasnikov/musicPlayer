@@ -44,7 +44,7 @@ export default function Registration() {
         <div className="reg">
           <div className="reg_container">
             <div className="title_box">
-              <FcMusic className="mini_logo"/>
+              <FcMusic color="#1ed760" className="mini_logo"/>
               <h1 className="reg_page__title">
                 Millions of Songs.<br></br>Free on Music Player.
               </h1>
