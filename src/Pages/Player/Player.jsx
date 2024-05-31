@@ -23,6 +23,7 @@ import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favo
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
 import './player.scss'
 
 export default function Player() {
@@ -217,7 +218,7 @@ export default function Player() {
                 </div>
                 <div className='player_content'>
                     <div className='upper_info'>
-                        <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><img src={chewronDown} alt="" height={22} width={22} /></button>
+                        <button className='go_back__btn_player' onClick={() => { goBackBtn() }}><IoIosArrowDown/></button>
                         <h1 className='page_player_title'>{trackAlbum}</h1>
                         <button className='more_info__btn' onClick={() => { setIsOpen(pr => !pr) }}> <img src={more} alt="" /></button>
                     </div>

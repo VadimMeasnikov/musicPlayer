@@ -3,15 +3,18 @@
     font-family: Avenir;
     color: #ffffff;
     height: 100vh;
+    width: 100%;
 }
 
 .player_container {
     display: grid;
     place-items: center;
     transition: 2s;
+    width: 100%;
 }
 
 .player_content {
+    width: 100%;
     display: grid;
     place-items: center;
 }
@@ -20,14 +23,15 @@
 .upper_info {
     padding-top: 45px;
     display: flex;
-    width: 100%;
+    width: 90%;
     justify-content: space-between;
     align-items: center;
 
     .page_player_title,
     .more_info__btn,
     .go_back__btn_player {
-        width: 33%;
+        font-size: 24px;
+        width: 100%;
     }
 
     .page_player_title {
@@ -35,15 +39,18 @@
     }
 
     .go_back__btn_player {
+        width: 10%;
         display: flex;
         justify-content: start;
         align-items: center;
         border: none;
         background: none;
+        color: white;
         outline: none;
     }
 
     .more_info__btn {
+        width: 10%;
         display: flex;
         justify-content: end;
         align-items: center;
@@ -61,6 +68,7 @@
 }
 
 .player_content {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -73,7 +81,7 @@
     flex-direction: column;
 
     .track_content_1 {
-        width: 100%;
+        width: 90%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -130,12 +138,14 @@
     align-items: center;
     justify-content: center;
     margin: auto;
+    width: 90%;
+    height: auto;
     margin-bottom: 15px;
     margin-top: 20px;
 }
 
 .track_function {
-    width: 96%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

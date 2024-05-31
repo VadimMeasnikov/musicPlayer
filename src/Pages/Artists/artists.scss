@@ -21,8 +21,8 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    position: relative;
     height: 32px;
 
     .text_block {
@@ -31,19 +31,20 @@
       align-items: center;
       justify-content: center;
       position: absolute;
-      left: 72px;
+      text-align: center;
 
       .choose_artists {
         color: #fff;
         font-family: Avenir;
         font-weight: 700;
         font-size: 16px;
+        text-align: center;
       }
     }
   }
 
   .input_block {
-    padding-top: 27px;
+    padding-top: 20px;
     width: 90%;
   }
 
@@ -70,16 +71,18 @@
       outline: none;
       color: rgb(19, 19, 19);
       font-size: 16px;
-      font-weight: 500;
+      font-weight: bold;
       line-height: 22px;
       letter-spacing: 0%;
+      font-family: Avenir;
 
       &::placeholder {
         color: rgb(19, 19, 19);
         font-size: 16px;
-        font-weight: 500;
+        font-weight: bold;
         line-height: 22px;
         letter-spacing: 0%;
+        padding-top: 5px;
       }
     }
 
