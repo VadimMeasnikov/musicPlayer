@@ -22,28 +22,18 @@ export default function LastTrack() {
     const audioRef = useRef()
     const dispatch = useDispatch()
     const audioSettings = useSelector(state => state.audio)
+    const trackLS = JSON.parse(localStorage.getItem('track'));
 
     useEffect(() => {
-       const track = JSON.parse(localStorage.getItem('track'));
-       setIsData(true)
-       setTrackImage(track.image)
-       setTrackName(track.name)
-       setTrackArtist(track.artist_name)
-       setURL(track.audio)
+        if (audioSettings.isPlay) {
+            setIsPlay(true)
+        } else {
+            setIsPlay(false)
+        }
     }, [audioSettings])
-
-    useEffect(() => {
-       if(audioSettings.isPlay){
-        setIsPlay(true)
-       } else{
-        setIsPlay(false)
-       }
-    }, [audioSettings])
-
     const handleColorGeneration = (color) => {
         setColor(color)
     };
-
     function audioControl() {
         const audio = audioRef.current
         if (audio.paused) {
@@ -62,7 +52,6 @@ export default function LastTrack() {
             setIsPlay(false)
         }
     }
-
     useEffect(() => {
         const track = JSON.parse(localStorage.getItem('track'));
         if (track !== null) {
@@ -75,6 +64,16 @@ export default function LastTrack() {
     }, [])
 
     useEffect(() => {
+        if(trackLS){
+            setIsData(true)
+            setTrackImage(trackLS.image)
+            setTrackName(trackLS.name)
+            setTrackArtist(trackLS.artist_name)
+            setURL(trackLS.audio)
+        }
+    }, [trackLS])
+
+    useEffect(() => {
         if (trackArtist) {
             if (trackName.length + trackArtist.length >= 35) {
                 setIsRotation(true)
@@ -84,7 +83,9 @@ export default function LastTrack() {
         }
     }, [trackArtist, trackName])
 
+    
     const bg = `${color}`
+
 
     return (
         <div className={`${isData ? ('visible_track') : ('last_track')}`} style={{ background: bg }}>
@@ -104,7 +105,6 @@ export default function LastTrack() {
                         </p>
                     </div>
                 </div>
-
                 <div className="track_funcrion_box">
                     {
                         isPlay ?
@@ -117,3 +117,4 @@ export default function LastTrack() {
         </div>
     )
 }
+

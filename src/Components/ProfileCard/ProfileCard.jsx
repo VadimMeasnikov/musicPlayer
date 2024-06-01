@@ -45,6 +45,7 @@ export default function ProfileCard({ data, dataAlbum }) {
 		}
 		else{
 			localStorage.setItem('track', JSON.stringify(data))
+			navigate(`/player/${data.id}`)
 			dispatch(setAudio({
 				audio: data.audio,
 				isPlay: true

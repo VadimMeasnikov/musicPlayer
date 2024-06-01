@@ -9,7 +9,7 @@ import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
-import {addLikedTrack,removeLikedTracks} from "../../reduxToolkit/slices/favouriteTracks";
+import { addLikedTrack, removeLikedTracks } from "../../reduxToolkit/slices/favouriteTracks";
 import { clearAlbum } from "../../reduxToolkit/slices/albumSlice";
 import GetCurrentColor from "../../GetCurrentColor";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
@@ -117,6 +117,11 @@ export default function Album() {
       setIsAuto(true);
       if (tracks.length !== 0) {
         const currentTrack = tracks[trackIndex];
+        localStorage.setItem('track', JSON.stringify(currentTrack));
+        dispatch(setAudio({
+          audio: currentTrack.audio,
+          isPlay: true
+        }))
         const timeout = setTimeout(() => {
           const nextIndex = (trackIndex + 1) % tracks.length;
           setTrackIndex(nextIndex);
@@ -129,6 +134,7 @@ export default function Album() {
 
   useEffect(() => {
     if (activeTrack) {
+
       setURL(activeTrack.audio);
       setIsAuto(true);
     }
@@ -146,21 +152,6 @@ export default function Album() {
     setLikedTracks(likedTracksStore);
   }, [likedTracksStore]);
 
-  const handleTrackLike = (track) => {
-    const isTrackLiked = likedTracksStore.some(
-      (likedTrack) => likedTrack.id === track.id
-    );
-    if (!isTrackLiked) {
-      setLikedTracks(track);
-      dispatch(addLikedTrack(track));
-    } else {
-      const updatedLikedTracks = likedTracks.filter(
-        (likedTrack) => likedTrack.id !== track.id
-      );
-      setLikedTracks(updatedLikedTracks);
-      dispatch(removeLikedTracks(track.id));
-    }
-  };
 
   const handleColorGeneration = (color) => {
     setAverageColor(color);
@@ -189,19 +180,19 @@ export default function Album() {
 
   function handleClickActive(info) {
     if (info === activeTrack) {
-        dispatch(setAudio({
-            audio: info.audio,
-            isPlay: false
-          }))
+      dispatch(setAudio({
+        audio: info.audio,
+        isPlay: false
+      }))
       setActiveTrack(false);
-      if (audioRef.current) audioRef.current.pause();
+
     } else {
       dispatch(setAudio({
         audio: info.audio,
         isPlay: true
       }))
       setActiveTrack(info);
-      if (audioRef.current) audioRef.current.play();
+
     }
   }
 
@@ -242,9 +233,8 @@ export default function Album() {
                   onChange={(e) => setSearch(e.target.value)}
                   className="search_content"
                   type="text"
-                  placeholder={`Find in ${
-                    isCustomPlaylist ? "playlist" : "album"
-                  }`}
+                  placeholder={`Find in ${isCustomPlaylist ? "playlist" : "album"
+                    }`}
                 />
               </div>
             </form>
@@ -301,8 +291,8 @@ export default function Album() {
           <div className="album_tracks_box">
             <ol className="album-tracks">
               {tracks
-                .slice()
-                .sort((a, b) => a.position - b.position)
+                // .slice()
+                // .sort((a, b) => a.position - b.position)
                 .map((item, index) => (
                   <AlbumCard
                     key={item.id}

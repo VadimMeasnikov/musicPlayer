@@ -289,7 +289,7 @@ export default function Home() {
               </div>
             </div>
           )}
-          {/* {isTrack && <LastTrack />} */}
+          {isTrack && <LastTrack />}
           <Navigation />
         </div>
       )}
