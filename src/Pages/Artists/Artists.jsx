@@ -112,17 +112,6 @@ export default function Artists() {
 						<p className='choose_artists'>Choose 3 or more artists you like.</p>
 					</div>
 				</div>
-				<div className='input_block'>
-					<div className='searchInput'>
-						<span></span>
-						<input
-							type='text'
-							placeholder='Search'
-							value={searchQuery}
-							onChange={handleSearch}
-						/>
-					</div>
-				</div>
 				<div className='card_block'>
 					{filteredArtists.filter(item => item.image !== "").map(item => (
 						<Artist key={item.id} item={item} onSelect={handleArtistSelect} />

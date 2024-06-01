@@ -93,7 +93,7 @@ export default function Profile() {
 						</div>
 						<div className='recently_played'>
 							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
-							{isLastTrack && <LastTrack/>}
+							{/* {isLastTrack && <LastTrack/>} */}
 							<Navigation />
 						</div>
 					</div>

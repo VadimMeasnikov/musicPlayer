@@ -181,20 +181,28 @@ export default function Home() {
 
   async function createPlaylists(artists, dispatch, formattedDate) {
     try {
-      artists.map(async (artist) => {
+      artists.forEach(async (artist) => {
         const playlistName = `${artist.name} Mix`;
-        const response = await fetch(
-          `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
-        );
-        const playlistTracks = await response.json();
-        const formattedTracks = playlistTracks.results[0].tracks;
-        dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
+  
+        // Проверяем, существует ли плейлист с таким же именем в Redux
+        const existingPlaylist = playlistInfo.find((playlist) => playlist.name === playlistName);
+  
+        // Если плейлист уже существует, не создаем новый
+        if (!existingPlaylist) {
+          const response = await fetch(
+            `https://api.jamendo.com/v3.0/artists/tracks/?client_id=354e8ba5&format=jsonpretty&order=track_name_desc&name=${artist.name}&album_datebetween=1980-01-01_${formattedDate}`
+          );
+          const playlistTracks = await response.json();
+          const formattedTracks = playlistTracks.results[0].tracks;
+          dispatch(addPlaylist({ name: playlistName, tracks: formattedTracks }));
+        }
       });
       setIsPageLoading(false);
     } catch (error) {
       console.error("Error creating playlists:", error);
     }
   }
+  
 
   return (
     <div className="wrapper">
@@ -231,7 +239,7 @@ export default function Home() {
                     to={`/player/${item.id}`}
                     onClick={() => {
                       dispatch(addSearch(item));
-                      dispatch(addTrackToHistory(item))
+                      dispatch(addTrackToHistory(item));
                     }}
                     key={index}
                   >
@@ -245,7 +253,7 @@ export default function Home() {
             <div className="featuredTracks-title">Today's biggest hits!</div>
             <div className="featuredTracks-results">
               {featured.map((item, index) => (
-                <MiniCard key={index} track={item}/>
+                <MiniCard key={index} track={item} />
               ))}
             </div>
           </div>
@@ -263,21 +271,9 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="playlistsMix-results">
-                    {playlistInfo
-                      .reduce((uniquePlaylists, playlist) => {
-                        if (
-                          !uniquePlaylists.some(
-                            (uniquePlaylist) =>
-                              uniquePlaylist.id === playlist.id
-                          )
-                        ) {
-                          uniquePlaylists.push(playlist);
-                        }
-                        return uniquePlaylists;
-                      }, [])
-                      .map((item) => (
-                        <MixMiniCard key={item.id} playlist={item} />
-                      ))}
+                    {playlistInfo.map((item) => (
+                      <MixMiniCard key={item.id} playlist={item} />
+                    ))}
                   </div>
                 )}
               </div>
@@ -293,7 +289,7 @@ export default function Home() {
               </div>
             </div>
           )}
-          {isTrack && <LastTrack />}
+          {/* {isTrack && <LastTrack />} */}
           <Navigation />
         </div>
       )}

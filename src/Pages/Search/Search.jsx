@@ -9,6 +9,7 @@ import tabsData from "../../tabs.json";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import LastTrack from '../../Components/LastTrack/LastTrack'
+import { setCurrentTrack, setPlaylist } from "../../reduxToolkit/slices/playerSlice";
 import "./search.scss";
 
 export default function Search() {
@@ -21,7 +22,7 @@ export default function Search() {
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemsToShow, setItemsToShow] = useState(100);
-
+  const dispatch = useDispatch()
   const auth = getAuth();
   const user = useSelector(state => state.user);
   const navigate = useNavigate();
@@ -65,6 +66,11 @@ export default function Search() {
     setLoading(true);
   };
 
+  const handleMiniPlayerCardClick = (track) => {
+    dispatch(setPlaylist(searchTracks));
+    dispatch(setCurrentTrack(track.id));
+  };
+
   return (
     <div className="wrapper">
       <div className="search-page">
@@ -104,7 +110,7 @@ export default function Search() {
                   <MiniPlayerCard
                     key={index}
                     info={item}
-                    onClick={console}
+                    onClick={() => handleMiniPlayerCardClick(item)}
                   />
                 ))
               ) : (
@@ -115,7 +121,7 @@ export default function Search() {
         </div>
         {itemsToShow === 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
       </div>
-      {isLastTrack && <LastTrack/>}
+      {/* {isLastTrack && <LastTrack/>} */}
       <Navigation />
     </div>
   );

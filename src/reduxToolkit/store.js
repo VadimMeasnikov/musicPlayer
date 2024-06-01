@@ -14,6 +14,7 @@ import albumSlice from "./slices/albumSlice";
 import userPhotoSlice from "./slices/userPhoto";
 import appAudio from "./slices/appAudio";
 import historySlice from './slices/historySlice'
+import playerReducer from './slices/playerSlice'
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +32,8 @@ export const store = configureStore({
     artist: artistSlice,
     album: albumSlice,
     audio: appAudio,
-    history: historySlice
+    history: historySlice,
+    player: playerReducer
   },
   middleware: (getDefault) =>
     getDefault().concat(
