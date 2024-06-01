@@ -42,6 +42,9 @@ export default function App() {
         setIsPlay(false)
       }
     }
+    if(audioSettings.audio == null){
+      audio.pause()
+    }
   }, [audioSettings])
 
 

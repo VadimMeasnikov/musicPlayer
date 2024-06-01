@@ -7,8 +7,12 @@ import "./MiniCard.scss";
 export default function MiniCard({ track }) {
   const dispatch = useDispatch();
 
+  function correctLastTrack(track){
+    localStorage.setItem('track', JSON.stringify(track))
+  }
+
   return (
-    <NavLink to={`/player/${track.id}`} onClick={() => { dispatch(addSearch(track)); dispatch(addTrackToHistory(track)) }}>
+    <NavLink to={`/player/${track.id}`} onClick={() => {correctLastTrack(track); dispatch(addSearch(track)); dispatch(addTrackToHistory(track)) }}>
       <div className="card">
         <div className="card-img">
           <img src={track.image} alt="img" />

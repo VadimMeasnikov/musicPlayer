@@ -129,6 +129,12 @@ export default function Album() {
 
         return () => clearTimeout(timeout);
       }
+    } else {
+      console.log(1);
+      dispatch(setAudio({
+        audio: null,
+        isPlay: false
+      }))
     }
   }, [trackIndex, tracks, isPlay]);
 
@@ -213,7 +219,6 @@ export default function Album() {
           src={URL}
           autoPlay={isAuto}
           muted='true'
-          controls
         ></audio>
         <div className="album_color__top" style={{ background: bg }}>
           <div className="album_arrow">
