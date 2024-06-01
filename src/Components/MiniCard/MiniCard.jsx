@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addSearch } from '../../reduxToolkit/slices/userSearch';
 import { addTrackToHistory } from "../../reduxToolkit/slices/historySlice";
+
 import "./MiniCard.scss";
 
 export default function MiniCard({ track }) {

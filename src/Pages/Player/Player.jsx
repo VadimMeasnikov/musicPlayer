@@ -34,7 +34,6 @@ import music_track from "../../tracks/The Beatles - From Me To You.mp3";
 import repeat_active from "../../img/trackFunction/Repeat.png";
 import repeat from "../../img/media-playlist-repeat.png";
 import GetCurrentColor from "../../GetCurrentColor";
-import { useEditData } from "../../services";
 import {
     addLikedTrack,
     removeLikedTracks,
@@ -43,12 +42,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import { nextTrack, prevTrack, setCurrentTrack } from "../../reduxToolkit/slices/playerSlice";
+import { setAudio } from '../../reduxToolkit/slices/appAudio';
+
 import "./player.scss";
 
 export default function Player() {
     const audioRef = useRef();
     const dispatch = useDispatch();
+    const audioSettings = useSelector(state => state.audio)
     const [trackName, setTrackName] = useState("");
     const [trackArtist, setTrackArtist] = useState("");
     const [trackAudio, setTrackAudio] = useState("");
@@ -64,8 +65,9 @@ export default function Player() {
     const [tabs, setTabs] = useState(tabsData);
     const [activeTab, setActiveTab] = useState(tabs[0].path);
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
     const [repeatState, setRepeatState] = useState(false);
+
     const trackIdParams = useParams();
 
     const { data, error } = useSearchQuery({
@@ -79,8 +81,6 @@ export default function Player() {
 
     const [likedTracks, setLikedTracks] = useState([]);
     const [currentTrack, setCurrentTrack] = useState();
-    const playlist = useSelector((state) => state.player.playlist);
-    const currentTrackIndex = useSelector((state) => state.player.currentTrackIndex);
 
     useEffect(() => {
         if (
@@ -92,6 +92,16 @@ export default function Player() {
             getCurrentTrack(data.results, trackIdParams.trackId);
         }
     }, [trackId, data]);
+
+    useEffect(() => {
+         const isPlay = audioSettings.isPlay
+         if(isPlay){
+            setIsPlaying(true)
+         }
+         else{
+            setIsPlaying(false)
+         }
+    }, [audioSettings.isPlay])
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -122,7 +132,7 @@ export default function Player() {
             return currentTrack;
         } else {
             const currentTrack = dataRd[dataRd.length - 1];
-    
+
             setTrackName(currentTrack.name);
             setTrackArtist(currentTrack.artist_name);
             setTrackAlbum(currentTrack.album_name);
@@ -138,9 +148,18 @@ export default function Player() {
         const audio = audioRef.current;
         if (!audio) return;
         if (audio.paused) {
+            localStorage.setItem('track', JSON.stringify(currentTrack))
+            dispatch(setAudio({
+                audio: trackAudio,
+                isPlay: true
+            }))
             audio.play();
             setIsPlaying(true);
         } else {
+            dispatch(setAudio({
+                audio: null,
+                isPlay:  false
+            }))
             audio.pause();
             setIsPlaying(false);
         }
@@ -184,7 +203,7 @@ export default function Player() {
 
     const handleTimeChange = (e) => {
         const audio = audioRef.current;
-        const newTime = e.target.value
+        const newTime = e.target.value;
         audio.currentTime = newTime;
         setSeconds(newTime);
     };
@@ -212,35 +231,6 @@ export default function Player() {
         }
     };
 
-    const handleNextTrack = () => {
-        dispatch(nextTrack());
-        const nextTrackIndex = currentTrackIndex + 1;
-        if (nextTrackIndex < playlist.length) {
-            const nextTrack = playlist[nextTrackIndex];
-            setCurrentTrack(nextTrack.id);
-            setTrackName(nextTrack.name);
-            setTrackArtist(nextTrack.artist_name);
-            setTrackAlbum(nextTrack.album_name);
-            setTrackImage(nextTrack.image);
-            setTrackAudio(nextTrack.audio);
-            setTrackId(nextTrack.id);
-        }
-    };
-
-    const handlePrevTrack = () => {
-        dispatch(prevTrack());
-        const prevTrackIndex = currentTrackIndex - 1;
-        if (prevTrackIndex >= 0) {
-            const prevTrack = playlist[prevTrackIndex];
-            setCurrentTrack(prevTrack.id);
-            setTrackName(prevTrack.name);
-            setTrackArtist(prevTrack.artist_name);
-            setTrackAlbum(prevTrack.album_name);
-            setTrackImage(prevTrack.image);
-            setTrackAudio(prevTrack.audio);
-            setTrackId(prevTrack.id);
-        }
-    };
     return (
         <div className="player" style={{ background: bg }}>
             <GetCurrentColor
@@ -354,6 +344,7 @@ export default function Player() {
                             className="audioElement"
                             src={trackAudio}
                             ref={audioRef}
+                            muted='true'
                         ></audio>
 
                         <input
@@ -385,7 +376,7 @@ export default function Player() {
                         ) : (
                             <BsRepeat className="repeatBtn" onClick={handleRepeatControl} />
                         )}
-                        <button className="track_function__btn prev_track" onClick={handlePrevTrack}>
+                        <button className="track_function__btn prev_track">
                             {" "}
                             <img src={Back} alt="" width={36} height={37} />
                         </button>
@@ -399,7 +390,7 @@ export default function Player() {
                             </button>
                         )}
 
-                        <button className="track_function__btn next_track" onClick={handleNextTrack}>
+                        <button className="track_function__btn next_track">
                             {" "}
                             <img
                                 src={Back}
@@ -429,4 +420,3 @@ export default function Player() {
         </div>
     );
 }
-

@@ -31,7 +31,9 @@ export default function App() {
   const audioRef = useRef()
 
   useEffect(() => {
+
     const audio  = audioRef.current
+    audio.pause()
     if (audioSettings.audio) {
       setURL(audioSettings.audio)
       if (audioSettings.isPlay) {
