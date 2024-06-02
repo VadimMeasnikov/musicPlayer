@@ -53,6 +53,10 @@ export default function Profile() {
 			}
 		}))
 
+		const track = JSON.parse(localStorage.getItem('track'));
+        if(track){
+			setIsLastTrack(true)
+		}
 	}, [])
 
 	useEffect(() => {
@@ -93,7 +97,7 @@ export default function Profile() {
 						</div>
 						<div className='recently_played'>
 							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
-							{/* {isLastTrack && <LastTrack/>} */}
+							{isLastTrack && <LastTrack/>}
 							<Navigation />
 						</div>
 					</div>
