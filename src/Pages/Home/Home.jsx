@@ -20,6 +20,7 @@ import { setKey } from "../../reduxToolkit/slices/userKeySlice";
 import { setArtists } from "../../reduxToolkit/slices/userArtistsSlice";
 import { getCurrentAvatar } from "./getCurrentAvatar";
 import { setPhoto } from "../../reduxToolkit/slices/userPhoto";
+import { v4 as uuidv4 } from 'uuid';
 
 import "./home.scss";
 
@@ -253,7 +254,7 @@ export default function Home() {
             <div className="featuredTracks-title">Today's biggest hits!</div>
             <div className="featuredTracks-results">
               {featured.map((item, index) => (
-                <MiniCard key={index} track={item} />
+                <MiniCard key={uuidv4()} track={item} />
               ))}
             </div>
           </div>
@@ -272,7 +273,7 @@ export default function Home() {
                 ) : (
                   <div className="playlistsMix-results">
                     {playlistInfo.map((item) => (
-                      <MixMiniCard key={item.id} playlist={item} />
+                      <MixMiniCard key={uuidv4()} playlist={item} />
                     ))}
                   </div>
                 )}
@@ -284,7 +285,7 @@ export default function Home() {
               <div className="suggestedArtists-title">Artists you like</div>
               <div className="suggestedArtists-results">
                 {userArtists.map((item, index) => (
-                  <ArtistMiniCard key={index} artist={item} />
+                  <ArtistMiniCard key={uuidv4()} artist={item} />
                 ))}
               </div>
             </div>
