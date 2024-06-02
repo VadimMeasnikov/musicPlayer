@@ -30,6 +30,7 @@ export default function LogIn() {
   async function logInUser(e) {
     e.preventDefault();
     if (!emailLogIn || !passwordLogIn) {
+      setIsError(true)
       return;
     }
 
@@ -38,7 +39,6 @@ export default function LogIn() {
         getAllUsersData()
           .then((data) => {
             const usersArray = createUsersArray(data);
-            console.log(usersArray);
             return usersArray
           })
           .then((array) => {
@@ -48,7 +48,6 @@ export default function LogIn() {
           })
           .then((userDb) => {
             if (userDb) {
-              console.log(userDb);
               dispatch(
                 setUser({
                   email: userDb.email,
@@ -65,9 +64,7 @@ export default function LogIn() {
               )
 
               const artistsArr = JSON.parse(userDb.artists)
-              console.log(typeof artistsArr);
               artistsArr.map((artist, key) => {
-                console.log(artist);
                 dispatch(setArtists(artist));
                 return artist;
               })
@@ -84,13 +81,10 @@ export default function LogIn() {
 
   function getCurrentUser(usersArray, email) {
     const authorizedUser = usersArray.find((user) => user.email === email);
-    console.log(authorizedUser);
-    console.log("auth succesfull");
     return authorizedUser || null;
   }
 
   function createUsersArray(usersObj) {
-    console.log(usersObj);
     const usersArray = Object.entries(usersObj).map(([key, value]) => {
       return { id: key, ...value };
     });
@@ -101,14 +95,14 @@ export default function LogIn() {
     <div className="login">
       <div className="login_container">
         <div className="title_box_login">
-        <Link to='/registration' className="go_back__btn_log"><img src={leftArrow} alt="" /></Link>
+          <Link to='/registration' className="go_back__btn_log"><img src={leftArrow} alt="" /></Link>
           <h1 className="title_text_login">Log In</h1>
         </div>
         <form onSubmit={(e) => logInUser(e)} className="login_user_form">
           <div className="user_data__box">
-            <label className="user_data_label">Please, enter your email</label>
+            <label className={isError ? ("error_label") : ("user_data_label")}>Please, enter your email</label>
             <input
-              className="user_data_input"
+              className={isError ? ("error_input") : ("user_data_input")}
               value={emailLogIn}
               onChange={(e) => {
                 setEmailLogIn(e.target.value);
@@ -118,11 +112,11 @@ export default function LogIn() {
             />
           </div>
           <div className="user_data__box">
-            <label className="user_data_label">
+            <label className={isError ? ("error_label") : ("user_data_label")}>
               Please, enter your password
             </label>
             <input
-              className="user_data_input"
+              className={isError ? ("error_input") : ("user_data_input")}
               value={passwordLogIn}
               onChange={(e) => {
                 setPasswordLogIn(e.target.value);
@@ -131,18 +125,11 @@ export default function LogIn() {
               type="password"
             />
           </div>
-          <button type="submit" className="login_user__btn">
+          <button disabled={isError} type="submit" className="login_user__btn">
             Log In
           </button>
         </form>
       </div>
-      {isError && (
-        <div className="popUp">
-          <p className="error_text">
-            This email and password combination is incorrect.
-          </p>
-        </div>
-      )}
     </div>
   );
 }

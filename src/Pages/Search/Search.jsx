@@ -4,63 +4,73 @@ import MiniPlayerCard from "../../Components/MiniPlayerCard/MiniPlayerCard";
 import Tab from "../../Components/Tab/Tab";
 import { useSearchQuery } from "../../reduxToolkit/queryApi/searchJamendo";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import tabsData from "../../tabs.json";
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from "react-redux"
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import LastTrack from '../../Components/LastTrack/LastTrack'
+import { setCurrentTrack, setPlaylist } from "../../reduxToolkit/slices/playerSlice";
 import "./search.scss";
 
-
-
 export default function Search() {
+  const [isLastTrack, setIsLastTrack] = useState(true)
   const [tabs, setTabs] = useState(tabsData);
-  const [searchTitle, isSearchTitle] = useState(true);
+  const [searchTitle, setSearchTitle] = useState(true);
   const [activeTab, setActiveTab] = useState(tabs[0].path);
   const [searchValue, setSearchValue] = useState("");
   const [searchTracks, setSearchTracks] = useState([]);
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
-  const [itemsToShow, setItemsToshow] = useState(100);
-
-  const auth = getAuth()
-  const user = useSelector(state => state.user)
-  const navigate = useNavigate()
+  const [itemsToShow, setItemsToShow] = useState(100);
+  const dispatch = useDispatch()
+  const auth = getAuth();
+  const user = useSelector(state => state.user);
+  const navigate = useNavigate();
 
   const showMore = () => {
-    setItemsToshow(200);
-  }
+    setItemsToShow(200);
+  };
 
-  
-	useEffect(() => {
-		onAuthStateChanged(auth, (userSt => {
-			if (user.email == null) {
-				navigate('/')
-			}
-		}))
-	}, [])
+  useEffect(() => {
+    onAuthStateChanged(auth, (userSt) => {
+      if (user.email == null) {
+        navigate('/');
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchValue(searchValue);
-    }, 100);
+    }, 300);
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
-  const { data, error } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
+
+  const { data, error, isFetching } = useSearchQuery({ path: activeTab, name: debouncedSearchValue });
 
   useEffect(() => {
-    if (data && data.results) {
+    if (isFetching) {
+      setLoading(true);
+    } else if (data && data.results) {
       setSearchTracks(data.results);
       setLoading(false);
-      setItemsToshow(100)
+      setItemsToShow(100);
     } else {
       setSearchTracks([]);
-      setItemsToshow(null)
+      setLoading(false);
     }
-  }, [data]);
+  }, [data, isFetching]);
+
   const handleTabClick = (path) => {
     setActiveTab(path);
+    setLoading(true);
   };
+
+  const handleMiniPlayerCardClick = (track) => {
+    dispatch(setPlaylist(searchTracks));
+    dispatch(setCurrentTrack(track.id));
+  };
+
   return (
     <div className="wrapper">
       <div className="search-page">
@@ -73,10 +83,10 @@ export default function Search() {
               type="text"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              onFocus={() => isSearchTitle(false)}
+              onFocus={() => setSearchTitle(false)}
               onBlur={() => {
                 if (!searchValue) {
-                  isSearchTitle(true);
+                  setSearchTitle(true);
                 }
               }}
             />
@@ -84,17 +94,13 @@ export default function Search() {
         </div>
         <div className="searchCategories">
           {tabs.map((item, index) => (
-            <Tab info={item} key={index} onClick={handleTabClick} />
+            <Tab info={item} key={index} onClick={() => handleTabClick(item.path)} />
           ))}
         </div>
         <div className="search-page__results">
           {loading ? (
             <div className="spinnerBox">
-              <CgSpinnerTwoAlt
-                color="white"
-                className="spinner"
-                display="block"
-              />
+              <CgSpinnerTwoAlt color="white" className="spinner" display="block" />
             </div>
           ) : (
             <>
@@ -104,7 +110,7 @@ export default function Search() {
                   <MiniPlayerCard
                     key={index}
                     info={item}
-                    onClick={console}
+                    onClick={() => handleMiniPlayerCardClick(item)}
                   />
                 ))
               ) : (
@@ -113,8 +119,9 @@ export default function Search() {
             </>
           )}
         </div>
-        {itemsToShow == 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
+        {itemsToShow === 100 && <button onClick={showMore} className="seeMoreBtn">See more</button>}
       </div>
+      {/* {isLastTrack && <LastTrack/>} */}
       <Navigation />
     </div>
   );

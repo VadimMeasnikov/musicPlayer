@@ -40,15 +40,15 @@ export default function Registration_Data({ regState, userObj }) {
     event.preventDefault();
 
     if (!userName || !userEmail || !userPassword) {
+      setIsError(true)
       return;
     }
 
-    // console.log('create user');
+
 
     createUserWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
         setUserState(user);
-        console.log(user.user.uid);
         dispatch(
           setUser({
             email: userEmail,
@@ -79,7 +79,6 @@ export default function Registration_Data({ regState, userObj }) {
       });
   }
   async function addDataUser() {
-    console.log("start add data");
 
     const user = auth.currentUser;
     const userObj = {
@@ -106,11 +105,9 @@ export default function Registration_Data({ regState, userObj }) {
       .catch((e) => console.error(e))
 
     const field = 'key'
-    console.log(userKey);
     editData.mutate({ id: userKey, field, updateData: userKey })
-    console.log('end edit data');
-    console.log(user);
   }
+
 
 
   return (
@@ -135,6 +132,7 @@ export default function Registration_Data({ regState, userObj }) {
             <input
               className={isError ? ("error_input") : ("user_data_input")}
               value={userEmail}
+              name='email'
               onChange={(e) => {
                 setUserEmail(e.target.value);
                 setIsError(false);
@@ -150,6 +148,7 @@ export default function Registration_Data({ regState, userObj }) {
               Create a password
             </label>
             <input
+              name='password'
               className={isError ? ("error_input") : ("user_data_input")}
               value={userPassword}
               onChange={(e) => {
@@ -165,6 +164,7 @@ export default function Registration_Data({ regState, userObj }) {
               What's your name?
             </label>
             <input
+              name='username'
               className={isError ? ("error_input") : ("user_data_input")}
               value={userName}
               onChange={(e) => {
@@ -180,7 +180,7 @@ export default function Registration_Data({ regState, userObj }) {
 
           <div className="user_terms">
             <p className="user_terms__text">
-              By creating an account, you agree to Spotify's
+              By creating an account, you agree to Music Player's
               <Link to="*" className="terms_link">
                 Terms and Conditions of Use
               </Link>
@@ -189,7 +189,7 @@ export default function Registration_Data({ regState, userObj }) {
             <p className="user_terms__text">
               {" "}
               To learn more about how Spotify collect, uses, shares and protects
-              your personal data, please read Spotify's
+              your personal data, please read Music Player's
               <Link to="*" className="terms_link">
                 Privacy Policy
               </Link>
@@ -198,7 +198,7 @@ export default function Registration_Data({ regState, userObj }) {
             <div className="extra_box">
               <div className="user_extra">
                 <p className="user_extra__text">
-                  Please send me news and offers from Spotify.
+                  Please send me news and offers from Music Player.
                 </p>
                 <input
                   className="user_extra__inp"
@@ -212,7 +212,7 @@ export default function Registration_Data({ regState, userObj }) {
               </div>
               <div className="user_extra">
                 <p className="user_extra__text">
-                  Share my registration data with Spotify’s content providers
+                  Share my registration data with Music Player's content providers
                   for marketing purposes.
                 </p>
                 <input

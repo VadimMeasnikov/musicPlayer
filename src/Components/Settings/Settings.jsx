@@ -50,6 +50,10 @@ export default function Settings({ modalArr, photoObj }) {
                         <p>Account</p>
                         <img src={ChevronRight} alt="" />
                     </Link>
+                    <Link to='/history' className="settings-user">
+                        <p>Recently Played</p>
+                        <img src={ChevronRight} alt="" />
+                    </Link>
                     <div className="settings-user">
                         <p>Data Saver</p>
                         <img src={ChevronRight} alt="" />

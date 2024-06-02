@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { clearHistory } from '../../reduxToolkit/slices/historySlice'
 import openBtn from '../../img/Add.png'
 import Recently_Played from '../../Components/Recently_Played/Recently_Played'
 import twoArrows from '../../img/twoArrows.svg'
@@ -11,7 +12,7 @@ import Settings from '../../Components/Settings/Settings'
 import defaultImg from '../../img/default.png'
 import { useNavigate } from 'react-router-dom'
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-
+import LastTrack from '../../Components/LastTrack/LastTrack'
 import './profile.scss'
 
 
@@ -25,12 +26,13 @@ export default function Profile() {
 	const [userPhoto, setUserPhoto] = useState(defaultImg)
 	const [isPageLoading, setIsPageLoading] = useState(false)
 
+	const [isLastTrack, setIsLastTrack] = useState(true)
+
 	const photoObj = { userPhoto, setUserPhoto }
 	const { data } = useGetTrackQuery()
 
 	const photo = useSelector(state => state.userPhoto.photo)
 	const user = useSelector(state => state.user)
-
 
 	const navigate = useNavigate()
 	const auth = getAuth()
@@ -43,12 +45,14 @@ export default function Profile() {
 
 
 	useEffect(() => {
+		console.log(1);
 		onAuthStateChanged(auth, (userSt => {
 			if (user.email == null) {
 				setIsPageLoading(true)
 				navigate('/')
 			}
 		}))
+
 	}, [])
 
 	useEffect(() => {
@@ -65,11 +69,6 @@ export default function Profile() {
 			setUserPhoto(defaultImg)
 		}
 	}, [photo])
-
-	function handleButtonClick(status) {
-		setStatus(status)
-		return status
-	}
 
 	const statusArr = { status, setStatus }
 	const modalArr = { isSettings, setIsSettings }
@@ -92,21 +91,9 @@ export default function Profile() {
 								<img src={openBtn} alt='' />
 							</button>
 						</div>
-						<div className='four_buttons'>
-							<button onClick={() => handleButtonClick('Playlist')} className='profile_button'>Playlists</button>
-							<button onClick={() => handleButtonClick('Artist')} className='profile_button'>Artists</button>
-							<button onClick={() => handleButtonClick('Album')} className='profile_button'>Albums</button>
-							<button onClick={() => handleButtonClick('Podcast & Show')} className='profile_button'>Podcasts & Shows</button>
-						</div>
 						<div className='recently_played'>
-							<div className='row'>
-								<div className='mini_title'>
-									<img src={twoArrows} alt='' />
-									<p className='near_text'>Recently Played</p>
-								</div>
-								<img src={fourSquares} alt='' />
-							</div>
 							<Recently_Played data={featured} favTracks={favTracks} favArtists={favArtists} playlists={playlists} statusArr={statusArr} />
+							{/* {isLastTrack && <LastTrack/>} */}
 							<Navigation />
 						</div>
 					</div>

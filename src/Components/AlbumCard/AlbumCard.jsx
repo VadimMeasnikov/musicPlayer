@@ -11,19 +11,18 @@ import share from '../../img/Share.png'
 import addToAlbum from '../../img/add_to_album.png'
 import { TfiClose } from "react-icons/tfi";
 import goToPlayer from '../../img/goToPlayer.png'
-import { useCorrectData } from '../../services';
 import twitter from '../../img/twitter.png'
 import link from '../../img/Link.png'
 import whatsup from '../../img/whatsup.png'
 import message from '../../img/message.png'
 import { addSearch } from '../../reduxToolkit/slices/userSearch';
 import { useLastTrack } from '../../hooks/useLastTrack';
+import { setAudio } from '../../reduxToolkit/slices/appAudio';
 import './album_card.scss'
 
 
 
 export default function AlbumCard({ info, img, isActive, handleClickActive }) {
-    console.log(isActive);
     const [src, setSrc] = useState(info.image || img);
     const [isMore, setIsMore] = useState(false)
     const [likedTracks, setLikedTracks] = useState([]);
@@ -32,9 +31,9 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
 
     const likedTracksStore = useSelector(state => state.likes.likedTracks)
     const { key } = useSelector(state => state.userKey)
+
     const field = 'liked'
     const dispatch = useDispatch()
-    const correctData = useCorrectData()
 
     useEffect(() => {
         if (info && !info.image && !img) {
@@ -69,11 +68,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
             setLikedTracks(track);
             setIsLike(true)
             dispatch(addLikedTrack(track));
-            correctData.mutate({
-                id: key,
-                field: field,
-                updateData: JSON.stringify(track),
-            });
         } else {
             const updatedLikedTracks = likedTracks.filter(
                 (likedTrack) => likedTrack.id !== track.id
@@ -81,7 +75,6 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
             setLikedTracks(updatedLikedTracks);
             dispatch(removeLikedTracks(track.id));
         }
-        console.log(isTrackLiked);
         return isTrackLiked
     };
 
@@ -90,10 +83,9 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
     }
 
     const bg = {
-        background: isActive ? 'rgba(50, 50, 50, 0.5)' : 'black',
+        background: isActive ? 'rgba(50, 50, 50, 0.5)' : 'inherit',
     };
 
-    console.log(bg);
 
     return (
         <div onClick={() => { handleClick(info); setIsMore(false) }} className="album_card" style={bg}>
@@ -110,7 +102,7 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
                             <div className="more_info_box__container">
                                 <button className='more_info_content' id='first_btn' onClick={() => {
                                     handleTrackLike(info);
-
+                                    setIsMore(false)
                                 }}>
                                     <div className="btn_image_content">
                                         {likedTracksStore.some(
@@ -127,7 +119,7 @@ export default function AlbumCard({ info, img, isActive, handleClickActive }) {
 
 
 
-                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info) }}>
+                                <Link to={`/player/${info.id}`} className='more_info_content ' id='third_btn' onClick={() => { addDataTrack(info); setIsMore(false)}}>
                                     <div className="btn_image_content">
                                         <IoPlay/>
                                     </div>

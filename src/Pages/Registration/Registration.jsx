@@ -9,7 +9,7 @@ import Registration_Data from "../../Components/Registration_Data/Registration_D
 import miniLogo from "../../img/spotifyLogo.png";
 import googleLogo from "../../img/googleLogo.png"
 import facebookLogo from "../../img/facebookLogo.png"
-
+import { FcMusic } from "react-icons/fc";
 import "./registration.scss";
 
 export default function Registration() {
@@ -44,9 +44,9 @@ export default function Registration() {
         <div className="reg">
           <div className="reg_container">
             <div className="title_box">
-              <img className="mini_logo" src={miniLogo} alt="logo" />
+              <FcMusic color="#1ed760" className="mini_logo"/>
               <h1 className="reg_page__title">
-                Millions of Songs.<br></br>Free on Spotify.
+                Millions of Songs.<br></br>Free on Music Player.
               </h1>
             </div>
             <div className="reg_funct_box">

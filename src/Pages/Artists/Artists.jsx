@@ -8,7 +8,8 @@ import { removeArtists } from '../../reduxToolkit/slices/userArtistsSlice';
 import Artist from '../../Components/Artist/Artist'
 import { FcCheckmark } from "react-icons/fc";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import { Link } from 'react-router-dom';
+import arrow from '../../img/ChevronLeft.png'
 
 import './artists.scss'
 
@@ -23,14 +24,10 @@ export default function Artists() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	// const userStr = JSON.stringify(useSelector((state) => state.user))
-	// console.log(userStr);
 	// const user = JSON.parse(userStr)
 	const keyObj = useSelector((state) => state.userKey)
-	console.log('key is ' + keyObj.key);
 	const idKey = keyObj.key
 	const field = 'artists'
-	console.log(field);
-	console.log(idKey);
 
 	const editData = useEditData()
 
@@ -41,7 +38,6 @@ export default function Artists() {
 		{ artist: 'artist_3' }
 	]);
 	// const artistArr = JSON.parse(artistArrStr)
-	// console.log(artistArr);
 	const [buttonShow, setButtonShow] = useState(false)
 
 	useEffect(() => {
@@ -49,6 +45,12 @@ export default function Artists() {
 			setArtistsServer(data.results)
 		}
 	}, [data])
+
+	useEffect(() => {
+		if (localStorage.getItem('track')) {
+			localStorage.removeItem('track');
+		}
+	}, [])
 
 	const handleSearch = event => {
 		setSearchQuery(event.target.value)
@@ -58,7 +60,6 @@ export default function Artists() {
 	const selectedArtists = useSelector(
 		state => userArtists.userAppArtists
 	)
-	console.log(selectedArtists);
 
 
 
@@ -78,11 +79,6 @@ export default function Artists() {
 			dispatch(setArtists(artist));
 		}
 
-		// if (selectedArtists.length >= 3) {
-		// 	console.log('start edit data');
-		// 	editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
-		// 	navigate('/');
-		// }
 	}
 	useEffect(() => {
 		// Если количество выбранных артистов больше или равно 3, показываем кнопку
@@ -97,10 +93,8 @@ export default function Artists() {
 		artist.name.toLowerCase().includes(searchQuery.toLowerCase())
 	)
 
-	console.log(selectedArtists);
 	const handleRedirect = () => {
 		if (selectedArtists.length >= 3) {
-			console.log('start edit data');
 			editData.mutate({ id: idKey, field, updateData: JSON.stringify(selectedArtists) });
 			navigate('/');
 		} else {
@@ -114,20 +108,8 @@ export default function Artists() {
 		<div className='artists'>
 			<div className='artists_container'>
 				<div className='top_block'>
-					<GoBackButton />
 					<div className='text_block'>
 						<p className='choose_artists'>Choose 3 or more artists you like.</p>
-					</div>
-				</div>
-				<div className='input_block'>
-					<div className='searchInput'>
-						<span></span>
-						<input
-							type='text'
-							placeholder='Search'
-							value={searchQuery}
-							onChange={handleSearch}
-						/>
 					</div>
 				</div>
 				<div className='card_block'>

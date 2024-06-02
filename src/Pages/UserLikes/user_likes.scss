@@ -1,0 +1,116 @@
+.user_likes {
+  p {
+    font-family:Roboto;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 28px;
+    color: white;
+  }
+
+  h1 {
+    color: white;
+    font-size: 15px;
+  }
+
+  .user_likes_content {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+
+
+    .album_content {
+      padding: 15px;
+      width: 90%;
+      height: 150px;
+      background: #272727;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .likes_img {
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
+      }
+
+      .album_data {
+        // padding: 10px;
+        width: 65%;
+        height: 85%;
+        background: #3b3b3b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        border-radius: 15px;
+
+        .album_likes_duration,
+        .album_likes_length {
+          width: 100%;
+          padding-left: 10px;
+          font-size: 13px;
+        }
+
+        .album_likes_length {
+          border-bottom: 1px solid white;
+        }
+      }
+    }
+
+    .user_likes_songs {
+      padding-top: 50px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .card {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+.user_likes_title_box {
+  padding-top: 15px;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+
+  .title_text_user_likes {
+    width: 95%;
+    text-align: center;
+    font-size: 26px;
+  }
+}
+
+.empty_box {
+  height: 40vh;
+  background: inherit;
+
+  .empty_box_container {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+
+    img {
+      margin-top: 15px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
